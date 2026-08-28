@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Szczupak",
+    "latin": "Esox lucius",
+    "img": "img/ryba-szczupak.jpg",
+    "gdzieKiedy": "opaski, główki, zwalone drzewa, dołki za wypłyceniami — jesień–wiosna, pochmurne dni",
+    "wyglad": "torpedowate, zielonkawo-oliwkowe ciało z jasnymi plamami i paskami; długi, spłaszczony „kaczy\" pysk pełen ostrych zębów; płetwa grzbietowa przesunięta daleko w tył, tuż nad odbytową",
+    "odroznic": "jedyny drapieżnik z płetwą grzbietową z tyłu ciała i „kaczym\" pyskiem. Od sandacza — brak pionowych pasów i kłów. Praktycznie nie do pomylenia",
+    "przynety": "Wahadłówki 12–20 g, obrotówki nr 3–5, gumy 10–20 cm (kopytka, shady, twistery), jerki 8–12 cm",
+    "prowadzenie": "wolno, z pauzami; obrotówkę wolno przy dnie; gumę z opadu",
+    "przypon": "obowiązkowo stalowy/wolframowy"
+  },
+  {
+    "name": "Sandacz",
+    "latin": "Sander lucioperca",
+    "img": "img/ryba-sandacz.jpg",
+    "gdzieKiedy": "głębokie rynny, krawędzie spadów, podmyte brzegi — świt/zmierzch, noc, jesień",
+    "wyglad": "smukły, szarozielony z ciemnymi pionowymi pasami; dwie płetwy grzbietowe (pierwsza twarda, kolczasta); dwa charakterystyczne „kły\" w pysku; duże oczy",
+    "odroznic": "od szczupaka — pasy, kły i dwie płetwy grzbietowe; od okonia — smuklejszy, jaśniejszy, większy, bez czerwonych płetw",
+    "przynety": "rippery, kopyta, smukłe shady 8–12 cm (najlepiej 8–14 cm na główce 10–25 g), woblery i cykady przy dnie",
+    "prowadzenie": "opad — rzuć, poczekaj aż przynęta opadnie (często branie jest właśnie na opadaniu), potem skoki po dnie, wolne podciąganie, pauzy przy dnie",
+    "przypon": "fluorocarbon 0,25–0,33 mm, 50–80 cm (gdy brak szczupaka)"
+  },
+  {
+    "name": "Okoń",
+    "latin": "Perca fluviatilis",
+    "img": "img/ryba-okon.jpg",
+    "gdzieKiedy": "opaski, kamieniste rafy, przykosy — cały sezon",
+    "wyglad": "krępe, wygrzbiecone ciało; zielonkawe z 5–9 ciemnymi pionowymi pasami; płetwy piersiowe, brzuszne i ogonowa czerwonawe; dwa grzbiety (pierwszy kolczasty z ciemną plamą)",
+    "odroznic": "od sandacza — mniejszy, bardziej „garbaty\", czerwone płetwy; od jazgarza — wyraźniejsze pasy i większy rozmiar",
+    "przynety": "małe gumy 3–8 cm na główkach 2–7 g, obrotówki, cykady, koguty, małe woblery",
+    "prowadzenie": "skoki po dnie, opad, lekkie podrywanie. Najlepsza ryba na początek — trzyma się stad, więc gdzie jeden, tam więcej",
+    "przypon": "fluorocarbon cienki (opcjonalnie)"
+  },
+  {
+    "name": "Boleń",
+    "latin": "Leuciscus aspius",
+    "img": "img/ryba-bolen.jpg",
+    "gdzieKiedy": "silny nurt, spłycenia, okolice drobnicy przy powierzchni — lato, świt/zmierzch",
+    "wyglad": "duży, srebrzysty, wydłużony; szeroki otwór gębowy z dolną szczęką wysuniętą ku górze; brak zębów (to karpiowaty); drobne łuski",
+    "odroznic": "od klenia i jazia — znacznie większy i bardziej srebrzysty, z masywniejszą głową; od uklei — wielokrotnie większy",
+    "przynety": "smukłe woblery 7–12 cm imitujące ukleję, wąskie wahadłówki, cykady, rippery/pilkery 5–8 cm (białe/perłowe)",
+    "prowadzenie": "szybkie, wysoko w toni. Bolenia zdradzają „chlapania\" — uderzenia w stada drobnicy na powierzchni",
+    "przypon": "fluorocarbon cienki 0,20–0,28 mm"
+  },
+  {
+    "name": "Sum",
+    "latin": "Silurus glanis",
+    "img": "img/ryba-sum.jpg",
+    "gdzieKiedy": "głębokie doły, cofki, przy dnie — noc, lato–jesień",
+    "wyglad": "bezłuski, oliwkowo-brązowy z marmurkowym wzorem; wielka, szeroka głowa; 6 wąsów (2 długie + 4 krótkie); mała płetwa grzbietowa, za to bardzo długa płetwa odbytowa",
+    "odroznic": "nie do pomylenia — jedyna duża ryba bezłuska z wąsami w Odrze",
+    "przynety": "duże gumy 15–25 cm+, duże kopyta, ciężkie woblery, na główkach 20–60 g",
+    "prowadzenie": "wolno przy dnie, nocą. Sprzęt: mocny kij (c.w. 40 g+), gruby przypon, hak 5/0–8/0",
+    "przypon": "gruby, stalowy/wolframowy"
+  },
+  {
+    "name": "Kleń",
+    "latin": "Squalius cephalus",
+    "img": "img/ryba-klen.jpg",
+    "gdzieKiedy": "nurt, przelewy, kamieniste odcinki — wiosna–lato",
+    "wyglad": "walcowate, mocne ciało; duża głowa z szerokim, końcowym pyskiem; duże łuski z ciemnym obrzeżeniem (wyglądają jak siateczka); płetwy brzuszne i odbytowa pomarańczowo-czerwone",
+    "odroznic": "od jazia — większa głowa, szerszy pysk, ciemniejsze obrzeżenie łusek; od bolenia — mniejszy, z ciemniejszym grzbietem",
+    "przynety": "małe woblery do ~4–5 cm (najskuteczniejsze na klenia), mikrogumy/twistery/rippery 3–7 cm, cykady, małe jigi",
+    "prowadzenie": "naturalnie, z nurtem. Delikatna wędka 5–20 g, cienka plecionka + fluorocarbon",
+    "przypon": "fluorocarbon cienki 0,20–0,28 mm"
+  },
+  {
+    "name": "Jaź",
+    "latin": "Leuciscus idus",
+    "img": "img/ryba-jaz.jpg",
+    "gdzieKiedy": "nurt, przelewy, kamieniste odcinki — wiosna–lato",
+    "wyglad": "smukły, srebrzysty ze złocistym połyskiem; mała głowa i mały, skośny pysk; czerwonawe płetwy (zwłaszcza brzuszne i odbytowa); łuski mniejsze niż u klenia",
+    "odroznic": "od klenia — mniejszy pysk i głowa, jaśniejszy; od płoci — większy i bardziej złocisty",
+    "przynety": "małe woblery do ~4–5 cm, mikrogumy/twistery/rippery 3–7 cm, cykady, małe jigi",
+    "prowadzenie": "naturalnie, z nurtem. Delikatna wędka 5–20 g, cienka plecionka + fluorocarbon",
+    "przypon": "fluorocarbon cienki 0,20–0,28 mm"
+  }
+]

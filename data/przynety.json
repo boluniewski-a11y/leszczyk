@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Guma miękka (ripper, kopyto, twister, shad)",
+    "img": "img/guma.jpg",
+    "coTo": "silikonowa przynęta na główce jigowej lub czeburaszce. Król opadu i rzeki",
+    "naCo": "sandacz (kopyta 8–12 cm), szczupak (10–20 cm), okoń (3–8 cm), sum (15–25 cm)",
+    "src": "margrom.pl",
+    "srcUrl": "https://margrom.pl/pl/products/przyneta-gumowa-ripper-kopyto-7-cm-3-5-g-spinning-okon-sandacz-szczupak-5120.html"
+  },
+  {
+    "name": "Wobler",
+    "img": "img/wobler.jpg",
+    "coTo": "twarda przynęta (drewno/tworzywo) z łopatką, nurkująca na zadaną głębokość",
+    "naCo": "szczupak (jerki, minnowy), boleń i kleń (smukłe 5–9 cm), sandacz (przy dnie)",
+    "src": "angloo.com",
+    "srcUrl": "https://angloo.com/woblery-przynety-spinningowe/"
+  },
+  {
+    "name": "Błystka obrotowa (obrotówka)",
+    "img": "img/obrotowka.jpg",
+    "coTo": "wirująca wokół osi blaszka — wibracje i błysk. Pracuje nawet przy wolnym prowadzeniu",
+    "naCo": "szczupak (nr 3–5), okoń i kleń (nr 0–2)",
+    "src": "margrom.pl",
+    "srcUrl": "https://margrom.pl/pl/products/blystka-blacha-blaszka-obrotowka-spinner-14-5g-13cm-gumowa-przyneta-rybka-3905.html"
+  },
+  {
+    "name": "Błystka wahadłowa (wahadłówka)",
+    "img": "img/wahadlowka.jpg",
+    "coTo": "metalowa blaszka „kołysząca się\" na boki, imitująca ranną rybkę",
+    "naCo": "szczupak (12–25 g), troć i boleń (wąskie)",
+    "src": "corona-fishing.pl",
+    "srcUrl": "https://www.corona-fishing.pl/artykuly/blystka-wahadlowa/"
+  }
+]
