@@ -109,6 +109,16 @@
       d.appendChild(n);
     }
 
+    if(s.rating || s.lastVisit){
+      const meta = document.createElement("p");
+      meta.className = "note";
+      const parts = [];
+      if(s.rating) parts.push("Ocena: " + "⭐".repeat(parseInt(s.rating, 10) || 0));
+      if(s.lastVisit) parts.push("Ostatnia wizyta: " + s.lastVisit);
+      meta.textContent = parts.join(" · ");
+      d.appendChild(meta);
+    }
+
     const act = document.createElement("div");
     act.className = "act";
     const a = document.createElement("a");
@@ -152,17 +162,21 @@
     const fish = document.getElementById("spFish").value.trim();
     const link = document.getElementById("spLink").value.trim();
     const note = document.getElementById("spNote").value.trim();
+    const rating = document.getElementById("spRating").value;
+    const lastVisit = document.getElementById("spLastVisit").value;
     const hint = document.getElementById("spHint");
     if(!link){ hint.textContent = "Wklej link Google Maps lub współrzędne."; return; }
     if(!name){ hint.textContent = "Podaj nazwę miejscówki."; return; }
 
     const list = loadSpots();
-    list.unshift({ name: name, fish: fish, link: link, note: note });
+    list.unshift({ name: name, fish: fish, link: link, note: note, rating: rating, lastVisit: lastVisit });
     const ok = persistSpots(list);
     document.getElementById("spName").value = "";
     document.getElementById("spFish").value = "";
     document.getElementById("spLink").value = "";
     document.getElementById("spNote").value = "";
+    document.getElementById("spRating").value = "";
+    document.getElementById("spLastVisit").value = "";
     renderSpots();
     if(ok){ hint.textContent = "✅ Zapisano w tej przeglądarce."; }
     else { hint.textContent = "⚠️ Dodano do listy, ale zapis nie zadziałał (pamięć zablokowana — np. w podglądzie). Po wgraniu na hosting zapis działa w pełni."; }
@@ -357,4 +371,179 @@
   }
 
   loadDataFiles();
+
+  // ===== DZIENNIK POŁOWÓW =====
+  const CATCH_KEY = "odraCatches";
+  function loadCatches(){ try{ return JSON.parse(localStorage.getItem(CATCH_KEY) || "[]"); } catch(e){ return []; } }
+  function persistCatches(list){ try{ localStorage.setItem(CATCH_KEY, JSON.stringify(list)); return true; } catch(e){ return false; } }
+
+  function addCatch(){
+    const date = document.getElementById("cDate").value;
+    const angler = document.getElementById("cAngler").value.trim();
+    const species = document.getElementById("cSpecies").value;
+    const length = parseFloat(document.getElementById("cLength").value) || 0;
+    const weight = parseFloat(document.getElementById("cWeight").value) || 0;
+    const lure = document.getElementById("cLure").value.trim();
+    const spot = document.getElementById("cSpot").value.trim();
+    const weather = document.getElementById("cWeather").value.trim();
+    const photo = document.getElementById("cPhoto").value.trim();
+    const note = document.getElementById("cNote").value.trim();
+    const hint = document.getElementById("cHint");
+    if(!species){ hint.textContent = "Wybierz gatunek."; return; }
+    if(!angler){ hint.textContent = "Podaj wędkarza."; return; }
+    const list = loadCatches();
+    list.unshift({ date: date, angler: angler, species: species, length: length, weight: weight, lure: lure, spot: spot, weather: weather, photo: photo, note: note });
+    const ok = persistCatches(list);
+    ["cDate","cAngler","cLength","cWeight","cLure","cSpot","cWeather","cPhoto","cNote"].forEach(function(id){ document.getElementById(id).value = ""; });
+    document.getElementById("cSpecies").value = "";
+    renderCatches();
+    if(ok){ hint.textContent = "✅ Zapisano połów."; }
+    else { hint.textContent = "⚠️ Dodano, ale zapis nie zadziałał (pamięć zablokowana)."; }
+  }
+
+  function renderCatches(){
+    const tbody = document.getElementById("catchBody");
+    const list = loadCatches();
+    const fSpecies = (document.getElementById("cFilterSpecies").value || "").toLowerCase().trim();
+    const fAngler = (document.getElementById("cFilterAngler").value || "").toLowerCase().trim();
+    tbody.innerHTML = "";
+    const filtered = list.filter(function(c){
+      const s = (c.species || "").toLowerCase();
+      const a = (c.angler || "").toLowerCase();
+      return (!fSpecies || s.indexOf(fSpecies) !== -1) && (!fAngler || a.indexOf(fAngler) !== -1);
+    });
+    if(filtered.length === 0){
+      tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--muted);padding:20px;">Brak połowów — dodaj pierwszy powyżej. 🎣</td></tr>';
+    }
+    filtered.forEach(function(c, i){
+      const tr = document.createElement("tr");
+      const tdDate = document.createElement("td"); tdDate.textContent = c.date || "—";
+      const tdAngler = document.createElement("td"); tdAngler.textContent = c.angler || "—";
+      const tdSpecies = document.createElement("td"); tdSpecies.innerHTML = '<span class="species">' + (c.species || "—") + '</span>';
+      const tdLength = document.createElement("td"); tdLength.textContent = c.length ? c.length + " cm" : "—";
+      const tdWeight = document.createElement("td"); tdWeight.textContent = c.weight ? c.weight + " kg" : "—";
+      const tdLure = document.createElement("td"); tdLure.textContent = c.lure || "—";
+      const tdSpot = document.createElement("td"); tdSpot.textContent = c.spot || "—";
+      const tdWeather = document.createElement("td"); tdWeather.textContent = c.weather || "—";
+      const tdPhoto = document.createElement("td");
+      if(c.photo){
+        const a = document.createElement("a");
+        a.href = c.photo; a.target = "_blank"; a.rel = "noopener"; a.textContent = "📷 Zobacz";
+        tdPhoto.appendChild(a);
+      } else { tdPhoto.textContent = "—"; }
+      const tdNote = document.createElement("td"); tdNote.textContent = c.note || "—";
+      const tdDel = document.createElement("td");
+      const del = document.createElement("a");
+      del.href = "#"; del.textContent = "✕"; del.style.color = "var(--muted)";
+      del.onclick = function(e){
+        e.preventDefault();
+        const cur = loadCatches();
+        cur.splice(i, 1);
+        persistCatches(cur);
+        renderCatches();
+      };
+      tdDel.appendChild(del);
+      tr.appendChild(tdDate); tr.appendChild(tdAngler); tr.appendChild(tdSpecies);
+      tr.appendChild(tdLength); tr.appendChild(tdWeight); tr.appendChild(tdLure);
+      tr.appendChild(tdSpot); tr.appendChild(tdWeather); tr.appendChild(tdPhoto);
+      tr.appendChild(tdNote); tr.appendChild(tdDel);
+      tbody.appendChild(tr);
+    });
+    renderCatchStats(filtered);
+    renderRecords();
+  }
+
+  function renderCatchStats(list){
+    const box = document.getElementById("catchStats");
+    if(!box) return;
+    if(list.length === 0){ box.textContent = "Brak danych do statystyk."; return; }
+    const total = list.length;
+    const bySpecies = {};
+    list.forEach(function(c){ bySpecies[c.species] = (bySpecies[c.species] || 0) + 1; });
+    const topSpecies = Object.keys(bySpecies).sort(function(a,b){ return bySpecies[b]-bySpecies[a]; })[0];
+    const maxLen = list.reduce(function(m,c){ return Math.max(m, c.length || 0); }, 0);
+    const maxW = list.reduce(function(m,c){ return Math.max(m, c.weight || 0); }, 0);
+    box.innerHTML = "Łącznie: <b>" + total + "</b> ryb · Najczęściej: <b>" + topSpecies + "</b> (" + bySpecies[topSpecies] + ") · Najdłuższa: <b>" + (maxLen ? maxLen + " cm" : "—") + "</b> · Najcięższa: <b>" + (maxW ? maxW + " kg" : "—") + "</b>";
+  }
+
+  function filterCatches(){ renderCatches(); }
+  function clearCatchFilters(){
+    document.getElementById("cFilterSpecies").value = "";
+    document.getElementById("cFilterAngler").value = "";
+    renderCatches();
+  }
+
+  function exportCatches(){ download("odra-polowy.json", JSON.stringify(loadCatches(), null, 2)); }
+  function importCatches(input){
+    const file = input.files[0]; if(!file) return;
+    const r = new FileReader();
+    r.onload = function(){
+      try{
+        const arr = JSON.parse(r.result);
+        if(!Array.isArray(arr)) throw 0;
+        const cur = loadCatches();
+        persistCatches(arr.concat(cur));
+        renderCatches();
+        renderRecords();
+        document.getElementById("cHint").textContent = "✅ Zaimportowano " + arr.length + " połowów.";
+      }catch(e){ document.getElementById("cHint").textContent = "⚠️ Błędny plik JSON."; }
+      input.value = "";
+    };
+    r.readAsText(file);
+  }
+
+  renderCatches();
+
+  // ===== REKORDY OSOBISTE =====
+  function renderRecords(){
+    const box = document.getElementById("recordsBox");
+    if(!box) return;
+    const list = loadCatches();
+    if(list.length === 0){ box.innerHTML = '<p class="kicker">Brak połowów — dodaj pierwszy w dzienniku, a tu pojawią się rekordy.</p>'; return; }
+    const bySpecies = {};
+    list.forEach(function(c){
+      if(!bySpecies[c.species]) bySpecies[c.species] = [];
+      bySpecies[c.species].push(c);
+    });
+    const speciesOrder = ["Szczupak","Sandacz","Okoń","Boleń","Sum","Kleń","Jaź","Brzana","Inny"];
+    const html = [];
+    speciesOrder.forEach(function(sp){
+      if(!bySpecies[sp]) return;
+      const catches = bySpecies[sp];
+      const maxLen = catches.reduce(function(m,c){ return c.length > m.length ? c : m; }, {length:0});
+      const maxW = catches.reduce(function(m,c){ return c.weight > m.weight ? c : m; }, {weight:0});
+      html.push('<div class="spotcard"><div class="top"><h4>' + sp + '</h4></div>');
+      html.push('<p class="note">Najdłuższa: <b>' + (maxLen.length ? maxLen.length + " cm" : "—") + '</b>' + (maxLen.angler ? " (" + maxLen.angler + ")" : "") + ' · Najcięższa: <b>' + (maxW.weight ? maxW.weight + " kg" : "—") + '</b>' + (maxW.angler ? " (" + maxW.angler + ")" : "") + '</p>');
+      html.push('</div>');
+    });
+    box.innerHTML = html.join("");
+  }
+
+  renderRecords();
+
+  // ===== BAROMETR BRAŃ =====
+  function calcBarometer(){
+    const pressure = document.getElementById("bPressure").value;
+    const sky = document.getElementById("bSky").value;
+    const wind = document.getElementById("bWind").value;
+    const res = document.getElementById("bResult");
+    if(!pressure || !sky || !wind){ res.textContent = "Wybierz wszystkie trzy warunki."; res.style.color = "var(--warn)"; return; }
+    let score = 0;
+    const reasons = [];
+    if(pressure === "stable"){ score += 2; reasons.push("stabilne ciśnienie"); }
+    if(pressure === "falling"){ score += 1; reasons.push("spadające ciśnienie (okno przed burzą)"); }
+    if(pressure === "rising"){ score += 1; reasons.push("rosnące ciśnienie (krótkie okno)"); }
+    if(sky === "cloudy"){ score += 2; reasons.push("pochmurno"); }
+    if(sky === "rain"){ score += 1; reasons.push("deszcz (mętna woda)"); }
+    if(sky === "sunny"){ score += 0; reasons.push("pełne słońce (gorsze brania)"); }
+    if(wind === "moderate"){ score += 1; reasons.push("umiarkowany wiatr"); }
+    if(wind === "strong"){ score += 1; reasons.push("silny wiatr (napowietrza wodę)"); }
+    if(wind === "calm"){ score += 0; reasons.push("cisza"); }
+    let verdict, color;
+    if(score >= 4){ verdict = "🟢 Warto iść — dobre warunki na brania."; color = "var(--accent)"; }
+    else if(score >= 2){ verdict = "🟡 Średnio — można spróbować, ale bez fajerwerków."; color = "var(--warn)"; }
+    else { verdict = "🔴 Raczej nie — trudne warunki, ryby mało aktywne."; color = "#ff8a8a"; }
+    res.textContent = verdict + " (" + reasons.join(", ") + ")";
+    res.style.color = color;
+  }
 

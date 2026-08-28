@@ -30,5 +30,101 @@
     "naCo": "szczupak (12–25 g), troć i boleń (wąskie)",
     "src": "corona-fishing.pl",
     "srcUrl": "https://www.corona-fishing.pl/artykuly/blystka-wahadlowa/"
+  },
+  {
+    "name": "Pilker",
+    "img": "",
+    "coTo": "metalowa przynęta w kształcie wydłużonego walca/stożka, opadająca pionowo z charakterystycznym „kołysaniem\"",
+    "naCo": "sandacz, okoń, boleń (pionowe opady, głębokie rynny)",
+    "src": "",
+    "srcUrl": ""
+  },
+  {
+    "name": "Cykada (blade)",
+    "img": "",
+    "coTo": "metalowa blaszka w kształcie liścia, wibrująca przy prowadzeniu — mocne drgania",
+    "naCo": "okoń, sandacz, szczupak (wolne prowadzenie przy dnie)",
+    "src": "",
+    "srcUrl": ""
+  },
+  {
+    "name": "Kogut (spinnerbait)",
+    "img": "",
+    "coTo": "przynęta z metalowym ramieniem i wirującą blaszką, z gumową spódnicą — bezzaczepowa",
+    "naCo": "szczupak, okoń (zarośla, płytkie łowiska)",
+    "src": "",
+    "srcUrl": ""
+  },
+  {
+    "name": "Mandula",
+    "img": "",
+    "coTo": "przynęta złożona z kilku segmentów gumy na wspólnym trzonie — imituje stado rybek",
+    "naCo": "sandacz, szczupak (wolne prowadzenie, opad)",
+    "src": "",
+    "srcUrl": ""
+  },
+  {
+    "name": "Popper",
+    "img": "",
+    "coTo": "wobler powierzchniowy z wklęsłym „pyszczkiem\" — pluje wodą przy szarpnięciu",
+    "naCo": "szczupak, okoń (lato, płytkie zarośla)",
+    "src": "",
+    "srcUrl": ""
+  },
+  {
+    "name": "Walker (walking bait)",
+    "img": "",
+    "coTo": "wobler powierzchniowy prowadzony slalomem „ósemką\" po powierzchni",
+    "naCo": "szczupak, boleń (żerowanie przy lustrze)",
+    "src": "",
+    "srcUrl": ""
+  },
+  {
+    "name": "Jerkbait",
+    "img": "",
+    "coTo": "duży, smukły wobler prowadzony szarpnięciami (twitching) — imituje ranną rybkę",
+    "naCo": "szczupak (duże okazy, jesień)",
+    "src": "",
+    "srcUrl": ""
+  },
+  {
+    "name": "Crankbait",
+    "img": "",
+    "coTo": "wobler z dużą łopatką, szybko nurkujący i wibrujący — obławia duże połacie wody",
+    "naCo": "szczupak, sandacz (obławianie rynien i spadów)",
+    "src": "",
+    "srcUrl": ""
+  },
+  {
+    "name": "Czeburaszka",
+    "img": "",
+    "coTo": "rozbieralne obciążenie „na śrubkę\" — podwiesza gumę swobodnie, inna praca niż główka",
+    "naCo": "sandacz, szczupak (wolne prowadzenie, opad)",
+    "src": "",
+    "srcUrl": ""
+  },
+  {
+    "name": "Drop shot",
+    "img": "",
+    "coTo": "zestaw z ciężarkiem poniżej haka — przynęta „wisi\" nad dnem",
+    "naCo": "sandacz, okoń (płochliwe ryby, delikatne podrygiwanie)",
+    "src": "",
+    "srcUrl": ""
+  },
+  {
+    "name": "Texas rig",
+    "img": "",
+    "coTo": "zestaw bezzaczepowy z hakiem offsetowym schowanym w gumie",
+    "naCo": "szczupak, okoń (zaczepione łowiska: zwaliska, zielsko)",
+    "src": "",
+    "srcUrl": ""
+  },
+  {
+    "name": "Carolina rig",
+    "img": "",
+    "coTo": "zestaw z ciężarkiem oddalonym od przynęty na przyponie ~30 cm",
+    "naCo": "okoń, sandacz (równe dno, guma pracuje swobodnie)",
+    "src": "",
+    "srcUrl": ""
   }
 ]
