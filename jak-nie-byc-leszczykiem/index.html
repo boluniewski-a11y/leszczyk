@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jak nie być leszczykiem — Spinning na Odrze A.D. 2026</title>
+<meta name="description" content="Praktyczny, lekko zabawny poradnik: jak zacząć i nie wyglądać jak leszczyk przy spinningu na Odrze. Ryby, sprzęt, przynęty, techniki, prawo.">
+<style>
+  :root{
+    --bg:#0e1a1e;
+    --bg2:#13232a;
+    --card:#1a2e36;
+    --card2:#203743;
+    --ink:#e8eef0;
+    --muted:#9fb3ba;
+    --accent:#4fd1a5;
+    --accent2:#7fd8ff;
+    --warn:#f2b35c;
+    --border:#2b444e;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:70px;}
+  body{
+    margin:0;
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
+    color:var(--ink);
+    line-height:1.65;
+    font-size:16px;
+  }
+  a{color:var(--accent2);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 20px;}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(14,26,30,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  nav .bar{display:flex;align-items:center;gap:14px;padding:12px 20px;max-width:900px;margin:0 auto;flex-wrap:wrap;}
+  nav .logo{font-weight:800;letter-spacing:.3px;color:var(--ink);white-space:nowrap;}
+  nav .logo .dot{color:var(--accent);}
+  nav .links{display:flex;gap:4px;flex-wrap:wrap;}
+  nav a.l{
+    color:var(--muted);font-size:13.5px;padding:6px 9px;border-radius:8px;
+  }
+  nav a.l:hover{color:var(--ink);background:var(--card2);text-decoration:none;}
+
+  /* HERO */
+  header.hero{padding:64px 0 40px;text-align:center;}
+  .badge{
+    display:inline-block;font-size:12px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--accent);padding:5px 14px;border-radius:999px;margin-bottom:20px;
+  }
+  h1{font-size:clamp(28px,6vw,46px);line-height:1.12;margin:0 0 14px;font-weight:900;}
+  h1 .hl{color:var(--accent);}
+  .sub{color:var(--muted);font-size:18px;max-width:640px;margin:0 auto;}
+
+  /* SECTIONS */
+  section{padding:34px 0;border-top:1px solid var(--border);}
+  h2{
+    font-size:26px;font-weight:800;margin:0 0 6px;
+    display:flex;align-items:center;gap:12px;
+  }
+  h2 .num{
+    font-size:14px;color:var(--accent);border:1.5px solid var(--accent);
+    width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;
+    flex:0 0 auto;
+  }
+  .lead{color:var(--muted);margin:0 0 20px;font-size:15.5px;}
+  h3{font-size:19px;margin:28px 0 10px;font-weight:700;color:var(--ink);}
+  h3 .em{color:var(--accent);}
+  p{margin:12px 0;}
+  ul,ol{margin:10px 0;padding-left:22px;}
+  li{margin:7px 0;}
+
+  .callout{
+    background:var(--card);border-left:4px solid var(--accent);
+    padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:18px 0;
+  }
+  .callout.warn{border-left-color:var(--warn);}
+  .callout b{color:var(--ink);}
+
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;background:var(--card);border-radius:var(--radius);overflow:hidden;}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top;}
+  th{background:var(--card2);color:var(--accent2);font-size:13px;letter-spacing:.5px;text-transform:uppercase;}
+  tr:last-child td{border-bottom:none;}
+  td .species{font-weight:700;color:var(--ink);}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr;}}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;}
+  .card h4{margin:0 0 8px;font-size:17px;color:var(--ink);}
+  .card .ico{font-size:24px;margin-bottom:6px;}
+
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;margin-right:4px;background:var(--card2);color:var(--muted);}
+  .tag.ok{background:rgba(79,209,165,.15);color:var(--accent);}
+  .tag.warn{background:rgba(242,179,92,.15);color:var(--warn);}
+
+  .quote{
+    font-style:italic;color:var(--muted);border-left:3px solid var(--border);
+    padding:6px 16px;margin:14px 0;
+  }
+
+  footer{padding:40px 0 60px;border-top:1px solid var(--border);color:var(--muted);font-size:14px;}
+  .kicker{color:var(--muted);font-size:13px;}
+
+  /* DZIENNIK */
+  .timeline{position:relative;margin:22px 0;padding-left:26px;}
+  .timeline::before{
+    content:"";position:absolute;left:8px;top:4px;bottom:4px;width:2px;
+    background:linear-gradient(180deg,var(--accent),var(--border));
+    border-radius:2px;
+  }
+  .entry{position:relative;margin:0 0 26px;}
+  .entry::before{
+    content:"";position:absolute;left:-24px;top:5px;width:12px;height:12px;border-radius:50%;
+    background:var(--accent);border:3px solid var(--bg2);
+  }
+  .entry .date{font-size:12.5px;font-weight:700;letter-spacing:1px;color:var(--accent2);text-transform:uppercase;}
+  .entry h4{margin:4px 0 8px;font-size:17px;color:var(--ink);}
+  .entry p{margin:6px 0;color:var(--muted);font-size:15px;}
+  .entry p b{color:var(--ink);}
+  .entry .src{font-size:13px;}
+  .entry .src a{word-break:break-all;}
+  .impact{
+    display:inline-block;font-size:12.5px;margin-top:8px;padding:6px 11px;border-radius:8px;
+    background:var(--card2);color:var(--muted);border:1px solid var(--border);
+  }
+  .impact b{color:var(--accent);}
+
+  /* MIEJSCÓWKI */
+  .mapwrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:16px 0;}
+  .mapwrap iframe{width:100%;height:380px;border:0;display:block;filter:grayscale(15%);}
+  .mapnote{font-size:12.5px;color:var(--muted);margin:8px 0 4px;}
+  .steps{counter-reset:s;margin:14px 0;}
+  .steps .st{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
+  .steps .st .n{
+    counter-increment:s;flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+    background:var(--card2);color:var(--accent);font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;border:1px solid var(--border);
+  }
+  .steps .st p{margin:2px 0;color:var(--muted);}
+  .steps .st p b{color:var(--ink);}
+  .spotcard{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:13px 15px;margin:10px 0;
+  }
+  .spotcard .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .spotcard .top h4{margin:0;font-size:15.5px;flex:1;color:var(--ink);}
+  .spotcard .fish{font-size:12px;color:var(--accent2);white-space:nowrap;}
+  .spotcard .note{font-size:13.5px;color:var(--muted);margin:6px 0 0;}
+  .spotcard .act{margin-top:8px;display:flex;gap:10px;flex-wrap:wrap;}
+  .spotcard .act a{font-size:13px;}
+
+  /* TLDR */
+  .tldr{
+    background:linear-gradient(90deg,rgba(79,209,165,.10),rgba(79,209,165,.02));
+    border:1px solid rgba(79,209,165,.28);
+    border-left:4px solid var(--accent);
+    border-radius:10px;padding:11px 15px;margin:16px 0 20px;font-size:14.5px;
+  }
+  .tldr .t{
+    font-weight:800;color:var(--accent);text-transform:uppercase;font-size:11px;
+    letter-spacing:1.6px;margin-right:10px;white-space:nowrap;
+  }
+
+  /* LINKI */
+  .links-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:640px){.links-grid{grid-template-columns:1fr;}}
+  .linkcard{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:14px 16px;display:flex;flex-direction:column;gap:6px;
+  }
+  .linkcard .cat{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .linkcard h4{margin:0;font-size:15.5px;color:var(--ink);}
+  .linkcard .desc{font-size:13.5px;color:var(--muted);margin:0;}
+  .linkcard a.url{font-size:12.5px;word-break:break-all;}
+
+  .addlink{
+    background:var(--card);border:1px dashed var(--accent);border-radius:var(--radius);
+    padding:20px;margin:22px 0;
+  }
+  .addlink h4{margin:0 0 4px;font-size:17px;}
+  .addlink .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  .addlink input[type=text],.addlink input[type=url],.addlink select{
+    background:var(--bg2);border:1px solid var(--border);color:var(--ink);
+    padding:9px 11px;border-radius:9px;font-size:14px;flex:1;min-width:160px;
+  }
+  .addlink button{
+    background:var(--accent);color:#06231a;border:none;font-weight:700;font-size:14px;
+    padding:10px 16px;border-radius:9px;cursor:pointer;
+  }
+  .addlink button:hover{filter:brightness(1.08);}
+  .addlink .hint{font-size:12.5px;color:var(--muted);margin:10px 0 0;}
+  #userLinks{list-style:none;padding:0;margin:0;}
+  #userLinks li{
+    display:flex;align-items:center;gap:10px;padding:10px 12px;margin:8px 0;
+    background:var(--card);border:1px solid var(--border);border-radius:10px;font-size:14px;
+  }
+  #userLinks li a{flex:1;word-break:break-all;}
+  #userLinks li button{
+    background:transparent;color:var(--muted);border:1px solid var(--border);
+    border-radius:7px;padding:3px 9px;cursor:pointer;font-size:12px;
+  }
+  #userLinks li button:hover{color:#ff8a8a;border-color:#ff8a8a;}
+
+  .toc{columns:2;gap:24px;}
+  @media(max-width:560px){.toc{columns:1;}}
+  .toc a{display:block;padding:5px 0;color:var(--ink);border-bottom:1px dashed var(--border);}
+  .toc a .n{color:var(--accent);font-weight:700;margin-right:8px;}
+  .toc a:hover{text-decoration:none;color:var(--accent);}
+
+  /* INFOGRAFIKI — ryby i przynęty */
+  .fishcard{display:flex;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:14px 0;}
+  .fishcard .imgs{display:flex;gap:8px;flex:0 0 auto;align-items:stretch;}
+  .fishcard .imgs img{width:140px;height:104px;object-fit:cover;border-radius:10px;border:1px solid var(--border);background:#0a1418;}
+  .fishcard .imgs .cap{position:absolute;}
+  .fishcard h4{margin:0 0 2px;font-size:18px;color:var(--ink);}
+  .fishcard .latin{font-style:italic;color:var(--muted);font-size:12.5px;margin:0 0 8px;}
+  .fishcard p{margin:6px 0;font-size:14px;color:var(--muted);}
+  .fishcard p b{color:var(--ink);}
+  .fishcard .src{font-size:11.5px;color:var(--muted);opacity:.78;margin-top:6px;}
+  .fishcard .src a{color:var(--muted);}
+  @media(max-width:560px){.fishcard{flex-direction:column;}.fishcard .imgs img{width:100%;height:auto;max-height:190px;}}
+
+  .lurecard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin:12px 0;}
+  .lurecard img{width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:8px;border:1px solid var(--border);background:#0a1418;}
+  .lurecard h4{margin:0 0 6px;font-size:16px;}
+  .lurecard p{font-size:13.5px;color:var(--muted);margin:5px 0;}
+  .lurecard p b{color:var(--ink);}
+  .lurecard .src{font-size:11px;color:var(--muted);opacity:.75;display:block;margin-top:6px;}
+  .lurecard .src a{color:var(--muted);}
+  .imgnote{font-size:11.5px;color:var(--muted);opacity:.82;margin:4px 0 14px;}
+
+  /* KALENDARZ OKRESÓW OCHRONNYCH */
+  .calwrap{overflow-x:auto;margin:20px 0;border:1px solid var(--border);border-radius:var(--radius);padding:14px;background:var(--card);}
+  .cal{width:100%;border-collapse:separate;border-spacing:2px;min-width:760px;margin:0;background:none;border-radius:0;overflow:visible;}
+  .cal th,.cal td{border:none;padding:0;text-align:center;background:none;}
+  .cal thead th.mon{
+    font-size:10.5px;color:var(--muted);font-weight:800;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 2px;white-space:nowrap;
+  }
+  .cal .sp{
+    text-align:left;font-size:12.5px;font-weight:700;color:var(--ink);white-space:nowrap;
+    padding:4px 8px 4px 2px;
+  }
+  .cal .sp .wm{font-weight:400;color:var(--muted);font-size:11px;}
+  .cal td.cell{height:22px;min-width:30px;border-radius:4px;}
+  .cal td.prot{background:linear-gradient(180deg,#d98a2b,#c0741e);}
+  .cal td.ok{background:var(--card2);}
+  .cal td.part{background:repeating-linear-gradient(45deg,#d98a2b,#d98a2b 4px,#8a5a1a 4px,#8a5a1a 8px);}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:12.5px;color:var(--muted);}
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .sw{width:16px;height:14px;border-radius:3px;display:inline-block;flex:0 0 auto;}
+  .sw.prot{background:linear-gradient(180deg,#d98a2b,#c0741e);}
+  .sw.ok{background:var(--card2);border:1px solid var(--border);}
+  .sw.part{background:repeating-linear-gradient(45deg,#d98a2b,#d98a2b 4px,#8a5a1a 4px,#8a5a1a 8px);}
+  /* WEZLY - galeria */
+  .knots{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:16px 0;}
+  .knot{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px;text-align:center;}
+  .knot svg{width:100%;height:70px;}
+  .knot .kn{font-size:12.5px;font-weight:700;color:var(--ink);margin-top:6px;}
+  .knot .kd{font-size:11px;color:var(--muted);}
+
+  /* CHECKLISTA */
+  .check{list-style:none;padding:0;margin:12px 0;}
+  .check li{display:flex;align-items:center;gap:12px;padding:10px 12px;margin:7px 0;background:var(--card);border:1px solid var(--border);border-radius:10px;cursor:pointer;}
+  .check li input{width:20px;height:20px;accent-color:var(--accent);flex:0 0 auto;cursor:pointer;}
+  .check li span{flex:1;font-size:14.5px;}
+  .check li.done span{text-decoration:line-through;color:var(--muted);}
+  .checkcat{margin:18px 0 4px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);font-weight:700;}
+  .checkres{margin:12px 0;font-weight:700;color:var(--accent);}
+
+  /* MIARKA */
+  .rulerbox{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:16px 0;}
+  .rulerbox svg{width:100%;height:auto;display:block;}
+
+  /* eksport/import */
+  .io-btn{display:inline-flex;gap:8px;align-items:center;margin:6px 8px 0 0;}
+  .io-btn button{
+    background:var(--card2);color:var(--ink);border:1px solid var(--border);
+    padding:8px 14px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;
+  }
+  .io-btn button:hover{border-color:var(--accent);color:var(--accent);}
+  .printbtn{
+    background:var(--accent);color:#06231a;border:none;font-weight:700;
+    padding:6px 12px;border-radius:8px;cursor:pointer;font-size:13px;white-space:nowrap;
+  }
+  .printbtn:hover{filter:brightness(1.08);}
+
+  /* PRINT */
+  @media print{
+    nav, .mapwrap iframe, .addlink, .io-btn, .printbtn, footer{display:none !important;}
+    body{background:#fff !important;color:#000 !important;font-size:11px;}
+    .wrap{max-width:100%;}
+    section{border-color:#ccc;padding:12px 0;}
+    .card,.fishcard,.lurecard,.callout,.spotcard,.linkcard,.tldr,.knot,.check li,.rulerbox{background:#fff !important;border-color:#ccc !important;color:#000 !important;}
+    h1,h2,h3,h4,.species,.knot .kn{color:#000 !important;}
+    .muted,.lead,.kicker,.imgnote,.src,.impact,td,p{color:#222 !important;}
+    a{color:#000 !important;text-decoration:none;}
+    .tldr{border-left-color:#999;}
+    img{max-width:120px;height:auto;}
+    .cal td.prot{background:#ccc !important;}
+    .cal td.ok{background:#f5f5f5 !important;}
+    a[href]:after{content:"";}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="bar">
+    <span class="logo">Jak nie być <span class="dot">leszczykiem</span></span>
+    <button class="printbtn" onclick="window.print()" title="Drukuj / zapisz PDF">🖨️ Drukuj</button>
+    <div class="links">
+      <a class="l" href="#wstep">Wstęp</a>
+      <a class="l" href="#rzeka">Rzeka</a>
+      <a class="l" href="#ryby">Ryby</a>
+      <a class="l" href="#sprzet">Sprzęt</a>
+      <a class="l" href="#zestaw">Zestaw</a>
+      <a class="l" href="#przynety">Przynęty</a>
+      <a class="l" href="#techniki">Techniki</a>
+      <a class="l" href="#hol">Hol i ryba</a>
+      <a class="l" href="#czytanie">Czytanie rzeki</a>
+      <a class="l" href="#miejscowki">Miejscówki</a>
+      <a class="l" href="#kalendarz">Kalendarz</a>
+      <a class="l" href="#sytuacje">Sytuacje</a>
+      <a class="l" href="#prawo">Prawo</a>
+      <a class="l" href="#zalew">Zalew i morze</a>
+      <a class="l" href="#trolling">Trolling</a>
+      <a class="l" href="#martwa">Martwa rybka</a>
+      <a class="l" href="#dziennik">Dziennik Odry</a>
+      <a class="l" href="#linki">Biblioteka linków</a>
+      <a class="l" href="#checklista">Checklista</a>
+      <a class="l" href="#slownik">Słowniczek</a>
+      <a class="l" href="#bezpieczenstwo">Bezpieczeństwo</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <span class="badge">Poradnik odrzański • A.D. 2026</span>
+  <h1>Jak nie być <span class="hl">leszczykiem</span>,<br>czyli spinning na Odrze od A do Z</h1>
+  <p class="sub">Bo leszcz to ryba spokojnego żeru, a „leszczyk" to stan umysłu. Ten poradnik ma Cię z niego wyprowadzić — z wędką, nie z siecią.</p>
+</header>
+
+<div class="wrap">
+  <section id="wstep">
+    <h2><span class="num">0</span>Wstęp: o co w ogóle chodzi</h2>
+    <p class="lead">Krótko o tym, dlaczego Odra, dla kogo ten poradnik i czego się tu (nie) nauczysz.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Odra to jedno z najrybniejszych łowisk drapieżników w Polsce, a ten poradnik prowadzi Cię od zera do „wyjadacza" — bez ściemy, z linkami do źródeł.</div>
+    <p>Odra to jedna z najrybniejszych rzek w Polsce. Dla spinningisty to poligon, na którym można się nauczyć wszystkiego: od mikro-okonia na opasce po nocnego sandacza z głębokiej rynny. Ale rzeka bywa bezlitosna dla ludzi, którzy podchodzą do niej jak do stawu za domem — dlatego powstał ten tekst.</p>
+    <p><b>Dla kogo?</b> Dla każdego, kto chce łowić drapieżniki w Odrze i nie wyglądać przy tym jak kompletny nowicjusz. Jeśli już coś łowisz — pominiemy dla Ciebie oczywistości. Jeśli łowisz pierwszy raz — wszystko jest wyjaśnione od zera.</p>
+    <div class="callout">
+      <b>Jak czytać ten poradnik:</b> rozdziały są ułożone od fundamentów do detali. Możesz czytać po kolei albo skakać do spisu treści, gdy znasz podstawy. Wszystko, co wygląda na „twardą liczbę" (wymiary, gramatury), to widełki praktyczne — na rzece ostatecznie decyduje <b>uciąg nurtu</b> i stan wody.
+    </div>
+  </section>
+
+  <section id="rzeka">
+    <h2><span class="num">1</span>Poznaj swoją rzekę</h2>
+    <p class="lead">Zanim zarzucisz, musisz wiedzieć, gdzie w ogóle stać i dlaczego ryby tam są.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Ryby w rzece stoją tam, gdzie jest drobnica i spokojniejszy nurt. Główki, opaski, przykosy, rynny, zwaliska — zapamiętaj: „gdzie patyki, tam wyniki".</div>
+    <p>W rzece nie ma przypadku: ryby rozmieszczają się według jednej prostej zasady — <b>gdzie jest drobnica i gdzie nie trzeba walczyć z prądem</b>. Drapieżnik stoi tam, gdzie może zaoszczędzić energię i mieć jednocześnie „stołówkę" pod nosem.</p>
+    <h3><span class="em">Słownik odrzańskich miejscówek</span></h3>
+    <table>
+      <tr><th>Miejsce</th><th>Co to jest</th><th>Kogo tam znajdziesz</th></tr>
+      <tr><td class="species">Główki</td><td>Kamienne tamy prostopadłe lub skośne do brzegu, regulujące nurt</td><td>Sandacz, szczupak, okoń, boleń — klasyka Odry</td></tr>
+      <tr><td class="species">Opaska / ostroga</td><td>Umocnienie brzegu, przy którym woda podmywa dno</td><td>Szczupak, sandacz, okoń</td></tr>
+      <tr><td class="species">Przykosa</td><td>Piaszczyste wypłycenie wcinające się w koryto</td><td>Boleń, kleń, jaź, okoń</td></tr>
+      <tr><td class="species">Rynna</td><td>Głębsze koryto głównego nurtu</td><td>Sandacz, sum</td></tr>
+      <tr><td class="species">Zwalisko / patyki</td><td>Zwalone drzewa, korzenie, krzaki w wodzie</td><td>Szczupak (i wszystko inne, co lubi kryjówki)</td></tr>
+      <tr><td class="species">Cofka</td><td>Miejsce, gdzie nurt słabnie lub zawraca</td><td>Wszystko, co nie lubi silnego prądu</td></tr>
+    </table>
+    <div class="quote">„Gdzie patyki, tam wyniki." — najstarsza prawda rzecznego spinningu, powtarzana na każdym forum.</div>
+    <p>Szczupak <b>unika silnego nurtu</b> i stoi za przeszkodami: zwalonymi drzewami, korzeniami, dołkami za wypłyceniami. Sandacz trzyma się <b>krawędzi prądowych</b>, głębokich dołów i miejsc przy zatopionych drzewach. A tam, gdzie nurt zwalnia, zbiera się drobnica — a za drobnicą przychodzą wszystkie drapieżniki.</p>
+  </section>
+
+  <section id="ryby">
+    <h2><span class="num">2</span>Kto pływa w Odrze</h2>
+    <p class="lead">Poznaj przeciwnika, zanim on pozna Ciebie.</p>
+    <div class="tldr"><span class="t">TL;DR</span> W Odrze na spinning weźmiesz 7 drapieżników: szczupaka, sandacza, okonia, bolenia, suma, klenia i jazia (plus brzanę jako przyłów). Każdy ma swoje miejsce, czas i przynętę.</div>
+    <div class="fishcard">
+      <div class="imgs"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/FMIB_51856_Pike%2C_Esox-Lucius_L.jpeg/500px-FMIB_51856_Pike%2C_Esox-Lucius_L.jpeg" alt="Szczupak — rysunek naukowy" loading="lazy"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Esox_Lucius.JPG/500px-Esox_Lucius.JPG" alt="Szczupak — zdjęcie" loading="lazy"></div>
+      <div class="body">
+        <h4>Szczupak</h4>
+        <p class="latin">Esox lucius</p>
+        <p><b>Gdzie / kiedy:</b> opaski, główki, zwalone drzewa, dołki za wypłyceniami — jesień–wiosna, pochmurne dni.</p>
+        <p><b>Wygląd:</b> torpedowate, zielonkawo-oliwkowe ciało z jasnymi plamami i paskami; długi, spłaszczony „kaczy" pysk pełen ostrych zębów; płetwa grzbietowa przesunięta daleko w tył, tuż nad odbytową.</p>
+        <p><b>Jak odróżnić:</b> jedyny drapieżnik z płetwą grzbietową z tyłu ciała i „kaczym" pyskiem. Od sandacza — brak pionowych pasów i kłów. Praktycznie nie do pomylenia.</p>
+        <p class="src">Ilustracje: <a href="https://commons.wikimedia.org/wiki/File:FMIB_51856_Pike,_Esox-Lucius_L.jpeg" target="_blank" rel="noopener">rysunek</a> (R.W. Shufeldt, domena publiczna) · <a href="https://commons.wikimedia.org/wiki/File:Esox_Lucius.JPG" target="_blank" rel="noopener">zdjęcie</a> (G. Mittenecker, CC BY-SA 2.5) — Wikimedia Commons</p>
+      </div>
+    </div>
+
+    <div class="fishcard">
+      <div class="imgs"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/FMIB_36084_Lucioperca_Sandra_%28The_Common_Pike-Perch%29.jpeg/500px-FMIB_36084_Lucioperca_Sandra_%28The_Common_Pike-Perch%29.jpeg" alt="Sandacz — rysunek naukowy" loading="lazy"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Sander_lucioperca_1.jpg/500px-Sander_lucioperca_1.jpg" alt="Sandacz — zdjęcie" loading="lazy"></div>
+      <div class="body">
+        <h4>Sandacz</h4>
+        <p class="latin">Sander lucioperca</p>
+        <p><b>Gdzie / kiedy:</b> głębokie rynny, krawędzie spadów, podmyte brzegi — świt/zmierzch, noc, jesień.</p>
+        <p><b>Wygląd:</b> smukły, szarozielony z ciemnymi pionowymi pasami; dwie płetwy grzbietowe (pierwsza twarda, kolczasta); dwa charakterystyczne „kły" w pysku; duże oczy.</p>
+        <p><b>Jak odróżnić:</b> od szczupaka — pasy, kły i dwie płetwy grzbietowe; od okonia — smuklejszy, jaśniejszy, większy, bez czerwonych płetw.</p>
+        <p class="src">Ilustracje: <a href="https://commons.wikimedia.org/wiki/File:FMIB_36084_Lucioperca_Sandra_(The_Common_Pike-Perch).jpeg" target="_blank" rel="noopener">rysunek</a> (W. Jardine, domena publiczna) · <a href="https://commons.wikimedia.org/wiki/File:Sander_lucioperca_1.jpg" target="_blank" rel="noopener">zdjęcie</a> (eLNuko, domena publiczna) — Wikimedia Commons</p>
+      </div>
+    </div>
+
+    <div class="fishcard">
+      <div class="imgs"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/FMIB_35688_Perca_fluviatilis_--_Pesce_persico.jpeg/500px-FMIB_35688_Perca_fluviatilis_--_Pesce_persico.jpeg" alt="Okoń — rysunek naukowy" loading="lazy"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Perca_fluviatilis_-_Perche_commune_-_European_perch_Cropped.jpg/500px-Perca_fluviatilis_-_Perche_commune_-_European_perch_Cropped.jpg" alt="Okoń — zdjęcie" loading="lazy"></div>
+      <div class="body">
+        <h4>Okoń</h4>
+        <p class="latin">Perca fluviatilis</p>
+        <p><b>Gdzie / kiedy:</b> opaski, kamieniste rafy, przykosy — cały sezon.</p>
+        <p><b>Wygląd:</b> krępe, wygrzbiecone ciało; zielonkawe z 5–9 ciemnymi pionowymi pasami; płetwy piersiowe, brzuszne i ogonowa czerwonawe; dwa grzbiety (pierwszy kolczasty z ciemną plamą).</p>
+        <p><b>Jak odróżnić:</b> od sandacza — mniejszy, bardziej „garbaty", czerwone płetwy; od jazgarza — wyraźniejsze pasy i większy rozmiar.</p>
+        <p class="src">Ilustracje: <a href="https://commons.wikimedia.org/wiki/File:FMIB_35688_Perca_fluviatilis_--_Pesce_persico.jpeg" target="_blank" rel="noopener">rysunek</a> (domena publiczna) · <a href="https://commons.wikimedia.org/wiki/File:Perca_fluviatilis_-_Perche_commune_-_European_perch_Cropped.jpg" target="_blank" rel="noopener">zdjęcie</a> (G. San Martin, CC BY-SA 2.5) — Wikimedia Commons</p>
+      </div>
+    </div>
+
+    <div class="fishcard">
+      <div class="imgs"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/FMIB_48096_Aspius_rapax_%28Agassiz%29.jpeg/500px-FMIB_48096_Aspius_rapax_%28Agassiz%29.jpeg" alt="Boleń — rysunek naukowy" loading="lazy"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Aspius_aspius.jpg/500px-Aspius_aspius.jpg" alt="Boleń — zdjęcie" loading="lazy"></div>
+      <div class="body">
+        <h4>Boleń</h4>
+        <p class="latin">Leuciscus aspius</p>
+        <p><b>Gdzie / kiedy:</b> silny nurt, spłycenia, okolice drobnicy przy powierzchni — lato, świt/zmierzch.</p>
+        <p><b>Wygląd:</b> duży, srebrzysty, wydłużony; szeroki otwór gębowy z dolną szczęką wysuniętą ku górze; brak zębów (to karpiowaty); drobne łuski.</p>
+        <p><b>Jak odróżnić:</b> od klenia i jazia — znacznie większy i bardziej srebrzysty, z masywniejszą głową; od uklei — wielokrotnie większy.</p>
+        <p class="src">Ilustracje: <a href="https://commons.wikimedia.org/wiki/File:FMIB_48096_Aspius_rapax_(Agassiz).jpeg" target="_blank" rel="noopener">rysunek</a> (H. Seeley, domena publiczna) · <a href="https://commons.wikimedia.org/wiki/File:Aspius_aspius.jpg" target="_blank" rel="noopener">zdjęcie</a> (J. Glans, CC BY-SA 3.0) — Wikimedia Commons</p>
+      </div>
+    </div>
+
+    <div class="fishcard">
+      <div class="imgs"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/FMIB_46313_Sheatfish.jpeg/500px-FMIB_46313_Sheatfish.jpeg" alt="Sum — rysunek naukowy" loading="lazy"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Silurus_glanis_02.jpg/500px-Silurus_glanis_02.jpg" alt="Sum — zdjęcie" loading="lazy"></div>
+      <div class="body">
+        <h4>Sum</h4>
+        <p class="latin">Silurus glanis</p>
+        <p><b>Gdzie / kiedy:</b> głębokie doły, cofki, przy dnie — noc, lato–jesień.</p>
+        <p><b>Wygląd:</b> bezłuski, oliwkowo-brązowy z marmurkowym wzorem; wielka, szeroka głowa; 6 wąsów (2 długie + 4 krótkie); mała płetwa grzbietowa, za to bardzo długa płetwa odbytowa.</p>
+        <p><b>Jak odróżnić:</b> nie do pomylenia — jedyna duża ryba bezłuska z wąsami w Odrze.</p>
+        <p class="src">Ilustracje: <a href="https://commons.wikimedia.org/wiki/File:FMIB_46313_Sheatfish.jpeg" target="_blank" rel="noopener">rysunek</a> (J. Couch, domena publiczna) · <a href="https://commons.wikimedia.org/wiki/File:Silurus_glanis_02.jpg" target="_blank" rel="noopener">zdjęcie</a> (D. Florian, CC BY-SA 3.0 de) — Wikimedia Commons</p>
+      </div>
+    </div>
+
+    <div class="fishcard">
+      <div class="imgs"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/FMIB_33281_Cephalus%3B_The_Chub.jpeg/500px-FMIB_33281_Cephalus%3B_The_Chub.jpeg" alt="Kleń — rysunek naukowy" loading="lazy"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Squalius_cephalus_I.jpg/500px-Squalius_cephalus_I.jpg" alt="Kleń — zdjęcie" loading="lazy"></div>
+      <div class="body">
+        <h4>Kleń</h4>
+        <p class="latin">Squalius cephalus</p>
+        <p><b>Gdzie / kiedy:</b> nurt, przelewy, kamieniste odcinki — wiosna–lato.</p>
+        <p><b>Wygląd:</b> walcowate, mocne ciało; duża głowa z szerokim, końcowym pyskiem; duże łuski z ciemnym obrzeżeniem (wyglądają jak siateczka); płetwy brzuszne i odbytowa pomarańczowo-czerwone.</p>
+        <p><b>Jak odróżnić:</b> od jazia — większa głowa, szerszy pysk, ciemniejsze obrzeżenie łusek; od bolenia — mniejszy, z ciemniejszym grzbietem.</p>
+        <p class="src">Ilustracje: <a href="https://commons.wikimedia.org/wiki/File:FMIB_33281_Cephalus;_The_Chub.jpeg" target="_blank" rel="noopener">rysunek</a> (E. Albin, domena publiczna) · <a href="https://commons.wikimedia.org/wiki/File:Squalius_cephalus_I.jpg" target="_blank" rel="noopener">zdjęcie</a> (Pohled 111, CC BY-SA 4.0) — Wikimedia Commons</p>
+      </div>
+    </div>
+
+    <div class="fishcard">
+      <div class="imgs"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/FMIB_48036_Leuciscus_idus_%28Linnaeus%29.jpeg/500px-FMIB_48036_Leuciscus_idus_%28Linnaeus%29.jpeg" alt="Jaź — rysunek naukowy" loading="lazy"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Ja%C5%BA_%28Leuciscus_idus%29.jpg/500px-Ja%C5%BA_%28Leuciscus_idus%29.jpg" alt="Jaź — zdjęcie" loading="lazy"></div>
+      <div class="body">
+        <h4>Jaź</h4>
+        <p class="latin">Leuciscus idus</p>
+        <p><b>Gdzie / kiedy:</b> nurt, przelewy, kamieniste odcinki — wiosna–lato.</p>
+        <p><b>Wygląd:</b> smukły, srebrzysty ze złocistym połyskiem; mała głowa i mały, skośny pysk; czerwonawe płetwy (zwłaszcza brzuszne i odbytowa); łuski mniejsze niż u klenia.</p>
+        <p><b>Jak odróżnić:</b> od klenia — mniejszy pysk i głowa, jaśniejszy; od płoci — większy i bardziej złocisty.</p>
+        <p class="src">Ilustracje: <a href="https://commons.wikimedia.org/wiki/File:FMIB_48036_Leuciscus_idus_(Linnaeus).jpeg" target="_blank" rel="noopener">rysunek</a> (H. Seeley, domena publiczna) · <a href="https://commons.wikimedia.org/wiki/File:Jaź_(Leuciscus_idus).jpg" target="_blank" rel="noopener">zdjęcie</a> (WiktorKus, CC BY-SA 4.0) — Wikimedia Commons</p>
+      </div>
+    </div>
+
+    <p class="imgnote">Brzana (przyłów): silny nurt, twarde dno, lato — mocny przeciwnik w nurcie. Rozpoznasz po „ryjku" (wysuwalny, skierowany w dół pysk) i dużych łuskach. Zdjęcia ryb mają charakter poglądowy — ich autorzy/prawa wskazani są w linkach źródłowych.</p>
+    <div class="callout">
+      <b>Na Odrze dolnej</b> (rejon Szczecina) szczególnie cenione są stanowiska <b>boleni, kleni, jazi, sandaczy, sumów i szczupaków</b> — rzeka obfituje w główki, opaski, rafy i jazy, które są doskonałymi łowiskami.
+    </div>
+  </section>
+
+  <section id="sprzet">
+    <h2><span class="num">3</span>Sprzęt, który nie zrujnuje portfela</h2>
+    <p class="lead">Jak złożyć zestaw i nie kupić „grabi", czyli czego naprawdę potrzebujesz.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Uniwersalny kij 2,4–2,7 m / 5–30 g, kołowrotek 2500–3000, plecionka 0,10–0,14 mm. Trzymaj przynęty w środku zakresu c.w. i nie przepłacaj.</div>
+    <h3><span class="em">Wędka</span></h3>
+    <p>Uniwersalna wędka na Odrę to kij ok. <b>2,4–2,7 m o ciężarze wyrzutowym 5–30 g</b> i szybkiej akcji. Taki blank obsłuży okonia na gumę, szczupaka na wahadło i sandacza na piętnastogramową główkę — jeden kij, większość scenariuszy.</p>
+    <ul>
+      <li><b>5–25 g</b> — okoń, kleń, jaź, okazjonalny szczupak</li>
+      <li><b>7–30 g</b> — szczupak i sandacz z brzegu (uniwersał)</li>
+      <li><b>10–40 g+</b> — sandacz w głębokim nurcie i sum</li>
+    </ul>
+    <p><b>Alternatywy:</b> <b>wędka teleskopowa</b> — tańsza i mieści się w plecaku, ale mniej czuła i słabsza; <b>wędka castingowa + multiplikator</b> — celność i moc do jerkowania/suma, ale trudniejsza na start. Na Odrę z brzegu klasyczny spin w zupełności wystarczy.</p>
+    <div class="callout warn">
+      <b>Zapamiętaj granice swojego kija:</b> dolna granica (np. 5 g) to minimum, poniżej którego nie „poczujesz" przynęty; górna (np. 30 g) to sufit — przeciążysz blank i stracisz rybę albo sprzęt. Trzymaj przynęty w środku zakresu (np. 7–25 g), a nie na krawędziach.
+    </div>
+    <h3><span class="em">Kołowrotek</span></h3>
+    <p>Rozmiar <b>2500–3000</b> z przełożeniem ok. <b>5:1</b>. Do bolenia i klenia przyda się szybszy (6:1), żeby nadążyć za prowadzeniem przynęty. Płynny przedni hamulec to podstawa — to on ratuje zestaw przy nagłym odjeździe ryby.</p>
+    <p><b>Alternatywy:</b> <b>multiplikator (baitcaster)</b> — większa celność i moc (jerk, sum, ciężkie gumy), ale początkującemu funduje „backlashe" (plątaninę na szpuli). Na start trzymaj się kołowrotka ze stałą szpulą.</p>
+    <h3><span class="em">Plecionka (linka główna)</span></h3>
+    <table>
+      <tr><th>Średnica</th><th>Do czego</th></tr>
+      <tr><td>0,06–0,10 mm</td><td>Mikrołowienie: kleń, jaź, okoń na paprochy</td></tr>
+      <tr><td>0,10–0,14 mm</td><td>Standard: szczupak, sandacz, okoń, boleń</td></tr>
+      <tr><td>0,14–0,16 mm (lub 20 lb)</td><td>Rzeka z zaczepami i kamieniami — wolniej się przeciera</td></tr>
+    </table>
+    <p><b>Alternatywy dla plecionki:</b> <b>żyłka monofilamentowa</b> — rozciągliwa (wybacza błędy w holu), tania i mniej widoczna, ale grubsza i dużo mniej czuła; dobra na start i do woblerów. <b>Fluorocarbon</b> — tonie i jest prawie niewidoczny, ale drogi i sztywny, więc częściej jako przypon niż linka główna. Na rzece, gdzie liczy się czucie brania i dno, plecionka to standard.</p>
+
+    <h3><span class="em">💸 Trzy zestawy budżetowe „od A do Z"</span></h3>
+    <p>Sprawdzone konfiguracje, które łowią, a nie bankrutują. Ceny orientacyjne (z widełek 2024–2025) — mogły się nieco zmienić.</p>
+    <table>
+      <tr><th>Wariant</th><th>Wędka</th><th>Kołowrotek</th><th>Linka</th><th>~Razem</th></tr>
+      <tr><td class="species">Absolutne minimum</td><td>Jaxon Grey Stream 2,65 m / 8–30 g (~120 zł)</td><td>Ryobi Ecusima 2500 (~110 zł)</td><td>Plecionka Mikado Nihonto 0,14 mm (~35 zł)</td><td>~265 zł</td></tr>
+      <tr><td class="species">Złoty środek</td><td>Dragon Express Spin 2,7 m / 5–25 g (~150 zł)</td><td>Daiwa Ninja LT 2500 (~200 zł)</td><td>Plecionka Power Pro 0,13 mm (~55 zł)</td><td>~405 zł</td></tr>
+      <tr><td class="species">Lekki (okoń/kleń)</td><td>DAM Shadow Tele Mini 2,4 m / 7–30 g (~140 zł)</td><td>Shimano Catana 1000 (~140 zł)</td><td>Żyłka Dragon HM69 0,18 mm (~20 zł)</td><td>~300 zł</td></tr>
+    </table>
+    <p class="kicker">Do tego „skrzynka startowa": kilka gum 7–12 cm, główki jigowe 7–15 g, obrotówka nr 3, wahadłówka 15–20 g i przypon stalowy — kolejne ~60–80 zł i masz komplet na pierwszą wyprawę.</p>
+  </section>
+
+  <section id="zestaw">
+    <h2><span class="num">4</span>Uzbrajanie zestawu</h2>
+    <p class="lead">Przypon, hak, główka, węzeł — tu się wygrywa lub traci ryby.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Na szczupaka stal/wolfram (min. 20–30 cm), na sandacza fluorocarbon 0,25–0,33 mm. Hak dobieraj do gumy, a nie tylko do ciężaru główki.</div>
+    <h3><span class="em">Przypon: stal czy fluorocarbon?</span></h3>
+    <table>
+      <tr><th>Sytuacja</th><th>Przypon</th><th>Dlaczego</th></tr>
+      <tr><td>Łowisz na szczupaka</td><td class="species">Stalowy / wolframowy, min. 20–30 cm, 5–10 kg+</td><td>Szczupak przecina fluorocarbon — stal jest praktycznie obowiązkowa</td></tr>
+      <tr><td>Sandacz (bez szczupaka)</td><td class="species">Fluorocarbon 0,25–0,33 mm, 50–80 cm</td><td>Mało widoczny, odporny na ścieranie o kamienie</td></tr>
+      <tr><td>Sandacz + ryzyko szczupaka</td><td class="species">Stal / tytan 15–25 cm</td><td>Ochrona przed zębami ważniejsza niż subtelność</td></tr>
+      <tr><td>Boleń / kleń / jaź</td><td class="species">Fluorocarbon cienki 0,20–0,28 mm</td><td>Dyskrecja — nie płoszy czujnych ryb</td></tr>
+    </table>
+    <h3><span class="em">Węzły, które musisz umieć</span></h3>
+    <p>Na spinning wystarczy kilka węzłów — ale musisz je wiązać pewnie i <b>zawsze zwilżać przed zaciągnięciem</b> (żyłka/fluorocarbon przegrzewają się od tarcia i tracą wytrzymałość). Plecionka się ślizga, więc wymaga więcej zwojów.</p>
+    <table>
+      <tr><th>Węzeł</th><th>Gdzie go używać</th><th>Uwagi</th></tr>
+      <tr><td class="species">Palomar</td><td>Plecionka → agrafka/krętlik; hak w drop shocie</td><td>Najpewniejszy na plecionce, prosty — standard do agrafki</td></tr>
+      <tr><td class="species">Uni Knot (podwójny)</td><td>Plecionka → przypon (uni-to-uni); agrafka; hak</td><td>Najbardziej uniwersalny — naucz się go jako pierwszego</td></tr>
+      <tr><td class="species">Improved Clinch (klincz)</td><td>Żyłka/fluorocarbon → agrafka, hak</td><td>Klasyk na żyłkę; na plecionce słabszy</td></tr>
+      <tr><td class="species">Rapala Loop (pętlowy)</td><td>Żyłka/fluoro → wobler, wahadłówka</td><td>Luźna pętla = swobodna praca przynęty</td></tr>
+      <tr><td class="species">FG knot</td><td>Plecionka → fluorocarbon (przypon główny)</td><td>Najsmuklejszy — płynnie przechodzi przez przelotki, idealny do rzutów</td></tr>
+      <tr><td class="species">Albright / Crazy Alberto</td><td>Plecionka → gruby fluorocarbon lub stalka</td><td>Gdy średnice mocno się różnią</td></tr>
+      <tr><td class="species">Surgeon Loop (pętla chirurga)</td><td>Boczny trok, drop shot (odnogi boczne)</td><td>Szybka pętla na przypon boczny</td></tr>
+    </table>
+    
+    <div class="knots">
+      <div class="knot">
+        <svg viewBox="0 0 150 90" aria-hidden="true">
+          <ellipse cx="26" cy="45" rx="7" ry="13" fill="none" stroke="#7fd8ff" stroke-width="3"/>
+          <path d="M33 34 L122 34" stroke="#e8eef0" stroke-width="2"/>
+          <path d="M33 56 L122 56" stroke="#e8eef0" stroke-width="2"/>
+          <circle cx="122" cy="45" r="11" fill="none" stroke="#4fd1a5" stroke-width="2.5"/>
+          <path d="M28 42 C 50 72, 78 18, 104 52" fill="none" stroke="#4fd1a5" stroke-width="2.5"/>
+        </svg>
+        <div class="kn">Palomar</div><div class="kd">plecionka → agrafka</div>
+      </div>
+      <div class="knot">
+        <svg viewBox="0 0 150 90" aria-hidden="true">
+          <ellipse cx="26" cy="45" rx="7" ry="13" fill="none" stroke="#7fd8ff" stroke-width="3"/>
+          <path d="M33 45 L125 45" stroke="#e8eef0" stroke-width="2"/>
+          <g stroke="#4fd1a5" stroke-width="2" fill="none">
+            <path d="M58 41 c-4-9 10-9 6 0"/>
+            <path d="M71 41 c-4-9 10-9 6 0"/>
+            <path d="M84 41 c-4-9 10-9 6 0"/>
+            <path d="M97 41 c-4-9 10-9 6 0"/>
+            <path d="M110 41 c-4-9 10-9 6 0"/>
+          </g>
+          <path d="M52 49 L52 62 L40 55" fill="none" stroke="#f2b35c" stroke-width="2"/>
+        </svg>
+        <div class="kn">Uni Knot</div><div class="kd">uniwersalny</div>
+      </div>
+      <div class="knot">
+        <svg viewBox="0 0 150 90" aria-hidden="true">
+          <ellipse cx="26" cy="45" rx="7" ry="13" fill="none" stroke="#7fd8ff" stroke-width="3"/>
+          <path d="M33 45 L125 45" stroke="#e8eef0" stroke-width="2"/>
+          <g stroke="#4fd1a5" stroke-width="2" fill="none">
+            <path d="M60 45 c0 12 -14 12 -12 0"/>
+            <path d="M72 45 c0 12 -14 12 -12 0"/>
+            <path d="M84 45 c0 12 -14 12 -12 0"/>
+            <path d="M96 45 c0 12 -14 12 -12 0"/>
+            <path d="M108 45 c0 12 -14 12 -12 0"/>
+          </g>
+          <path d="M52 49 L52 62 L40 55" fill="none" stroke="#f2b35c" stroke-width="2"/>
+        </svg>
+        <div class="kn">Improved Clinch</div><div class="kd">żyłka → hak</div>
+      </div>
+      <div class="knot">
+        <svg viewBox="0 0 150 90" aria-hidden="true">
+          <ellipse cx="26" cy="45" rx="7" ry="13" fill="none" stroke="#7fd8ff" stroke-width="3"/>
+          <path d="M33 45 L122 45" stroke="#e8eef0" stroke-width="2"/>
+          <path d="M60 45 q18 -22 36 0" fill="none" stroke="#4fd1a5" stroke-width="2.5"/>
+          <path d="M96 45 q12 18 0 30" fill="none" stroke="#4fd1a5" stroke-width="2.5"/>
+          <path d="M48 49 L48 62 L38 56" fill="none" stroke="#f2b35c" stroke-width="2"/>
+        </svg>
+        <div class="kn">Rapala Loop</div><div class="kd">wobler / wahadłówka</div>
+      </div>
+      <div class="knot">
+        <svg viewBox="0 0 150 90" aria-hidden="true">
+          <path d="M15 40 L135 40" stroke="#7fd8ff" stroke-width="4"/>
+          <path d="M25 60 L115 28" stroke="#4fd1a5" stroke-width="2"/>
+          <path d="M35 60 L125 28" stroke="#4fd1a5" stroke-width="2"/>
+          <path d="M45 60 L132 26" stroke="#4fd1a5" stroke-width="2"/>
+          <path d="M20 63 L108 33" stroke="#4fd1a5" stroke-width="2"/>
+        </svg>
+        <div class="kn">FG knot</div><div class="kd">plecionka → fluoro</div>
+      </div>
+    </div>
+    <p class="kicker">Schematy poglądowe. Zasada uniwersalna: <b>zwilż węzeł</b> przed zaciągnięciem i dociągaj wolno, bez szarpnięcia.</p>
+<div class="callout">
+      <b>Zasada kciuka:</b> plecionka → Palomar/Uni/FG; żyłka i fluorocarbon → Clinch/Uni/Rapala Loop; łączenie plecionki z przyponem → FG (na poważnie) lub Albright/uni-to-uni (na szybko). Nie kombinuj z dziesięcioma węzłami — opanuj te i wiąż je pewnie.
+    </div>
+
+    <h3><span class="em">Haki i główki — orientacyjne rozmiary</span></h3>
+    <table>
+      <tr><th>Gatunek</th><th>Główka jigowa</th><th>Hak</th><th>Guma / przynęta</th></tr>
+      <tr><td class="species">Okoń</td><td>2–7 g</td><td>nr 4 – 1/0</td><td>3–8 cm (twistery, paprochy, rippery)</td></tr>
+      <tr><td class="species">Sandacz</td><td>5–12 g (opad) / 15–30 g (nurt)</td><td>1/0–4/0</td><td>8–12 cm — kopyta, smukłe shady</td></tr>
+      <tr><td class="species">Szczupak</td><td>7–21 g</td><td>2/0–5/0</td><td>10–20 cm (duże gumy, kopytka, jerki)</td></tr>
+      <tr><td class="species">Boleń</td><td>5–15 g (lub woblery)</td><td>1/0–2/0</td><td>5–8 cm smukłe (rippery, pilkery, woblery)</td></tr>
+      <tr><td class="species">Sum</td><td>20–60 g</td><td>5/0–8/0</td><td>15–25 cm+ (duże gumy, kopyta)</td></tr>
+      <tr><td class="species">Kleń / Jaź</td><td>1–7 g</td><td>nr 6 – 2</td><td>3–7 cm (mikrogumy, małe woblery, cykady)</td></tr>
+    </table>
+    <h3><span class="em">Rozmiar haczyka w milimetrach — żeby nie zgadywać</span></h3>
+    <p>Numery haczyków (nr 4, 2/0…) <b>nie są ujednolicone między producentami</b> — ten sam „nr 4" u dwóch firm może mieć inny rozmiar. Pewniejszy jest <b>rozwaru (szerokość łuku) w milimetrach</b>:</p>
+    <table>
+      <tr><th>Hak</th><th>2/0</th><th>1/0</th><th>1</th><th>2</th><th>4</th><th>6</th><th>8</th><th>10</th><th>12</th><th>14</th></tr>
+      <tr><td>Rozwaru (mm)</td><td>13</td><td>12</td><td>11</td><td>10,5</td><td>9</td><td>7,5</td><td>6,5</td><td>5,5</td><td>4,5</td><td>4</td></tr>
+    </table>
+    <p class="kicker">Źródło wymiarów: <a href="https://www.decathlon.pl/c/htp/rozmiary-haczykow-wedkarskich-rodzaj-a-metoda-lowienia_c33af23c-f56c-4fef-a5c0-4955d9ff137e" target="_blank" rel="noopener">Decathlon — rozmiary haczyków</a>.</p>
+    <div class="callout">
+      <b>Zasada doboru haka:</b> hak ma pasować do <b>długości i grubości gumy</b>, nie tylko do ciężaru główki. Guma 6–8 cm → hak nr 2–1/0; 8–10 cm → 1/0–3/0; 10–13 cm → 3/0–5/0. Za duży hak „uszywnia" przynętę i zabija jej pracę.
+    </div>
+  </section>
+
+  <section id="przynety">
+    <h2><span class="num">5</span>Przynęty: co, kiedy i czy kolor ma znaczenie</h2>
+    <p class="lead">Krótki przewodnik po skrzynce, której nie trzeba wypchać po sufit.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Szczupak — gumy/wahadłówki/obrotówki nr 3–5; sandacz — kopyta i smukłe shady z opadu; boleń — smukłe woblery prowadzone szybko. Kolor to sprawa drugorzędna, rozmiar i prowadzenie — pierwszorzędna.</div>
+    <h3><span class="em">Cztery rodzaje przynęt, które musisz znać</span></h3>
+    <div class="grid2">
+      <div class="lurecard">
+        <img src="img/guma.jpg" alt="Guma miękka — ripper / kopyto" loading="lazy">
+        <h4>Guma miękka (ripper, kopyto, twister, shad)</h4>
+        <p><b>Co to:</b> silikonowa przynęta na główce jigowej lub czeburaszce. Król opadu i rzeki.</p>
+        <p><b>Na co:</b> sandacz (kopyta 8–12 cm), szczupak (10–20 cm), okoń (3–8 cm), sum (15–25 cm).</p>
+        <span class="src">Zdjęcie: <a href="https://margrom.pl/pl/products/przyneta-gumowa-ripper-kopyto-7-cm-3-5-g-spinning-okon-sandacz-szczupak-5120.html" target="_blank" rel="noopener">margrom.pl</a></span>
+      </div>
+      <div class="lurecard">
+        <img src="img/wobler.jpg" alt="Wobler" loading="lazy">
+        <h4>Wobler</h4>
+        <p><b>Co to:</b> twarda przynęta (drewno/tworzywo) z łopatką, nurkująca na zadaną głębokość.</p>
+        <p><b>Na co:</b> szczupak (jerki, minnowy), boleń i kleń (smukłe 5–9 cm), sandacz (przy dnie).</p>
+        <span class="src">Zdjęcie: <a href="https://angloo.com/woblery-przynety-spinningowe/" target="_blank" rel="noopener">angloo.com</a></span>
+      </div>
+      <div class="lurecard">
+        <img src="img/obrotowka.jpg" alt="Błystka obrotowa" loading="lazy">
+        <h4>Błystka obrotowa (obrotówka)</h4>
+        <p><b>Co to:</b> wirująca wokół osi blaszka — wibracje i błysk. Pracuje nawet przy wolnym prowadzeniu.</p>
+        <p><b>Na co:</b> szczupak (nr 3–5), okoń i kleń (nr 0–2).</p>
+        <span class="src">Zdjęcie: <a href="https://margrom.pl/pl/products/blystka-blacha-blaszka-obrotowka-spinner-14-5g-13cm-gumowa-przyneta-rybka-3905.html" target="_blank" rel="noopener">margrom.pl</a></span>
+      </div>
+      <div class="lurecard">
+        <img src="img/wahadlowka.jpg" alt="Błystka wahadłowa" loading="lazy">
+        <h4>Błystka wahadłowa (wahadłówka)</h4>
+        <p><b>Co to:</b> metalowa blaszka „kołysząca się" na boki, imitująca ranną rybkę.</p>
+        <p><b>Na co:</b> szczupak (12–25 g), troć i boleń (wąskie).</p>
+        <span class="src">Zdjęcie: <a href="https://www.corona-fishing.pl/artykuly/blystka-wahadlowa/" target="_blank" rel="noopener">corona-fishing.pl</a></span>
+      </div>
+    </div>
+
+    <h3><span class="em">Kto na co bierze — ściąga</span></h3>
+    <div class="grid2">
+      <div class="card">
+        <div class="ico">🎣</div>
+        <h4>Szczupak</h4>
+        <p>Wahadłówki 12–20 g, obrotówki <b>nr 3–5</b>, gumy 10–20 cm (kopytka, shady, twistery), jerki 8–12 cm.</p>
+        <p class="kicker">Prowadzenie: wolno, z pauzami. Obrotówka wolno przy dnie, guma z opadu.</p>
+      </div>
+      <div class="card">
+        <div class="ico">🌙</div>
+        <h4>Sandacz</h4>
+        <p>Rippery, kopyta, smukłe shady <b>8–14 cm</b> na główkach 10–25 g. Woblery i cykady przy dnie.</p>
+        <p class="kicker">Prowadzenie: opad — rzuć, czekaj aż opadnie, potem skoki po dnie. Branie często na opadaniu!</p>
+      </div>
+      <div class="card">
+        <div class="ico">🐟</div>
+        <h4>Okoń</h4>
+        <p>Małe gumy <b>3–8 cm</b> na główkach 2–7 g, obrotówki, cykady, koguty, małe woblery.</p>
+        <p class="kicker">Prowadzenie: skoki po dnie, opad, lekkie podrywanie. Najlepsza ryba na start.</p>
+      </div>
+      <div class="card">
+        <div class="ico">⚡</div>
+        <h4>Boleń</h4>
+        <p>Smukłe woblery 7–12 cm imitujące ukleję, wąskie wahadłówki, cykady, rippery/pilkery 5–8 cm (białe/perłowe).</p>
+        <p class="kicker">Prowadzenie: szybko, wysoko w toni. Szukaj „chlapań" — uderzeń w stada drobnicy.</p>
+      </div>
+      <div class="card">
+        <div class="ico">🐋</div>
+        <h4>Sum</h4>
+        <p>Duże gumy <b>15–25 cm+</b>, duże kopyta, ciężkie woblery na główkach 20–60 g.</p>
+        <p class="kicker">Prowadzenie: wolno przy dnie, nocą. Sprzęt c.w. 40 g+ i gruby przypon.</p>
+      </div>
+      <div class="card">
+        <div class="ico">🌿</div>
+        <h4>Kleń i jaź</h4>
+        <p>Małe woblery do ~4–5 cm, mikrogumy/twistery/rippery 3–7 cm, cykady, małe jigi.</p>
+        <p class="kicker">Prowadzenie: naturalnie, z nurtem. Delikatna wędka 5–20 g i cienka linka.</p>
+      </div>
+    </div>
+    <h3><span class="em">🏆 Ranking: na co ludzie faktycznie łowią</span></h3>
+    <p>Zebrane z rankingów sklepowych, portali i forów — nie reklama, tylko to, co się sprawdza w praktyce. Modele podane z nazwy, bo o to pytasz.</p>
+    <table>
+      <tr><th>Kategoria</th><th>Top przynęty (co ludzie łowią)</th></tr>
+      <tr><td class="species">Szczupak — gumy</td><td>Berkley Puls Shad (11–14 cm), Savage Gear Cannibal (12,5–17 cm), Mikado Sicario Pike Tail, Abu Garcia Beast Zander Shad</td></tr>
+      <tr><td class="species">Szczupak — woblery</td><td>Salmo Hornet (9), Salmo Pike (16), Corona Hodor / Glan / Panic Z</td></tr>
+      <tr><td class="species">Szczupak — wahadłówki</td><td>Corona Esox, Hauer, Krakowska; Polsping Alga 3</td></tr>
+      <tr><td class="species">Szczupak — obrotówki</td><td>Mepps Aglia (nr 3–5), Corona Salmon Long 3 / Gigant, Jaxon Lukris Reder</td></tr>
+      <tr><td class="species">Sandacz — gumy</td><td>Relax Ohio (4–5), Fox Rage Zander Pro, Westin TwinTeez V-Tail, Mikado Saira, Keitech Easy Shiner</td></tr>
+      <tr><td class="species">Sandacz — koguty/mandule</td><td>Spinmad Kogut, Mandula</td></tr>
+      <tr><td class="species">Sandacz — woblery</td><td>Salmo Whacky</td></tr>
+      <tr><td class="species">Okoń</td><td>Keitech Easy Shiner (2–3"), małe twistery, Mepps Aglia (nr 0–2)</td></tr>
+      <tr><td class="species">Boleń</td><td>smukłe woblery (Salmo Hornet), pilkery, rippery 5–8 cm perłowe/białe</td></tr>
+      <tr><td class="species">Sum</td><td>duże kopyta/gumy 15–25 cm, mandule, ciężkie woblerki</td></tr>
+    </table>
+    <p class="imgnote">Źródła: <a href="https://portalwedkarski.com/ranking-przynet-na-sandacza/" target="_blank" rel="noopener">PortalWędkarski — ranking na sandacza</a> · <a href="https://portalwedkarski.com/ranking-przynet-na-szczupaka/" target="_blank" rel="noopener">ranking na szczupaka</a> · <a href="https://corona-fishing.pl/artykuly/najlepsza-przyneta-na-szczupaka/" target="_blank" rel="noopener">Corona-Fishing</a> · <a href="https://splawikigrunt.pl/forum/index.php?topic=23879.0" target="_blank" rel="noopener">forum Spławik i Grunt</a>.</p>
+
+    <h3><span class="em">Przynęty powierzchniowe — na lato i żerujące przy lustrze</span></h3>
+    <p>Kiedy drapieżnik poluje przy powierzchni (boleń, szczupak w zaroślach, okoń w ataku na stado uklei), przynęty powierzchniowe dają spektakularne brania „na wierzchu".</p>
+    <table>
+      <tr><th>Typ</th><th>Jak działa</th><th>Na co</th></tr>
+      <tr><td class="species">Popper</td><td>Wklęsły „pyszczek" pluje wodą przy szarpnięciu — głośne, prowokujące</td><td>Szczupak, okoń (lato, płytkie zarośla)</td></tr>
+      <tr><td class="species">Walker</td><td>Slalom „ósemką" po powierzchni przy podrygiwaniu</td><td>Szczupak, boleń</td></tr>
+      <tr><td class="species">Wobler powierzchniowy</td><td>Płynie tuż pod lustrem, kołysząc się</td><td>Boleń, kleń (imitacja uklei)</td></tr>
+      <tr><td class="species">Łódka/slide</td><td>Przynęta „ślizgająca się" po wodzie</td><td>Boleń na żerowisku</td></tr>
+    </table>
+    <p class="kicker">Zasada: łów powierzchnię w ciepłe poranki i wieczory, kiedy słychać „chlapania". Rzucaj za stado uklei i prowadź przynętę przez nie.</p>
+
+    <h3><span class="em">Czy kolor ma znaczenie?</span></h3>
+    <p>O, to jest pytanie, które potrafi skłócić dwóch wędkarzy nad jedną rzeką. Prawda leży mniej więcej tak:</p>
+    <ul>
+      <li><b>Nurt główny:</b> kolor ma znaczenie <b>drugorzędne</b> — rozmiar, kształt i prowadzenie liczą się bardziej.</li>
+      <li><b>Ale:</b> w skrajnych warunkach kolor potrafi robić różnicę — w mętnej wodzie lepiej widać jaskrawe (żółty, pomarańczowy, chartreuse), w czystej naturalne (perła, naturalny shad, motor oil).</li>
+      <li><b>Głęboko:</b> gdzie dociera mało światła, sprawdzają się barwy jasne, białe i fluorescencyjne.</li>
+    </ul>
+    <div class="quote">„Kolor nie ma znaczenia" — powie Ci jeden. „Na mętnej seledyn robi robotę" — powie drugi. Obaj mają trochę racji. Miej kilka kolorów, nie dwadzieścia.</div>
+  </section>
+
+  <section id="techniki">
+    <h2><span class="num">6</span>Techniki prowadzenia</h2>
+    <p class="lead">Żeby guma „żyła", a nie wyglądała jak martwy kawałek silikonu.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Król rzeki to opad: rzuć, czekaj aż opadnie, podrywaj. Branie najczęściej na opadaniu. Główka jak najlżejsza, ale tak, żeby czuć stuknięcie o dno.</div>
+    <table>
+      <tr><th>Technika</th><th>Na czym polega</th><th>Na co działa</th></tr>
+      <tr><td class="species">Opad (jig)</td><td>Rzuć → przynęta opada na dno → podryw → znowu opad</td><td>Sandacz, szczupak, okoń, sum</td></tr>
+      <tr><td class="species">Równe prowadzenie</td><td>Jednostajne zwijanie, przynęta pracuje jednostajnie</td><td>Boleń, szczupak (wahadłówka/obrotówka)</td></tr>
+      <tr><td class="species">Skoki po dnie</td><td>Krótkie podbicia i opad, kontakt z dnem</td><td>Okoń, sandacz</td></tr>
+      <tr><td class="species">Twitching</td><td>Szarpnięcia szczytówką + pauzy</td><td>Szczupak (jerki, woblery)</td></tr>
+      <tr><td class="species">Pod powierzchnią</td><td>Szybkie zwijanie tuż pod lustrem wody</td><td>Boleń, kleń, jaź</td></tr>
+    </table>
+    <div class="callout">
+      <b>Złota zasada opadu:</b> ciężar główki dobieraj <b>jak najmniejszy, ale taki, żeby czuć stuknięcie o dno</b>. Branie bardzo często następuje właśnie <b>w trakcie opadania</b>, zanim przynęta dotknie dna. Kto nie czuje dna — ten wróży z fusów.
+    </div>
+
+    <h3><span class="em">Rigi, o których warto wiedzieć</span></h3>
+    <p>Poza klasyczną główką jigową istnieje cała rodzina „rigów" — zestawów, w których ciężarek i przynęta są rozdzielone. Każdy ma swoje miejsce nad Odrą.</p>
+    <table>
+      <tr><th>Rig</th><th>Jak wygląda</th><th>Kiedy go użyć</th></tr>
+      <tr><td class="species">Drop shot</td><td>Hak na lince, a <b>ciężarek zawieszony poniżej haka</b> (na końcu przyponu). Przynęta „wisi" 20–40 cm nad dnem.</td><td>Gdy ryba jest płochliwa albo przydenna — delikatne podrygiwanie szczytówką w miejscu. Świetny na sandacza z opasek i okonia. Hak 2–1/0, węzeł Palomar z długim końcem.</td></tr>
+      <tr><td class="species">Boczny trok</td><td>Cieżarek na końcu, hak na <b>bocznym, odchodzącym przyponie</b> wyżej na lince.</td><td>Prowadzenie z nurtem, obławianie toni; przynęta pracuje swobodniej niż na główce. Dobre na okonia i drobnego drapieżnika.</td></tr>
+      <tr><td class="species">Texas rig</td><td>Cieżarek (najlepiej kulka) <b>bezpośrednio przy haku offsetowym</b>, hak schowany w gumie (bezzaczepowy).</td><td>Zaczepione łowiska — zwaliska, zielsko, kamienie. Przynęta prześlizguje się przez przeszkody, nie zahaczając.</td></tr>
+      <tr><td class="species">Carolina rig</td><td>Cieżarek <b>oddalony od przynęty</b> na przyponie ~30 cm, z krętlikiem i koralikiem między nimi.</td><td>Guma pracuje swobodnie nad dnem, ciężarek „stuka" po dnie i przyciąga uwagę. Dobre na okonia i sandacza na równym dnie.</td></tr>
+    </table>
+    <p class="kicker">Prosty skrót: <b>drop shot</b> = ciężarek POD hakiem; <b>Texas</b> = ciężarek PRZY haku; <b>Carolina</b> = ciężarek DALEKO od przynęty; <b>boczny trok</b> = hak na bocznym odgałęzieniu.</p>
+
+    <h3><span class="em">Czytanie dna główką jigową</span></h3>
+    <p>Główka jigowa to Twoje „oczy pod wodą". Plecionka (nie rozciąga się) przenosi na szczytówkę to, co dzieje się z przynętą na dnie — wystarczy się tego nauczyć.</p>
+    <table>
+      <tr><th>Typ dna</th><th>Jak to czujesz</th><th>Co z tym zrobić</th></tr>
+      <tr><td class="species">Muł</td><td>Główka miękko „zapada się", lekko się klei, przynęta jakby „siada"</td><td>Króć pauzy, daj lżejszą główkę albo prowadź wyżej — w mule przynęta znika rybom z oczu</td></tr>
+      <tr><td class="species">Piasek</td><td>Równomierne, delikatne stuknięcie, bez wibracji</td><td>Uniwersalnie — spokojnie możesz trzymać kontakt z dnem</td></tr>
+      <tr><td class="species">Żwir</td><td>Drobne, „chrzęszczące" drgania przy przeciąganiu</td><td>Dobre miejsce — drapieżniki lubią żwir; zwolnij tempo</td></tr>
+      <tr><td class="species">Kamienie / głazy</td><td>Twarde „stuk-stuk", czasem główka klinuje się między kamieniami</td><td>Ostrożnie — zaczepy. Podbijaj wyżej, wybijaj główkę lekkim szarpnięciem</td></tr>
+      <tr><td class="species">Zielsko</td><td>Miękki, sprężysty opór; przynęta „wiesza się"</td><td>Weź rig bezzaczepowy (Texas) albo drop shot nad zielskiem</td></tr>
+    </table>
+    <p class="kicker">Ćwiczenie: rzucaj na znany odcinek i „słuchaj" dna. Po kilku sesjach rozpoznasz muł, piasek i kamienie z zamkniętymi oczami.</p>
+
+    <h3><span class="em">Branie i zacięcie — jak to naprawdę wygląda</span></h3>
+    <p>Nie każde „puknięcie" to ryba. Tu najważniejsze: nie zacinać na pierwszy kontakt (to często zaczep albo ryba „trąca" przynętę), ale u sandacza nie zwlekać — branie bywa ledwo wyczuwalne.</p>
+    <table>
+      <tr><th>Ryba</th><th>Jak bierze</th><th>Zacięcie</th></tr>
+      <tr><td class="species">Sandacz</td><td>Delikatne „puk-puk" albo nagły ciężar (guma nagle „nie spada"); czasem ledwo wyczuwalny pstryk</td><td>Zdecydowane, szybkie, ale nie szarpane — sandacz ma twardy pysk, przecinaj pewnie</td></tr>
+      <tr><td class="species">Szczupak</td><td>Gwałtowne uderzenie albo „wyszarpnięcie" przynęty; bywa, że przynęta po prostu „znika"</td><td>Mocne i pewne — przypon stalowy wytrzyma, nie odpuszczaj</td></tr>
+      <tr><td class="species">Okoń</td><td>Ostre, nerwowe „pukanie", często seria puknięć w stadzie</td><td>Krótkie, energiczne zacięcie nadgarstkiem</td></tr>
+      <tr><td class="species">Boleń</td><td>Uderzenie z zaskoczenia, często sam się zacina w rozpędzie</td><td>Krótkie zacięcie, kij w górę — boleń ma delikatny pysk</td></tr>
+      <tr><td class="species">Kleń / jaź</td><td>Szybkie branie, potrafi wziąć i wypuścić w ułamku sekundy</td><td>Błyskawiczna reakcja — zwlekanie = strata ryby</td></tr>
+    </table>
+    <div class="callout">
+      <b>Technika zacięcia:</b> nie wymachuj wędziskiem nad głową. Krótki, zdecydowany ruch szczytówką w górę/w bok (wystarczy 20–30 cm) i od razu utrzymuj napięcie — plecionka przenosi zacięcie natychmiast. Po zacięciu nie luzuj linki ani na sekundę.
+    </div>
+  </section>
+
+  <section id="hol">
+    <h2><span class="num">7</span>Hol i bezpieczne wyjęcie ryby</h2>
+    <p class="lead">Złowić to połowa sukcesu. Druga połowa to nie stracić ryby przy brzegu i wypuścić ją (lub zabrać) bez szkody — dla niej i dla Ciebie.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Utrzymuj napięcie linki, pracuj wędką (nie kołowrotkiem), luzuj hamulec przy odjeździe. Szczupaka odhaczaj rozwieraczem i uwalniaczem — nigdy palcami w pysku.</div>
+
+    <h3><span class="em">Hol — zasady, które ratują ryby</span></h3>
+    <ul>
+      <li><b>Nie luzuj linki ani na sekundę</b> — haczyk wypada z ryby dokładnie wtedy, gdy linka zwisa.</li>
+      <li><b>Pracuj blankiem, nie korbką.</b> Wędka amortyzuje zrywy ryby; kołowrotkiem tylko dobierasz luz.</li>
+      <li><b>Hamulec ma „chodzić".</b> Przy mocnym odjeździe (sum, duży szczupak) daj rybie pociągnąć — hamulec oddaje linkę, zamiast zrywać zestaw.</li>
+      <li><b>Pompuj.</b> Podnieś szczytówkę, opuść i jednocześnie zwijaj — klasyczne „pompowanie" wyciąga rybę bez przeciążania sprzętu.</li>
+      <li><b>Przy brzegu opuść szczytówkę nisko</b> i dociągnij rybę do podbieraka — nie szarp jej pionowo w górę (zerwiesz wargę lub zestaw).</li>
+    </ul>
+    <table>
+      <tr><th>Ryba</th><th>Specyfika holu</th></tr>
+      <tr><td class="species">Szczupak</td><td>Krótkie, gwałtowne zrywy i świece; trzymaj kij nisko przy brzegu, nie daj mu „świecy" nad wodą</td></tr>
+      <tr><td class="species">Sandacz</td><td>Zwykle „ciągnie" równo i głęboko; nie spiesz się — jego pysk jest twardy, ale zacięcie płytkie może wypaść</td></tr>
+      <tr><td class="species">Sum</td><td>Masa, nie szybkość — wyciąganie z dołu potrafi trwać; hamulec i dużo cierpliwości</td></tr>
+      <tr><td class="species">Okoń</td><td>Delikatny pysk — hol spokojnie, bez forsowania, żeby go nie „oderwać"</td></tr>
+      <tr><td class="species">Boleń</td><td>Gwałtowny start i szybkie zmiany kierunku; delikatny pysk — luzowanie przy odjazdach</td></tr>
+    </table>
+
+    <h3><span class="em">Bezpieczne odhaczanie — zwłaszcza szczupaka</span></h3>
+    <ul>
+      <li><b>Szczupak to nie „patyk"</b> — setki ostrych, zakrzywionych zębów. Nigdy nie wkładaj palców do pyska.</li>
+      <li>Niezbędnik: <b>rozwieracz</b> (rozchyla pysk), <b>uwalniacz/pęseta</b> i <b>szczypce</b> do głębokich zacepów.</li>
+      <li>Chwyć szczupaka <b>pewnie za pokrywy skrzelowe</b> (od spodu, pod głową), nie za oczy i nie „za kark" w pojedynkę bez praktyki.</li>
+      <li>Głęboko połkniętą przynętę: przetnij hak szczypcami lub wyjmij uwalniaczem — czasem lepiej zostawić kawałek haka niż ranić rybę.</li>
+      <li><b>Podbierak z miękkiej (gumowanej) siatki</b> — nie niszczy śluzu i łusek ryby.</li>
+    </ul>
+
+    <h3><span class="em">No-kill krok po kroku</span></h3>
+    <ol>
+      <li>Przygotuj sprzęt <b>przed</b> wyjęciem ryby (uwalniacz, miarka, aparat).</li>
+      <li><b>Mokre ręce</b> — sucha dłoń zdziera śluz, który chroni rybę.</li>
+      <li>Ryba poza wodą <b>minimum czasu</b> — im krócej, tym lepiej.</li>
+      <li>Zdjęcie szybko, rybę trzymaj poziomo (duże sztuki podpieraj pod brzuch).</li>
+      <li>Wypuść i <b>wspieraj rybę w wodzie</b>, aż sama odpłynie — nie „rzucaj" jej z powrotem.</li>
+    </ol>
+  </section>
+
+  <section id="czytanie">
+    <h2><span class="num">8</span>Czytanie rzeki</h2>
+    <p class="lead">Jak znaleźć miejscówkę bez echosondy, samą parą oczu i zdrowym rozsądkiem.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Obserwuj drobnicę, „chlapania" bolenia, ptaki i brzeg. Rzucaj wachlarzowo. Echosonda to luksus, nie konieczność.</div>
+    <ul>
+      <li><b>Obserwuj drobnicę.</b> Tam, gdzie uciekają stada uklei, za chwilę pojawi się boleń. Gdzie żeruje drobnica — tam przyjdzie drapieżnik.</li>
+      <li><b>Słuchaj i patrz na powierzchnię.</b> „Chlapania" bolenia, kręgi, uciekająca drobnica — to mapy miejscówek za darmo.</li>
+      <li><b>Czytaj brzeg.</b> Zwaliska, nawisy, korzenie, kamienne opaski — wszystko, co daje kryjówkę, przyciąga ryby.</li>
+      <li><b>Szukaj spowolnień nurtu.</b> Krawędzie prądowe, cofki, miejsca za główkami — tam ryby odpoczywają i żerują bez walki z prądem.</li>
+      <li><b>Ptaki wodne.</b> Skupiska mew i rybitw często zdradzają, gdzie drapieżnik wypycha drobnicę ku powierzchni.</li>
+      <li><b>Rzucaj wachlarzowo.</b> Systematycznie przeczesuj łuk przed sobą, zamiast bezmyślnie walić w jedno miejsce.</li>
+    </ul>
+  </section>
+
+  <section id="miejscowki">
+    <h2><span class="num">9</span>Twoje miejscówki</h2>
+    <p class="lead">Zaznaczaj, zapisuj i wracaj do sprawdzonych punktów — na mapie i w notatkach.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Znajdź punkt w Google Maps, skopiuj link/współrzędne, wklej poniżej — zapisze się w Twojej przeglądarce i otworzy jednym kliknięciem.</div>
+
+    <div class="mapwrap">
+      <iframe
+        title="Mapa Odry i okolic Szczecina"
+        src="https://maps.google.com/maps?q=Odra%20Szczecin&z=11&output=embed"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <p class="mapnote">Mapa poglądowa (Odra, jezioro Dąbie, Regalica). W podglądzie może być pusta — po wgraniu na hosting ładuje się normalnie. Aby zobaczyć konkretny punkt, otwórz linki z listy poniżej.</p>
+
+    <h3><span class="em">Jak zapisać miejscówkę w 3 krokach</span></h3>
+    <div class="steps">
+      <div class="st"><span class="n">1</span><p>Otwórz <b>Google Maps</b> i znajdź swój punkt nad Odrą (główkę, opaskę, zwalisko).</p></div>
+      <div class="st"><span class="n">2</span><p>Kliknij <b>prawym przyciskiem</b> (na telefonie: <b>przytrzymaj palcem</b>) w tym miejscu, żeby upuścić pinezkę.</p></div>
+      <div class="st"><span class="n">3</span><p>Skopiuj <b>współrzędne</b> (albo kliknij <b>Udostępnij → Kopiuj link</b>) i wklej do formularza poniżej.</p></div>
+    </div>
+
+    <div class="addlink">
+      <h4>➕ Dodaj miejscówkę</h4>
+      <div class="row">
+        <input type="text" id="spName" placeholder="Nazwa (np. Główka za mostem)">
+        <input type="text" id="spFish" placeholder="Ryba (np. sandacz)">
+      </div>
+      <div class="row">
+        <input type="url" id="spLink" placeholder="Link Google Maps lub współrzędne (np. 53.42, 14.55)">
+      </div>
+      <div class="row">
+        <input type="text" id="spNote" placeholder="Notatka: metoda, pora, co brało… (opcjonalnie)">
+      </div>
+      <div class="row">
+        <button onclick="addSpot()">Zapisz miejscówkę</button>
+      </div>
+      <p class="hint" id="spHint"></p>
+      <div class="io-btn">
+        <button onclick="exportSpots()">⬇ Eksportuj (JSON)</button>
+        <button onclick="document.getElementById('spFile').click()">⬆ Importuj</button>
+        <input type="file" id="spFile" accept="application/json" style="display:none" onchange="importSpots(this)">
+      </div>
+    </div>
+
+    <h3><span class="em">Zapisane miejscówki</span></h3>
+    <div id="userSpots"></div>
+  </section>
+
+  <section id="kalendarz">
+    <h2><span class="num">10</span>Kalendarz leszczyka</h2>
+    <p class="lead">Sezon, pogoda, pory dnia — i które z tych „prawd" to bajki.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Jesień = szczupak i sandacz; lato = boleń i kleń; sandacz nocą. Fazy księżyca to wróżenie z fusów — najlepsza pora to ta, kiedy jesteś nad wodą.</div>
+    <table>
+      <tr><th>Pora</th><th>Co się dzieje</th><th>Na co celować</th></tr>
+      <tr><td class="species">Wiosna</td><td>Rzeka budzi się po zimie, drobnica zbiera się w spokojnych miejscach</td><td>Okoń, szczupak (po okresie ochronnym), kleń, jaź, boleń</td></tr>
+      <tr><td class="species">Lato</td><td>Woda ciepła, ryby żerują o świcie i zmierzchu</td><td>Kleń, jaź, boleń, okoń; sandacz nocą</td></tr>
+      <tr><td class="species">Jesień</td><td>Najlepszy czas na drapieżniki — ryby żerują przed zimą</td><td>Szczupak, sandacz, sum</td></tr>
+      <tr><td class="species">Zima</td><td>Ryby w głębokich rynnach, wolne tempo</td><td>Sandacz i okoń w głębokich dołach</td></tr>
+    </table>
+
+    <h3><span class="em">🗓️ Kalendarz okresów ochronnych</span></h3>
+    <p>Grafika: wiersz = gatunek, kolumny = miesiące. <b>Pomarańczowe bloki = okres ochronny</b> (nie wolno łowić ani zabierać), ciemne = wolno łowić.</p>
+    <div class="calwrap">
+      <table class="cal">
+        <thead><tr><th></th><th class="mon">Sty</th><th class="mon">Lut</th><th class="mon">Mar</th><th class="mon">Kwi</th><th class="mon">Maj</th><th class="mon">Cze</th><th class="mon">Lip</th><th class="mon">Sie</th><th class="mon">Wrz</th><th class="mon">Paź</th><th class="mon">Lis</th><th class="mon">Gru</th></tr></thead>
+        <tbody>
+      <tr><td class="sp">Szczupak <span class="wm">50 cm</span></td><td class="cell prot" title="Szczupak — okres ochronny"></td><td class="cell prot" title="Szczupak — okres ochronny"></td><td class="cell prot" title="Szczupak — okres ochronny"></td><td class="cell prot" title="Szczupak — okres ochronny"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td></tr>
+      <tr><td class="sp">Sandacz <span class="wm">50 cm</span></td><td class="cell prot" title="Sandacz — okres ochronny"></td><td class="cell prot" title="Sandacz — okres ochronny"></td><td class="cell prot" title="Sandacz — okres ochronny"></td><td class="cell prot" title="Sandacz — okres ochronny"></td><td class="cell prot" title="Sandacz — okres ochronny"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td></tr>
+      <tr><td class="sp">Sum <span class="wm">70 cm</span></td><td class="cell prot" title="Sum — okres ochronny"></td><td class="cell prot" title="Sum — okres ochronny"></td><td class="cell prot" title="Sum — okres ochronny"></td><td class="cell prot" title="Sum — okres ochronny"></td><td class="cell prot" title="Sum — okres ochronny"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td></tr>
+      <tr><td class="sp">Boleń <span class="wm">40 cm</span></td><td class="cell prot" title="Boleń — okres ochronny"></td><td class="cell prot" title="Boleń — okres ochronny"></td><td class="cell prot" title="Boleń — okres ochronny"></td><td class="cell prot" title="Boleń — okres ochronny"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td></tr>
+      <tr><td class="sp">Brzana <span class="wm">40 cm</span></td><td class="cell prot" title="Brzana — okres ochronny"></td><td class="cell prot" title="Brzana — okres ochronny"></td><td class="cell prot" title="Brzana — okres ochronny"></td><td class="cell prot" title="Brzana — okres ochronny"></td><td class="cell prot" title="Brzana — okres ochronny"></td><td class="cell prot" title="Brzana — okres ochronny"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td></tr>
+      <tr><td class="sp">Certa <span class="wm">30 cm</span></td><td class="cell prot" title="Certa — okres ochronny"></td><td class="cell prot" title="Certa — okres ochronny"></td><td class="cell prot" title="Certa — okres ochronny"></td><td class="cell prot" title="Certa — okres ochronny"></td><td class="cell prot" title="Certa — okres ochronny"></td><td class="cell prot" title="Certa — okres ochronny"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td></tr>
+      <tr><td class="sp">Węgorz <span class="wm">60 cm</span></td><td class="cell prot" title="Węgorz — okres ochronny"></td><td class="cell prot" title="Węgorz — okres ochronny"></td><td class="cell prot" title="Węgorz — okres ochronny"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell prot" title="Węgorz — okres ochronny"></td></tr>
+      <tr><td class="sp">Miętus <span class="wm">30 cm</span></td><td class="cell prot" title="Miętus — okres ochronny"></td><td class="cell prot" title="Miętus — okres ochronny"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell prot" title="Miętus — okres ochronny"></td></tr>
+      <tr><td class="sp">Troć wędrowna <span class="wm">50 cm</span></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell prot" title="Troć wędrowna — okres ochronny"></td><td class="cell prot" title="Troć wędrowna — okres ochronny"></td><td class="cell prot" title="Troć wędrowna — okres ochronny"></td></tr>
+      <tr><td class="sp">Łosoś <span class="wm">50 cm</span></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell prot" title="Łosoś — okres ochronny"></td><td class="cell prot" title="Łosoś — okres ochronny"></td><td class="cell prot" title="Łosoś — okres ochronny"></td></tr>
+      <tr><td class="sp">Okoń <span class="wm">20 cm</span></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td></tr>
+      <tr><td class="sp">Kleń <span class="wm">30 cm</span></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td></tr>
+      <tr><td class="sp">Jaź <span class="wm">30 cm</span></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td><td class="cell ok"></td></tr>
+        </tbody>
+      </table>
+      <div class="legend">
+        <span><span class="sw ok"></span> wolno łowić</span>
+        <span><span class="sw prot"></span> okres ochronny</span>
+      </div>
+    </div>
+    <div class="callout warn">
+      <b>UWAGA — czytaj z rozsądkiem:</b> to kalendarz <b>orientacyjny</b> wg ogólnopolskiego RAPR (rozporządzenia). Okręgi PZW (w tym <b>Szczecin</b>) mogą wprowadzać <b>odstępstwa</b> — np. na Odrze nr 5 wymiar ochronny szczupaka i sandacza to 45 cm, a okres ochronny sandacza 1.03–31.05. Na wodach morskich obowiązują <b>odrębne</b> wymiary i okresy organizmów morskich. Zawsze sprawdzaj regulamin swojego okręgu i łowiska.
+    </div>
+    <h3><span class="em">Strategie na poszczególne miesiące</span></h3>
+    <p>Co realnie robisz nad Odrą w każdym miesiącu (orientacyjnie, z poprawką na stan wody i temperaturę).</p>
+    <table>
+      <tr><th>Miesiąc</th><th>Co robić</th></tr>
+      <tr><td class="species">Styczeń</td><td>Szczupak, sandacz i sum pod ochroną — realnie zostaje okoń i spokojne łowienie; sprawdź odstępstwa okręgowe.</td></tr>
+      <tr><td class="species">Luty</td><td>Końcówka ochrony szczupaka; sandacz i sum wciąż chronione; okoń i jaź na lekkim sprzęcie.</td></tr>
+      <tr><td class="species">Marzec</td><td>Sandacz nadal chroniony (na Odrze nr 5 od 1.03); przygotuj sprzęt, testuj węzły i przynęty przed sezonem.</td></tr>
+      <tr><td class="species">Kwiecień</td><td>Szczupak wraca od 1.05 — na razie wiosenne okonie, jazie i klenie w nurcie.</td></tr>
+      <tr><td class="species">Maj</td><td>START: szczupak (od 1.05) i często sandacz (od 1.06); płytsze opaski i trzcinowiska po tarle.</td></tr>
+      <tr><td class="species">Czerwiec</td><td>Sandacz i sum (od 1.06); boleń na przykosach o świcie; ciepłe wieczory na opaski.</td></tr>
+      <tr><td class="species">Lipiec</td><td>Pełnia lata: boleń, kleń, jaź na powierzchni; sandacz nocą; niska woda = delikatny sprzęt.</td></tr>
+      <tr><td class="species">Sierpień</td><td>Uważaj na przyduchę i zakwity glonów; łów przy natlenionych miejscach; no-kill na maksa.</td></tr>
+      <tr><td class="species">Wrzesień</td><td>Początek żerowania jesiennego — szczupak i sandacz wracają do gry; klasyk na gumy z opadu.</td></tr>
+      <tr><td class="species">Październik</td><td>Złoty okres: duże gumy, wahadłówki, sandacz z głębszych rynien; szczupak przed zimą.</td></tr>
+      <tr><td class="species">Listopad</td><td>Jeszcze żerują; łów doły i głębokie rynny; troć i łosoś pod ochroną (1.10–31.12).</td></tr>
+      <tr><td class="species">Grudzień</td><td>Zimowy sandacz i okoń w głębokich dołach; węgorz i miętus pod ochroną; wolne, przy dnie.</td></tr>
+    </table>
+
+    <p><b>Pory dnia:</b> sandacz to „specjalista od nocnych brań" — najlepiej bierze o świcie, zmierzchu i nocą. Boleń i kleń to ryby światła. Szczupak lubi pochmurne dni i ciszę przed burzą.</p>
+    <div class="callout warn">
+      <b>Bajki, które warto znać (ale nie traktować jak wyroczni):</b> fazy księżyca i solunary bywają podawane jako pewnik brań, ale wielu wędkarzy uważa je za wróżenie z fusów. Stabilne ciśnienie atmosferyczne ma zwykle większy wpływ na żerowanie niż tarcza księżyca. Jedno jest pewne: <b>najlepsza pora na ryby to ta, kiedy jesteś nad wodą.</b>
+    </div>
+  </section>
+
+  <section id="sytuacje">
+    <h2><span class="num">11</span>Sytuacje na Odrze — jak reagować</h2>
+    <p class="lead">Rzeka nie jest stała. Te same miejscówki łowią inaczej przy wysokiej i niskiej wodzie. Oto najczęstsze scenariusze i reakcje.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Wysoka/mętna woda = bliżej brzegu, jaskrawe i wibrujące przynęty, cięższe główki. Niska/czysta = naturalne kolory, delikatny sprzęt, dalej. Mocny nurt = cięższa główka, łów za przeszkodami.</div>
+
+    <table>
+      <tr><th>Sytuacja</th><th>Co się dzieje z rybami</th><th>Jak reagujesz</th></tr>
+      <tr><td class="species">Wysoka, mętna woda (po opadach)</td><td>Ryby podchodzą bliżej brzegu, opasek i granic nurtu; widoczność niska</td><td>Jaskrawe, kontrastowe i mocno wibrujące przynęty; cięższa główka (utrzymaj dno); skróć dystans rzutu</td></tr>
+      <tr><td class="species">Niski stan + upał (ryzyko przyduchy)</td><td>Ryby osłabione, schodzą do głębszych, natlenionych miejsc (progi, ujścia, cień)</td><td>Łów delikatnie, przy głębszych i natlenionych punktach; rozważ wypuszczenie wszystkiego — ryba jest w stresie</td></tr>
+      <tr><td class="species">Mocny nurt</td><td>Ryby trzymają się za przeszkodami i w spowolnieniach — tam, gdzie nie walczą z prądem</td><td>Cięższa główka, rzuty pod prąd/ukosem, obławiaj „cień" za główkami, filarami i kamieniami</td></tr>
+      <tr><td class="species">Krystalicznie czysta woda</td><td>Ryby płochliwe, widzą Cię z daleka</td><td>Naturalne kolory, cienki fluorocarbon, dłuższe rzuty, cisza na brzegu, nie stój na linii rzutu</td></tr>
+      <tr><td class="species">Silny wiatr</td><td>Trudniejsze rzuty i prowadzenie; fala napowietrza wodę</td><td>Łów od strony nawietrznej (wiatr w plecy), cięższe przynęty, skróć rzut</td></tr>
+      <tr><td class="species">Noc (sandacz)</td><td>Sandacz podchodzi do brzegu i żeruje</td><td>Wolne prowadzenie, przynęty o mocnej sylwetce (ciemne na tle nieba lub jasne); celuj w oświetlone opaski i mosty</td></tr>
+      <tr><td class="species">Po burzy / skok ciśnienia</td><td>Żerowanie bywa intensywne tuż przed i po zmianie ciśnienia</td><td>Wykorzystaj okno czasowe — ryby bywają aktywne krótko, łów wtedy na aktywniejsze przynęty</td></tr>
+    </table>
+  </section>
+
+  <section id="prawo">
+    <h2><span class="num">12</span>Prawo i etyka</h2>
+    <p class="lead">Żeby przyjemność nie skończyła się mandatem — i żeby rzeka została dla następnych.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Karta wędkarska + zezwolenie PZW to podstawa. Wymiary ochronne i limity zmieniają się co roku — sprawdzaj w swoim okręgu. Nie zostawiaj śmieci, wypuszczaj z głową.</div>
+    <h3><span class="em">Podstawa: karta i zezwolenie</span></h3>
+    <p>Na wodach <b>śródlądowych</b> (PZW i RZGW/Wody Polskie) do wędkowania potrzebujesz <b>karty wędkarskiej</b> i <b>zezwolenia</b> na dany okręg. Bez nich łowienie jest nielegalne. Sprawdź zasady <b>Okręgu PZW Szczecin</b>.</p>
+    <div class="callout">
+      <b>⚠️ Szczególna sprawa — granica wód morskich w Szczecinie:</b> poniżej linii trzech mostów zaczynają się <b>morskie wody wewnętrzne</b>: na Odrze zachodniej to <b>Most Długi (Trasa Zamkowa)</b>, na Regalicy <b>Most Cłowy</b>, na Kanale Parnickim <b>Most Portowy</b>. Poniżej nich <b>nie potrzebujesz karty wędkarskiej ani opłat PZW</b> — wystarczy <b>zezwolenie na rekreacyjne wędkowanie w morzu (opłata)</b>, <b>dowód uiszczenia opłaty</b> oraz <b>dokument tożsamości</b>. To prostszy reżim niż na wodach śródlądowych. <span class="kicker">(Źródło: <a href="https://wiadomosciwedkarskie.com.pl/szczegoly-artykulu/szczecin-sandaczem-stoi_j6oVh0XFIitoiUAKNiGN" target="_blank" rel="noopener">Wiadomości Wędkarskie — „Szczecin sandaczem stoi"</a>)</span>
+    </div>
+    <h3><span class="em">Prawo morskie w pigułce (poniżej mostów)</span></h3>
+    <p>Rekreacyjne wędkowanie na morskich wodach wewnętrznych Odry reguluje <b>ustawa o rybołówstwie morskim</b> (z 19.12.2014) oraz rozporządzenie w sprawie wymiarów i okresów ochronnych organizmów morskich poławianych rekreacyjnie.</p>
+    <ul>
+      <li><b>Bez karty wędkarskiej</b> — wystarczy <b>dowód uiszczenia opłaty</b> + <b>dokument tożsamości</b> (oraz dokument uprawniający do zniżki, jeśli z niej korzystasz).</li>
+      <li><b>Organ:</b> Główny Inspektorat Rybołówstwa Morskiego (GIRM) w Słupsku. Nie wydaje papierowych zezwoleń — uprawnienie nabywa się przez <b>wpłatę na konto</b>.</li>
+    </ul>
+    <table>
+      <tr><th>Okres</th><th>Opłata (orientacyjnie)</th></tr>
+      <tr><td>Tydzień</td><td>~15 zł</td></tr>
+      <tr><td>Miesiąc</td><td>~25 zł</td></tr>
+      <tr><td>Rok (12 mies.)</td><td>~65 zł</td></tr>
+    </table>
+    <p class="kicker">Kwoty bywają waloryzowane (kiedyś było 7/11/42 zł) — sprawdź aktualne na <a href="https://www.amatorskie-wedkowanie.pl/zezwolenie-morskie-2024-oplaty/" target="_blank" rel="noopener">amatorskie-wedkowanie.pl</a> lub bezpośrednio w GIRM w Słupsku.</p>
+    <div class="callout warn">
+      <b>Uwaga na wymiary ochronne morskie:</b> na wodach morskich obowiązują <b>odrębne wymiary i okresy ochronne organizmów morskich</b> (inne niż w PZW) — reguluje je rozporządzenie ministra, a wartości bywają aktualizowane. Sprawdź je przed łowieniem, zwłaszcza na gatunki dwuśrodowiskowe (łosoś, troć) i drapieżniki w wodach przejściowych.
+    </div>
+
+    <h3><span class="em">Wymiary ochronne i limity — wody śródlądowe (PZW, orientacyjnie!)</span></h3>
+    <div class="callout warn">
+      <b>UWAGA:</b> wartości poniżej są <b>orientacyjne</b> i zmieniają się co roku oraz różnią między wodami. Na odcinkach <b>granicznych Odry</b> obowiązują odrębne regulaminy polsko-niemieckie. <b>Zawsze weryfikuj w swoim okręgu przed wyjściem nad wodę.</b>
+    </div>
+    <table>
+      <tr><th>Gatunek</th><th>Wymiar ochronny (typowo)</th><th>Uwagi</th></tr>
+      <tr><td class="species">Szczupak</td><td>ok. 50 cm</td><td>Okres ochronny regionalnie (zwykle styczeń–kwiecień)</td></tr>
+      <tr><td class="species">Sandacz</td><td>ok. 50 cm</td><td>Okres ochronny regionalnie (zwykle styczeń–maj)</td></tr>
+      <tr><td class="species">Sum</td><td>ok. 70 cm</td><td>Limit dobowy zwykle 2 szt.</td></tr>
+      <tr><td class="species">Boleń</td><td>ok. 40 cm</td><td>Limit dobowy zwykle 2 szt.</td></tr>
+      <tr><td class="species">Okoń</td><td>ok. 18–20 cm</td><td>Zależnie od okręgu</td></tr>
+    </table>
+    
+    <h3><span class="em">📏 Miarka na ekranie — do wymiarów ochronnych</span></h3>
+    <div class="rulerbox">
+      <svg viewBox="0 0 1030 48" xmlns="http://www.w3.org/2000/svg"><line x1="10" y1="6" x2="1010" y2="6" stroke="#e8eef0" stroke-width="1.5"/><line x1="10" y1="6" x2="10" y2="26" stroke="#e8eef0" stroke-width="1.6"/><text x="10" y="40" font-size="10" fill="#9fb3ba" text-anchor="middle">0</text><line x1="20" y1="6" x2="20" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="30" y1="6" x2="30" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="40" y1="6" x2="40" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="50" y1="6" x2="50" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="60" y1="6" x2="60" y2="19" stroke="#e8eef0" stroke-width="1.2"/><line x1="70" y1="6" x2="70" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="80" y1="6" x2="80" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="90" y1="6" x2="90" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="100" y1="6" x2="100" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="110" y1="6" x2="110" y2="26" stroke="#e8eef0" stroke-width="1.6"/><text x="110" y="40" font-size="10" fill="#9fb3ba" text-anchor="middle">1</text><line x1="120" y1="6" x2="120" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="130" y1="6" x2="130" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="140" y1="6" x2="140" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="150" y1="6" x2="150" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="160" y1="6" x2="160" y2="19" stroke="#e8eef0" stroke-width="1.2"/><line x1="170" y1="6" x2="170" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="180" y1="6" x2="180" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="190" y1="6" x2="190" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="200" y1="6" x2="200" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="210" y1="6" x2="210" y2="26" stroke="#e8eef0" stroke-width="1.6"/><text x="210" y="40" font-size="10" fill="#9fb3ba" text-anchor="middle">2</text><line x1="220" y1="6" x2="220" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="230" y1="6" x2="230" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="240" y1="6" x2="240" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="250" y1="6" x2="250" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="260" y1="6" x2="260" y2="19" stroke="#e8eef0" stroke-width="1.2"/><line x1="270" y1="6" x2="270" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="280" y1="6" x2="280" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="290" y1="6" x2="290" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="300" y1="6" x2="300" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="310" y1="6" x2="310" y2="26" stroke="#e8eef0" stroke-width="1.6"/><text x="310" y="40" font-size="10" fill="#9fb3ba" text-anchor="middle">3</text><line x1="320" y1="6" x2="320" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="330" y1="6" x2="330" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="340" y1="6" x2="340" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="350" y1="6" x2="350" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="360" y1="6" x2="360" y2="19" stroke="#e8eef0" stroke-width="1.2"/><line x1="370" y1="6" x2="370" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="380" y1="6" x2="380" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="390" y1="6" x2="390" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="400" y1="6" x2="400" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="410" y1="6" x2="410" y2="26" stroke="#e8eef0" stroke-width="1.6"/><text x="410" y="40" font-size="10" fill="#9fb3ba" text-anchor="middle">4</text><line x1="420" y1="6" x2="420" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="430" y1="6" x2="430" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="440" y1="6" x2="440" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="450" y1="6" x2="450" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="460" y1="6" x2="460" y2="19" stroke="#e8eef0" stroke-width="1.2"/><line x1="470" y1="6" x2="470" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="480" y1="6" x2="480" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="490" y1="6" x2="490" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="500" y1="6" x2="500" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="510" y1="6" x2="510" y2="26" stroke="#e8eef0" stroke-width="1.6"/><text x="510" y="40" font-size="10" fill="#9fb3ba" text-anchor="middle">5</text><line x1="520" y1="6" x2="520" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="530" y1="6" x2="530" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="540" y1="6" x2="540" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="550" y1="6" x2="550" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="560" y1="6" x2="560" y2="19" stroke="#e8eef0" stroke-width="1.2"/><line x1="570" y1="6" x2="570" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="580" y1="6" x2="580" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="590" y1="6" x2="590" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="600" y1="6" x2="600" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="610" y1="6" x2="610" y2="26" stroke="#e8eef0" stroke-width="1.6"/><text x="610" y="40" font-size="10" fill="#9fb3ba" text-anchor="middle">6</text><line x1="620" y1="6" x2="620" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="630" y1="6" x2="630" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="640" y1="6" x2="640" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="650" y1="6" x2="650" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="660" y1="6" x2="660" y2="19" stroke="#e8eef0" stroke-width="1.2"/><line x1="670" y1="6" x2="670" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="680" y1="6" x2="680" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="690" y1="6" x2="690" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="700" y1="6" x2="700" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="710" y1="6" x2="710" y2="26" stroke="#e8eef0" stroke-width="1.6"/><text x="710" y="40" font-size="10" fill="#9fb3ba" text-anchor="middle">7</text><line x1="720" y1="6" x2="720" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="730" y1="6" x2="730" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="740" y1="6" x2="740" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="750" y1="6" x2="750" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="760" y1="6" x2="760" y2="19" stroke="#e8eef0" stroke-width="1.2"/><line x1="770" y1="6" x2="770" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="780" y1="6" x2="780" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="790" y1="6" x2="790" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="800" y1="6" x2="800" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="810" y1="6" x2="810" y2="26" stroke="#e8eef0" stroke-width="1.6"/><text x="810" y="40" font-size="10" fill="#9fb3ba" text-anchor="middle">8</text><line x1="820" y1="6" x2="820" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="830" y1="6" x2="830" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="840" y1="6" x2="840" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="850" y1="6" x2="850" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="860" y1="6" x2="860" y2="19" stroke="#e8eef0" stroke-width="1.2"/><line x1="870" y1="6" x2="870" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="880" y1="6" x2="880" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="890" y1="6" x2="890" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="900" y1="6" x2="900" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="910" y1="6" x2="910" y2="26" stroke="#e8eef0" stroke-width="1.6"/><text x="910" y="40" font-size="10" fill="#9fb3ba" text-anchor="middle">9</text><line x1="920" y1="6" x2="920" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="930" y1="6" x2="930" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="940" y1="6" x2="940" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="950" y1="6" x2="950" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="960" y1="6" x2="960" y2="19" stroke="#e8eef0" stroke-width="1.2"/><line x1="970" y1="6" x2="970" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="980" y1="6" x2="980" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="990" y1="6" x2="990" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="1000" y1="6" x2="1000" y2="13" stroke="#e8eef0" stroke-width="0.7"/><line x1="1010" y1="6" x2="1010" y2="26" stroke="#e8eef0" stroke-width="1.6"/><text x="1010" y="40" font-size="10" fill="#9fb3ba" text-anchor="middle">10</text></svg>
+    </div>
+    <p class="kicker"><b>Jak skalibrować:</b> połóż na ekranie kartę płatniczą/kredytową (standardowa szerokość = <b>85,6 mm</b>) i zmieniaj zoom (Ctrl +/−) tak, aby jej krawędź zgadzała się z kreską „0" i „8,5" na linijce. Po zgraniu linijka pokazuje realne milimetry — możesz mierzyć rybę na zdjęciu czy przy podbieraku.</p>
+<p><b>Limity dobowe:</b> typowo szczupak + sandacz łącznie 2 szt., sum 2 szt. — po wypełnieniu limitu część regulaminów nakazuje zakończyć wędkowanie.</p>
+    <h3><span class="em">Etyka leszczyka kontra etyka wyjadacza</span></h3>
+    <ul>
+      <li><b>Zabierz śmieci.</b> Papierek po przynęcie, opakowanie, zerwana żyłka — wszystko wraca do plecaka. Zostawiona plecionka zabija ptaki i ryby.</li>
+      <li><b>Wypuszczaj z głową.</b> Rybę poniżej wymiaru delikatnie i szybko. Mokre ręce, minimum czasu poza wodą, podbierak z miękkiej siatki.</li>
+      <li><b>Szacunek do stanowiska.</b> Nie wchodź drugiemu wędkarzowi „w rzut". Nie hałasuj. Rzeka należy do wszystkich.</li>
+      <li><b>No kill to nie obowiązek, ale wdzięczność.</b> Wielu odrzańskich wędkarzy wypuszcza drapieżniki — to inwestycja w to, żeby za rok też było co łowić.</li>
+    </ul>
+  </section>
+
+  <section id="zalew">
+    <h2><span class="num">13</span>Na północ od Szczecina: Zalew i wody morskie</h2>
+    <p class="lead">Tuż za miastem zaczyna się inny świat — Zalew Szczeciński i morskie wody wewnętrzne. Warto wiedzieć, co tam czeka.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Zalew Szczeciński to najbogatsze gatunkowo łowisko w Polsce — wody słonawe, płycizny ~1,5 m i głęboki tor wodny. Wody morskie = bez karty wędkarskiej, tylko opłata morska.</div>
+
+    <h3><span class="em">Co to za woda</span></h3>
+    <ul>
+      <li><b>Zalew Szczeciński</b> to morskie wody wewnętrzne, ale o wodzie <b>słonawej</b> — żyją tu ryby słodkowodne przystosowane do soli (płoć, leszcz, sandacz, szczupak, węgorz, okoń).</li>
+      <li><b>Głębokości:</b> średnio zaledwie ok. <b>1,5 m</b> (duże płycizny!), za to <b>tor wodny</b> ze Szczecina do Świnoujścia sięga <b>14 m</b>. Pod brzegami Roztoki Odrzańskiej ~4 m.</li>
+      <li><b>Roztoka Odrzańska</b> i <b>Jezioro Dąbie</b> (największy akwen Szczecina, ~56 km²) to główne łowiska południowej części zalewu.</li>
+    </ul>
+
+    <h3><span class="em">Kogo tam złowisz</span></h3>
+    <p>Najbogatsze gatunkowo łowisko kraju: niemal wszystkie ryby karpiowate plus drapieżniki — <b>szczupak, sandacz, okoń, boleń, sum, miętus</b>, a w wodach przejściowych <b>łosoś i troć wędrowna</b>.</p>
+
+    <h3><span class="em">Miejscówki na starcie</span></h3>
+    <ul>
+      <li><b>Trzcinowiska i zatoki</b> (płytkie) — szczupak, zwłaszcza północna część Dąbia i brzegi wysp.</li>
+      <li><b>Głębsze partie, rynny i przesmyki</b> — sandacz; na Dąbiu część południowa i centralna.</li>
+      <li><b>Regalica, Kanał Parnicki, Starorzecze Kiełpińskie</b> — duże szczupaki i sandacze przy mostach i prądach.</li>
+      <li><b>Wyspa Pucka i okolice Wyspy Grodzkiej</b> — drapieżniki w kanałach centrum Szczecina.</li>
+    </ul>
+
+    <h3><span class="em">Prawo i sezony</span></h3>
+    <ul>
+      <li><b>Bez karty wędkarskiej</b> — na wodach morskich wystarczy opłata morska + dokument tożsamości.</li>
+      <li><b>Sezony orientacyjnie</b> (wg organizatorów wypraw): okoń cały rok, szczupak 01.05–31.12, sandacz i sum 01.06–31.12 — ale <b>zawsze weryfikuj</b>, bo wymiary/okresy ochronne organizmów morskich bywają aktualizowane.</li>
+      <li><b>Metody:</b> spinning, trolling, drop shot, martwa rybka. Na płyciznach sprawdza się lekki spinning; na torze wodnym — cięższy sprzęt.</li>
+    </ul>
+    <p class="imgnote">Źródła: <a href="https://przewodnicywedkarscy.pl/wyprawy-wedkarskie-na-ryby-zalew-szczecinski-i-okolice-wyprawy-z-przewodnikiem-wedkarskim/" target="_blank" rel="noopener">PrzewodnicyWędkarscy</a> · <a href="https://stepnica.pl/strona/menu/32_zalew_szczecinski" target="_blank" rel="noopener">Gmina Stepnica</a> · <a href="https://wolf-boat.pl/gdzie-na-sandacza-i-szczupaka/" target="_blank" rel="noopener">Wolf Boat</a>.</p>
+  </section>
+
+  <section id="trolling">
+    <h2><span class="num">14</span>Trolling i łowienie z łodzi</h2>
+    <p class="lead">Odra i Zalew to w dużej mierze łowiska łodziowe — trolling otwiera miejsca niedostępne z brzegu.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Trolling = holowanie przynęty za płynącą łodzią. Klucz: dobrać woblera tak, by schodził na głębokość, na której stoi ryba, i utrzymać właściwą prędkość.</div>
+    <ul>
+      <li><b>Sprzęt:</b> mocniejszy kij (c.w. 30–80 g), multiplikator lub kołowrotek z licznikiem linki, plecionka + przypon. Do zejścia głębiej: <b>downrigger</b> lub <b>planery</b>/ciężarki.</li>
+      <li><b>Przynęty:</b> woblery nurkujące (z tabelą schodzenia), duże gumy na główkach, obrotówki/wahadłówki. Na sandacza — smukłe woblery przy dnie; na szczupaka — duże jerki i woblery na płyciznach.</li>
+      <li><b>Prędkość:</b> sandacz/szczupak lubią wolno (1,5–2,5 km/h), boleń i okoń — szybciej. Obserwuj pracę przynęty.</li>
+      <li><b>Technika:</b> prowadź wzdłuż spadów, rynien i krawędzi toru wodnego; zmieniaj dystans przynęty od łodzi i głębokość.</li>
+      <li><b>Gdzie:</b> tor wodny Zalewu (sandacz, sum), płycizny i trzcinowiska (szczupak), otwarte ploso Odry (boleń).</li>
+      <li><b>Przepisy:</b> sprawdź limity wędek z łodzi i wymogi (kamizelki, zezwolenie morskie na Zalewie) — łowienie z łodzi ma osobne zasady.</li>
+    </ul>
+    <div class="callout warn"><b>Bezpieczeństwo na wodzie:</b> kamizelka asekuracyjna zawsze, sprawdź pogodę i stan wody, nie łów w torze żeglugowym. Trolling w nurcie wymaga wprawy — zaczynaj na spokojnej wodzie.</div>
+  </section>
+
+  <section id="martwa">
+    <h2><span class="num">15</span>Martwa i żywa rybka</h2>
+    <p class="lead">Najstarsza metoda na drapieżniki — na Odrze wciąż zabójczo skuteczna na szczupaka i suma, zwłaszcza tam, gdzie sztuczne przynęty zawodzą.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Żywa lub martwa rybka na zestawie z przyponem stalowym i kotwiczką/hakiem. Szczupak i sum biorą niemal zawsze. Pamiętaj o przepisach — żywca i jego wymiar reguluje regulamin.</div>
+    <h3><span class="em">Zestaw</span></h3>
+    <ul>
+      <li><b>Gruntówka lub spławik</b> — na rzece klasyka to zestaw gruntowy z ciężarkiem i przyponem.</li>
+      <li><b>Przypon stalowy/wolframowy</b> — obowiązkowy (zęby szczupaka).</li>
+      <li><b>Hak/kotwiczka</b> — pojedynczy hak 2–4 lub kotwiczka 4–6 pod wielkość rybki.</li>
+    </ul>
+    <h3><span class="em">Jak zbroić</span></h3>
+    <ul>
+      <li><b>Żywca</b> — za pyszczek (przez obie wargi) lub za grzbiet (przed płetwą grzbietową, nie uszkadzając kręgosłupa), żeby rybka pływała naturalnie.</li>
+      <li><b>Martwą rybkę</b> — najczęściej na zestawie „trupka" lub z kotwiczką wzdłuż ciała; prowadź ją powoli, imitując ranną rybkę.</li>
+      <li>Gatunki na żywca: płoć, ukleja, kiełb, okoń (sprawdź dozwolone gatunki i wymiary!).</li>
+    </ul>
+    <div class="callout warn"><b>Przepisy:</b> na wielu wodach obowiązują limity żywca (gatunki, wymiar, liczba) i zakaz łowienia na żywca niektórych ryb. Sprawdzaj regulamin okręgu i łowiska — tu łatwo o mandat.</div>
+  </section>
+
+  <section id="dziennik">
+    <h2><span class="num">16</span>Dziennik Odry</h2>
+    <p class="lead">Co się ostatnio działo w rzece i w jej dopływach — oraz co to może znaczyć dla Twojego wędkowania. Oś czasu, od najnowszych wstecz.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Po katastrofie 2022 (złota alga) Odra się odbudowuje, ale wciąż zdarzają się przyduchy, zakwity glonów i podejrzane zrzuty. Sprawdzaj komunikaty przed każdą wyprawą.</div>
+    <div class="callout">
+      <b>Zanim zarzucisz:</b> to subiektywne, skrótowe zestawienie na podstawie ogólnodostępnych doniesień. Przed wyprawą zawsze sprawdzaj <b>oficjalne komunikaty</b> — monitoring Wód Polskich i WIOŚ, alerty RCB oraz stronę rządową <b>gov.pl/web/odra</b> (zakazy i stany wody). Ryby z Odry bywały objęte czasowym zakazem spożycia — lepiej wiedzieć zawczasu.
+    </div>
+
+    <div class="timeline">
+
+      <div class="entry">
+        <div class="date">11 sierpnia 2026 · zrzut / ścieki</div>
+        <h4>Wędkarze nagrali ciemny zrzut z niemieckiej strony (rejon Schwedt)</h4>
+        <p>Polscy wędkarze zarejestrowali spływającą do Odry czarną, śmierdzącą substancję tuż przy granicy z Brandenburgią, w pobliżu Parku Narodowego Unteres Odertal i rafinerii w Schwedt. Sprawa wywołała interwencje samorządowców i posłów.</p>
+        <p class="src">Źródło: <a href="https://tvrepublika.pl/Polska/Niemcy-zanieczyszczaja-Odre-polski-rzad-milczy/219534" target="_blank" rel="noopener">TV Republika — „Niemcy zanieczyszczają Odrę"</a></p>
+        <span class="impact">⚠️ <b>Dla wędkarza:</b> zgłoszenie wędkarzy, oficjalnie niepotwierdzone — ale to graniczny odcinek Odry, który łowią właśnie wędkarze z rejonu Szczecina. Warto śledzić komunikaty WIOŚ.</span>
+      </div>
+
+      <div class="entry">
+        <div class="date">4–10 czerwca 2026 · przyducha</div>
+        <h4>Śnięte ryby w Odrze i jeziorze Dąbie (Szczecin) — przyducha, nie złota alga</h4>
+        <p>Z Odry w okolicach Szczecina wyłowiono ok. 200 kg śniętych ryb. Badania wykluczyły złotą algę, wskazały za to <b>niski poziom tlenu (przyducha)</b>, wysokie zasolenie oraz podwyższone stężenie azotu i fosforu. Zjawisko lokalne, ograniczone do szczecińskiego węzła wodnego i części Regalicy.</p>
+        <p class="src">Źródło: <a href="https://tvn24.pl/szczecin/szczecin-sniete-ryby-w-odrze-znamy-wyniki-badan-wody-wyniki-sa-niepokojace-st9080780" target="_blank" rel="noopener">TVN24 — wyniki badań wody</a> · <a href="https://niezalezna.pl/polska/sniete-ryby-w-odrze-sa-wyniki-badan-wody/572097" target="_blank" rel="noopener">Niezależna.pl</a></p>
+        <span class="impact">⚠️ <b>Dla wędkarza:</b> to Twoje podwórko. Przyducha najczęściej dopada ryby w ciepłe, bezwietrzne dni przy niskim stanie — wtedy w płytkich, wolno płynących miejscach łowienie bywa słabe, a ryby osłabione.</span>
+      </div>
+
+      <div class="entry">
+        <div class="date">20 stycznia 2026 · podsumowanie sezonu</div>
+        <h4>Oficjalne podsumowanie sezonu 2025 na Odrze</h4>
+        <p>Rządowe podsumowanie: mimo bardzo niekorzystnych warunków hydrologicznych w 2025 r. <b>nie odnotowano złotej algi w nurcie Odry</b>. Z Odry i Kanału Gliwickiego odłowiono 4,5 t śniętych ryb, z czego złota alga odpowiadała za ok. 250 kg — reszta to infekcje wirusowe i niski poziom tlenu.</p>
+        <p class="src">Źródło: <a href="https://www.gov.pl/web/odra/odra-podsumowanie-sezonu-2025-oraz-perspektywy-na-2026-rok" target="_blank" rel="noopener">gov.pl — Odra, podsumowanie sezonu 2025</a></p>
+        <span class="impact">ℹ️ <b>Dla wędkarza:</b> dobra wiadomość na wejście w 2026 — rzeka główna była „czysta" od złotej algi, ale rybostan wciąż odbudowuje się po 2022 r.</span>
+      </div>
+
+      <div class="entry">
+        <div class="date">16 października 2025 · złota alga</div>
+        <h4>„Musimy nauczyć się z nią żyć" — alga zostaje na lata</h4>
+        <p>Eksperci podkreślają, że złota alga (Prymnesium parvum) w zlewni Odry zostanie na stałe, bo jej zakwitom sprzyja wysokie zasolenie. W walce z nią testowano nadtlenek wodoru, który redukuje liczebność algi o ponad 90%.</p>
+        <p class="src">Źródło: <a href="https://tvn24.pl/tvnmeteo/polska/zlota-alga-katastrofa-ekologiczna-w-oderze-musimy-nauczyc-sie-z-nia-zyc-st8703723" target="_blank" rel="noopener">TVN24 Meteo</a></p>
+        <span class="impact">ℹ️ <b>Dla wędkarza:</b> alga będzie wracać w dopływach i zbiornikach przy niskim stanie i wysokim zasoleniu. Ryby z miejsc objętych zakwitem lepiej wypuszczać.</span>
+      </div>
+
+      <div class="entry">
+        <div class="date">Wrzesień 2025 · zasolenie / NIK</div>
+        <h4>Raport NIK: kopalnie zasalały rzeki „zgodnie z prawem"</h4>
+        <p>Najwyższa Izba Kontroli potwierdziła, że zrzuty zasolonych wód z kopalń węgla na Śląsku poważnie obciążały rzeki, a system pozwoleń i nadzoru nie chronił ich skutecznie. Średnie zasolenie zrzutów bywało wyższe niż w Bałtyku.</p>
+        <p class="src">Źródło: <a href="https://otop.org.pl/2025/09/26/gorzka-i-slona-refleksja-w-swiatowym-dniu-rzek-nik-potwierdza-zarzuty-koalicji-ratujmy-rzeki/" target="_blank" rel="noopener">OTOP — NIK potwierdza zarzuty</a></p>
+        <span class="impact">ℹ️ <b>Dla wędkarza:</b> to zasolenie jest „paliwem" dla złotej algi. Problem ma charakter systemowy i nie zniknie szybko — stąd stała czujność na stan wody.</span>
+      </div>
+
+      <div class="entry">
+        <div class="date">Kwiecień–maj 2025 · glony (inne)</div>
+        <h4>Śnięte ryby w Kanale Gliwickim i Odrze — tym razem nie złota alga</h4>
+        <p>Od początku kwietnia wyłowiono łącznie ponad 2,5 t śniętych ryb. WIOŚ w Opolu nie stwierdził złotej algi ani zanieczyszczenia — wstępne badania wskazały zakwit <b>innych glonów</b>, zmieniający parametry wody.</p>
+        <p class="src">Źródło: <a href="https://polska-morska.pl/2025/04/30/dziennie-wylawiane-sa-kilogramy-snietych-ryb-tym-razem-to-nie-zlota-alga/" target="_blank" rel="noopener">Polska Morska</a></p>
+        <span class="impact">ℹ️ <b>Dla wędkarza:</b> przypomnienie, że nie tylko złota alga dusi ryby — każdy zakwit przy niskim stanie potrafi wywołać lokalne śnięcia.</span>
+      </div>
+
+      <div class="entry">
+        <div class="date">Sierpień 2024 · złota alga</div>
+        <h4>Złota alga w Jeziorze Dzierżno Duże i Kanale Gliwickim</h4>
+        <p>Badania potwierdziły toksynę złotej algi. Wyłowiono 3,9 t śniętych ryb. By powstrzymać spływ algi do Odry, na kanale rozstawiono bariery ze słomy jęczmiennej, a wojewoda śląski wprowadził zakaz korzystania ze zbiornika i IV sekcji kanału.</p>
+        <p class="src">Źródło: <a href="https://businessinsider.com.pl/wiadomosci/zlota-alga-znow-zaatakowala-sluzby-wylawiaja-sniete-ryby/0jdpjt2" target="_blank" rel="noopener">Business Insider</a></p>
+        <span class="impact">⚠️ <b>Dla wędkarza:</b> Dzierżno Duże i Kanał Gliwicki to śląska „fabryka" złotej algi, która zagraża całej Odrze. Pokazało, że problem nie zniknął po 2022 r.</span>
+      </div>
+
+      <div class="entry">
+        <div class="date">Lipiec–sierpień 2022 · katastrofa ekologiczna</div>
+        <h4>Katastrofa na Odrze — złota alga i masowe śnięcie ryb</h4>
+        <p>Największa katastrofa ekologiczna rzeki w historii: na setkach kilometrów Odry (od okolic Oławy po Szczecin) masowo ginęły ryby i małże. Bezpośrednią przyczyną była toksyna złotej algi, której rozwój umożliwiło <b>wysokie zasolenie</b> pochodzące m.in. ze zrzutów wód kopalnianych. Wprowadzono zakaz wstępu i <b>całkowity zakaz połowu ryb</b>, m.in. w województwie zachodniopomorskim.</p>
+        <p class="src">Źródło: <a href="https://tvn24.pl/polska/odra-co-sie-stalo-algi-zasolenie-przyczyny-katastrofy-ekologicznej-aktualizacja-22-sierpnia-st6066678" target="_blank" rel="noopener">TVN24 — co wiemy o katastrofie</a></p>
+        <span class="impact">⚠️ <b>Dla wędkarza:</b> punkt zwrotny dla całej Odry. Od tego czasu rzeka odbudowuje rybostan, a każdy sezon letni budzi obawy o powtórkę.</span>
+      </div>
+
+    </div>
+
+    <h3><span class="em">Gdzie sprawdzać stan wody i zakazy?</span></h3>
+    <ul>
+      <li><b>gov.pl/web/odra</b> — oficjalny monitoring i komunikaty o stanie Odry</li>
+      <li><b>WIOŚ</b> (Wojewódzki Inspektorat Ochrony Środowiska) — wyniki badań wody</li>
+      <li><b>Wody Polskie (RZGW Szczecin)</b> — stany wody, komunikaty lokalne</li>
+      <li><b>Alerty RCB</b> — natychmiastowe ostrzeżenia o zanieczyszczeniu</li>
+      <li><b>Okręg PZW Szczecin</b> — ewentualne lokalne zakazy połowu na Twoich wodach</li>
+    </ul>
+  </section>
+
+  <section id="linki">
+    <h2><span class="num">17</span>Biblioteka linków</h2>
+    <p class="lead">Wszystko w jednym miejscu: relacje znad wody, fora, społeczności i oficjalne źródła. Otwieraj, oglądaj, analizuj.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Tu znajdziesz linki do relacji i wiedzy o łowieniu na Odrze — i możesz dopisać własne (zapisują się w Twojej przeglądarce).</div>
+
+    <div class="links-grid">
+      <div class="linkcard">
+        <span class="cat">🎬 Video / YouTube</span>
+        <h4>Sebastian Kowalczyk – wędkarstwo i podróże</h4>
+        <p class="desc">Spinning na drapieżniki; specjalizacja: sandacz, boleń, okoń, na koniec szczupak. Dużo wiedzy praktycznej o prowadzeniu gum i miejscówkach.</p>
+        <a class="url" href="https://www.youtube.com/@SebastianKowalczyk77" target="_blank" rel="noopener">youtube.com/@SebastianKowalczyk77</a>
+      </div>
+      <div class="linkcard">
+        <span class="cat">💬 Forum</span>
+        <h4>haczyk.pl — „Spining na Odrze"</h4>
+        <p class="desc">Wieloletni wątek o przynętach, główkach i technikach na Odrze. Kopalnia konkretów od lokalnych wędkarzy (np. kopyta 7–10 cm seledynowe fluo, główki 10–20 g).</p>
+        <a class="url" href="https://haczyk.pl/forum/topic/1761-spining-na-odrze/" target="_blank" rel="noopener">haczyk.pl/forum/topic/1761</a>
+      </div>
+      <div class="linkcard">
+        <span class="cat">💬 Forum</span>
+        <h4>haczyk.pl — „Wrocławska Odra"</h4>
+        <p class="desc">Dyskusja o stanowiskach i gatunkach we wrocławskim odcinku Odry: gdzie sandacz, gdzie szczupak, gdzie boleń.</p>
+        <a class="url" href="https://haczyk.pl/forum/topic/524-wroc%C5%82awska-odra/" target="_blank" rel="noopener">haczyk.pl/forum/topic/524</a>
+      </div>
+      <div class="linkcard">
+        <span class="cat">💬 Forum</span>
+        <h4>Forum amatorskie-wedkowanie.pl — Spinningowe</h4>
+        <p class="desc">Dział sprzętowy: konkretne kije i zestawy na szczupaka, sandacza, bolenia. Dobry do porównań przed zakupem.</p>
+        <a class="url" href="https://forum.amatorskie-wedkowanie.pl/viewtopic.php?t=179" target="_blank" rel="noopener">forum.amatorskie-wedkowanie.pl</a>
+      </div>
+      <div class="linkcard">
+        <span class="cat">👥 Społeczności</span>
+        <h4>Discord — serwery wędkarskie (spinning)</h4>
+        <p class="desc">Wyszukiwarka serwerów Discord o tematyce wędkarskiej — znajdziesz społeczności spinningowe, gdzie ludzie dzielą się relacjami i zdjęciami.</p>
+        <a class="url" href="https://disboard.org/servers/tag/w%C4%99dkarstwo" target="_blank" rel="noopener">disboard.org/servers/tag/wędkarstwo</a>
+      </div>
+      <div class="linkcard">
+        <span class="cat">🏛️ Oficjalne</span>
+        <h4>gov.pl/web/odra</h4>
+        <p class="desc">Oficjalny monitoring stanu Odry: komunikaty, podsumowania sezonów, informacje o złotej aldze i zagrożeniach.</p>
+        <a class="url" href="https://www.gov.pl/web/odra" target="_blank" rel="noopener">gov.pl/web/odra</a>
+      </div>
+      <div class="linkcard">
+        <span class="cat">🏛️ Oficjalne</span>
+        <h4>Polski Związek Wędkarski (PZW)</h4>
+        <p class="desc">Regulaminy, wymiary ochronne, zezwolenia i okręgi — pierwsze miejsce, które sprawdzasz przed wędkowaniem.</p>
+        <a class="url" href="https://pzw.org.pl" target="_blank" rel="noopener">pzw.org.pl</a>
+      </div>
+    </div>
+
+    <div class="callout">
+      <b>Jak analizować linki:</b> z filmów wyłapuj nie „co złowił", tylko <b>gdzie i jak</b> — typ miejscówki, gramaturę główki, tempo prowadzenia. Z forów bierz lokalny kontekst (odcinek rzeki, stan wody). Wszystko konfrontuj z oficjalnymi komunikatami.
+    </div>
+
+    <div class="addlink">
+      <h4>➕ Dodaj własny link</h4>
+      <p class="hint" style="margin-top:0;">Wklej link do relacji znad Odry (YouTube, Instagram, TikTok, Facebook, forum…) — zostanie dopisany do listy poniżej i zapisany w Twojej przeglądarce.</p>
+      <div class="row">
+        <input type="url" id="lkUrl" placeholder="https://... (link)">
+        <input type="text" id="lkName" placeholder="Nazwa / opis (opcjonalnie)">
+        <select id="lkCat">
+          <option value="🎬 Video">🎬 Video</option>
+          <option value="💬 Forum">💬 Forum</option>
+          <option value="👥 Społeczności">👥 Społeczności</option>
+          <option value="📱 Social media">📱 Social media</option>
+          <option value="🏛️ Oficjalne">🏛️ Oficjalne</option>
+        </select>
+      </div>
+      <div class="row">
+        <button onclick="addLink()">Dodaj link</button>
+      </div>
+      <p class="hint" id="lkHint"></p>
+      <div class="io-btn">
+        <button onclick="exportLinks()">⬇ Eksportuj (JSON)</button>
+        <button onclick="document.getElementById('lkFile').click()">⬆ Importuj</button>
+        <input type="file" id="lkFile" accept="application/json" style="display:none" onchange="importLinks(this)">
+      </div>
+    </div>
+
+    <h3><span class="em">Twoje dodane linki</span></h3>
+    <ul id="userLinks"></ul>
+  </section>
+
+  
+  <section id="checklista">
+    <h2><span class="num">18</span>Checklista nad wodę</h2>
+    <p class="lead">Odhacz, zanim wyjdziesz — nic nie boli bardziej niż nad rzeką brak przyponu albo dokumentu.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Klikaj pozycje — lista zapisuje się w Twojej przeglądarce. Zielony licznik pokazuje, ile masz gotowe.</div>
+
+    <div class="checkcat">Dokumenty</div>
+    <ul class="check" id="chk1"></ul>
+    <div class="checkcat">Sprzęt</div>
+    <ul class="check" id="chk2"></ul>
+    <div class="checkcat">Bezpieczeństwo i drobiazgi</div>
+    <ul class="check" id="chk3"></ul>
+
+    <div class="checkres" id="chkRes"></div>
+    <button class="printbtn" onclick="resetCheck()">Wyczyść listę</button>
+  </section>
+
+  <section id="slownik">
+    <h2><span class="num">19</span>Słowniczek odrzański</h2>
+    <p class="lead">Od „leszczyka" do „wyjadacza" — żebyś rozumiał, co mówią nad wodą.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Leszczyk = nowicjusz, wyjadacz = cel tego poradnika. Reszta haseł poniżej — żebyś rozumiał język znad wody.</div>
+    <table>
+      <tr><th>Hasło</th><th>Co znaczy</th></tr>
+      <tr><td class="species">Leszczyk</td><td>Nowicjusz, żółtodziób. Przeciwieństwo wyjadacza. (Od ryby spokojnego żeru — symbolu bierności.)</td></tr>
+      <tr><td class="species">Wyjadacz</td><td>Doświadczony wędkarz, który wie, gdzie i czym. Cel tego poradnika.</td></tr>
+      <tr><td class="species">Opad</td><td>Technika: przynęta opada na dno, podrywasz, znowu opada.</td></tr>
+      <tr><td class="species">Kopyto</td><td>Rodzaj gumy (ripper o kopyciastym ogonie) — klasyka na sandacza i szczupaka.</td></tr>
+      <tr><td class="species">Główka</td><td>1) główka jigowa (obciążenie z hakiem); 2) kamienna tama w rzece.</td></tr>
+      <tr><td class="species">Patyki</td><td>Zatopione drzewa i gałęzie — kryjówki drapieżników. „Gdzie patyki, tam wyniki."</td></tr>
+      <tr><td class="species">Przykosa</td><td>Piaszczyste wypłycenie wcinające się w koryto rzeki.</td></tr>
+      <tr><td class="species">Rynna</td><td>Głębsze koryto głównego nurtu — królestwo sandacza.</td></tr>
+      <tr><td class="species">Chlapanie</td><td>Uderzenia bolenia w stado drobnicy — sygnał, gdzie rzucać.</td></tr>
+      <tr><td class="species">Akcja wędki</td><td>Tempo ugięcia blanku: fast = szybka (gina się tylko szczytówka), regular = stopniowa, slow = paraboliczna.</td></tr>
+      <tr><td class="species">C.W. (ciężar wyrzutowy)</td><td>Zakres gramatur przynęt, do jakich zaprojektowany jest kij (np. 5–30 g).</td></tr>
+      <tr><td class="species">Blank</td><td>Sam wędzisko bez przelotek i uchwytu — „serce" wędki.</td></tr>
+      <tr><td class="species">Multiplikator</td><td>Kołowrotek z obrotową szpulą (baitcaster) — celność i moc do jerkowania, suma.</td></tr>
+      <tr><td class="species">Plecionka 8-splotowa</td><td>Linka z 8 splotów — okrągła, cicha, dalekie rzuty; droższa od 4-splotowej.</td></tr>
+      <tr><td class="species">Czeburaszka</td><td>Rozbieralne obciążenie „na śrubkę" — podwiesza gumę swobodnie, inna praca niż główka.</td></tr>
+      <tr><td class="species">Agrafka</td><td>Zapinka do szybkiej wymiany przynęt bez przewiązywania.</td></tr>
+      <tr><td class="species">Offset</td><td>Hak o przegiętym trzonku — chowa grot w gumie (zestawy bezzaczepowe, Texas rig).</td></tr>
+      <tr><td class="species">Kotwica</td><td>Trzyramienny hak — dozbrojki, woblery, martwa rybka.</td></tr>
+      <tr><td class="species">Plecionka z fluoro</td><td>Połączenie plecionki (czucie) z przyponem fluorocarbonowym (niewidoczność).</td></tr>
+      <tr><td class="species">Grabie</td><td>Pogardliwie o kiepskim, „sztywnym" sprzęcie albo o utraconych przynętach w zaczepach.</td></tr>
+    </table>
+  </section>
+
+  <section id="bezpieczenstwo">
+    <h2><span class="num">20</span>Bezpieczeństwo nad rzeką</h2>
+    <p class="lead">Rzeka nie wybacza lekkomyślności. Kilka zasad, które trzymają Cię przy życiu i zdrowiu.</p>
+    <div class="tldr"><span class="t">TL;DR</span> Śliskie opaski, wysoki brzeg, nagła burza i nurt to realne zagrożenia. Kamizelka z łodzi obowiązkowo, telefon w wodoodpornej kopercie, informuj kogoś, gdzie idziesz.</div>
+    <ul>
+      <li><b>Opaski i główki bywają śliskie</b> (glony, muł) — poruszaj się ostrożnie, nie biegnij, nie łów na skraju bez pewnego oparcia.</li>
+      <li><b>Wysoki, podmyty brzeg</b> potrafi się osunąć — sprawdź grunt, zanim staniesz blisko krawędzi.</li>
+      <li><b>Burza = natychmiast z wody i z dala od wędki</b> (karbon przewodzi prąd). Schowaj się, nie stój na otwartym brzegu.</li>
+      <li><b>Nurt potrafi być zdradliwy</b> — nie wchodź do wody po zgubioną przynętę; lepiej stracić przynętę niż zdrowie.</li>
+      <li><b>Z łodzi: kamizelka asekuracyjna zawsze</b>, sprawdź pogodę, unikaj toru żeglugowego.</li>
+      <li><b>Telefon w wodoodpornej kopercie</b> + powerbank; powiedz komuś, gdzie i na jak długo idziesz.</li>
+      <li><b>Haki i noże</b> trzymaj zabezpieczone; przy zacięciu w dłoń — nie wyrywaj na siłę (szukaj pomocy medycznej).</li>
+    </ul>
+  </section>
+
+  <footer class="wrap">
+    <p><b>Jak nie być leszczykiem — Spinning na Odrze A.D. 2026.</b> Poradnik oparty na ogólnodostępnych źródłach wędkarskich (portale, fora, poradniki sklepowe) oraz praktyce rzecznego spinningu.</p>
+    <p>Przed wyjściem nad wodę zawsze sprawdź aktualne przepisy swojego Okręgu PZW i GIRM. Ryby, gramatury i wymiary podane w tekście mają charakter orientacyjny.</p>
+    <p class="kicker">Zdjęcia ryb i przynęt mają charakter poglądowy — ich autorzy i prawa są wskazani w linkach źródłowych pod każdą ilustracją. Powodzenia nad wodą. Niech Ci się odgryza — i niech nie przegryza przyponu.</p>
+  </footer>
+</div>
+
+
+
+<script>
+  // BIBLIOTEKA LINKÓW — własne linki w localStorage (bezpieczny fallback, gdyby storage był zablokowany)
+  const LS_KEY = "odraLinks";
+
+  function loadLinks(){
+    try{ return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); }
+    catch(e){ return []; }
+  }
+  function persistLinks(list){
+    try{ localStorage.setItem(LS_KEY, JSON.stringify(list)); return true; }
+    catch(e){ return false; }
+  }
+
+  function renderUserLinks(){
+    const ul = document.getElementById("userLinks");
+    const list = loadLinks();
+    ul.innerHTML = "";
+    if(list.length === 0){
+      ul.innerHTML = '<li style="color:var(--muted);border-style:dashed;">Brak dodanych linków — wklej pierwszy powyżej. 🎣</li>';
+      return;
+    }
+    list.forEach((item, i) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = item.url; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = item.name ? (item.name + " — " + item.url) : item.url;
+      const cat = document.createElement("span");
+      cat.textContent = item.cat || "";
+      cat.style.fontSize = "12px";
+      cat.style.color = "var(--accent2)";
+      cat.style.whiteSpace = "nowrap";
+      const del = document.createElement("button");
+      del.textContent = "✕";
+      del.title = "Usuń";
+      del.onclick = function(){
+        const cur = loadLinks();
+        cur.splice(i, 1);
+        persistLinks(cur);
+        renderUserLinks();
+      };
+      li.appendChild(cat);
+      li.appendChild(a);
+      li.appendChild(del);
+      ul.appendChild(li);
+    });
+  }
+
+  function addLink(){
+    const urlEl = document.getElementById("lkUrl");
+    const nameEl = document.getElementById("lkName");
+    const catEl = document.getElementById("lkCat");
+    const hint = document.getElementById("lkHint");
+    let url = urlEl.value.trim();
+    if(!url){ hint.textContent = "Wpisz link (musi zaczynać się od http:// lub https://)."; return; }
+    if(!/^https?:\/\//i.test(url)){ url = "https://" + url; }
+    const name = nameEl.value.trim();
+    const cat = catEl.value;
+
+    const list = loadLinks();
+    list.unshift({ url: url, name: name, cat: cat });
+    const ok = persistLinks(list);
+
+    urlEl.value = ""; nameEl.value = "";
+    renderUserLinks();
+    if(ok){
+      hint.textContent = "✅ Dodano i zapisano w tej przeglądarce.";
+    } else {
+      hint.textContent = "⚠️ Dodano do bieżącej listy, ale zapis nie zadziałał (pamięć przeglądarki może być zablokowana — np. w podglądzie). Po wgraniu strony na hosting zapis działa w pełni.";
+    }
+  }
+
+  renderUserLinks();
+</script>
+
+<script>
+  // MIEJSCÓWKI — zapis w localStorage
+  const SP_KEY = "odraSpots";
+  function loadSpots(){ try{ return JSON.parse(localStorage.getItem(SP_KEY) || "[]"); } catch(e){ return []; } }
+  function persistSpots(list){ try{ localStorage.setItem(SP_KEY, JSON.stringify(list)); return true; } catch(e){ return false; } }
+
+  function mapsUrl(link){
+    const s = (link || "").trim();
+    if(/^https?:\/\//i.test(s)) return s;
+    return "https://www.google.com/maps?q=" + encodeURIComponent(s);
+  }
+
+  function renderSpots(){
+    const box = document.getElementById("userSpots");
+    const list = loadSpots();
+    box.innerHTML = "";
+    if(list.length === 0){
+      box.innerHTML = '<p class="kicker" style="border:1px dashed var(--border);border-radius:10px;padding:14px;">Brak zapisanych miejscówek — dodaj pierwszą powyżej. 📍</p>';
+      return;
+    }
+    list.forEach((s, i) => {
+      const d = document.createElement("div");
+      d.className = "spotcard";
+      const url = mapsUrl(s.link);
+
+      const top = document.createElement("div");
+      top.className = "top";
+      const h = document.createElement("h4");
+      h.textContent = s.name || "Bez nazwy";
+      const f = document.createElement("span");
+      f.className = "fish";
+      f.textContent = s.fish || "";
+      top.appendChild(h);
+      top.appendChild(f);
+      d.appendChild(top);
+
+      if(s.note){
+        const n = document.createElement("p");
+        n.className = "note";
+        n.textContent = s.note;
+        d.appendChild(n);
+      }
+
+      const act = document.createElement("div");
+      act.className = "act";
+      const a = document.createElement("a");
+      a.href = url; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = "Otwórz w Google Maps ↗";
+      const del = document.createElement("a");
+      del.href = "#"; del.textContent = "Usuń"; del.style.color = "var(--muted)";
+      del.onclick = function(e){
+        e.preventDefault();
+        const cur = loadSpots();
+        cur.splice(i, 1);
+        persistSpots(cur);
+        renderSpots();
+      };
+      act.appendChild(a);
+      act.appendChild(del);
+      d.appendChild(act);
+      box.appendChild(d);
+    });
+  }
+
+  function addSpot(){
+    const name = document.getElementById("spName").value.trim();
+    const fish = document.getElementById("spFish").value.trim();
+    const link = document.getElementById("spLink").value.trim();
+    const note = document.getElementById("spNote").value.trim();
+    const hint = document.getElementById("spHint");
+    if(!link){ hint.textContent = "Wklej link Google Maps lub współrzędne."; return; }
+    if(!name){ hint.textContent = "Podaj nazwę miejscówki."; return; }
+
+    const list = loadSpots();
+    list.unshift({ name: name, fish: fish, link: link, note: note });
+    const ok = persistSpots(list);
+    document.getElementById("spName").value = "";
+    document.getElementById("spFish").value = "";
+    document.getElementById("spLink").value = "";
+    document.getElementById("spNote").value = "";
+    renderSpots();
+    if(ok){ hint.textContent = "✅ Zapisano w tej przeglądarce."; }
+    else { hint.textContent = "⚠️ Dodano do listy, ale zapis nie zadziałał (pamięć zablokowana — np. w podglądzie). Po wgraniu na hosting zapis działa w pełni."; }
+  }
+
+  renderSpots();
+</script>
+
+
+<script>
+  // CHECKLISTA
+  var CHECK_KEY = "odraCheck";
+  var CHECK_ITEMS = {
+    chk1: ["Karta wędkarska / dokument tożsamości","Zezwolenie PZW lub dowód opłaty morskiej","Telefon z naładowaną baterią"],
+    chk2: ["Wędka + kołowrotek","Plecionka/żyłka + przypony (stal + fluorocarbon)","Przynęty (gumy, obrotówka, wahadłówka, wobler)","Haki, główki, agrafki","Podbierak z miękką siatką"],
+    chk3: ["Rozwieracz + uwalniacz + szczypce","Miarka + nożyczki/obcążki","Wodoodporna koperta na telefon + powerbank","Kamizelka asekuracyjna (z łodzi)","Okulary polaryzacyjne","Woda + przekąska"]
+  };
+  function loadCheck(){ try{ return JSON.parse(localStorage.getItem(CHECK_KEY) || "{}"); }catch(e){ return {}; } }
+  function saveCheck(o){ try{ localStorage.setItem(CHECK_KEY, JSON.stringify(o)); }catch(e){} }
+  function renderCheck(){
+    var state = loadCheck();
+    var total = 0, done = 0;
+    ["chk1","chk2","chk3"].forEach(function(id){
+      var ul = document.getElementById(id);
+      ul.innerHTML = "";
+      CHECK_ITEMS[id].forEach(function(label){
+        total++;
+        var key = id + ":" + label;
+        var li = document.createElement("li");
+        if(state[key]){ li.className = "done"; done++; }
+        var cb = document.createElement("input");
+        cb.type = "checkbox"; cb.checked = !!state[key];
+        var sp = document.createElement("span");
+        sp.textContent = label;
+        cb.onchange = function(){
+          var s = loadCheck();
+          if(cb.checked){ s[key] = 1; li.className = "done"; } else { delete s[key]; li.className = ""; }
+          saveCheck(s); renderCheck();
+        };
+        li.appendChild(cb); li.appendChild(sp);
+        li.onclick = function(e){ if(e.target.tagName !== "INPUT"){ cb.checked = !cb.checked; cb.onchange(); } };
+        ul.appendChild(li);
+      });
+    });
+    var res = document.getElementById("chkRes");
+    var pct = total ? Math.round(done/total*100) : 0;
+    res.textContent = "Gotowe: " + done + "/" + total + " (" + pct + "%)";
+    res.style.color = pct === 100 ? "var(--accent)" : "var(--accent2)";
+  }
+  function resetCheck(){ localStorage.removeItem(CHECK_KEY); renderCheck(); }
+
+  // EKSPORT / IMPORT (miejscówki i linki)
+  function download(name, text){
+    var b = new Blob([text], {type:"application/json"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(b); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 500);
+  }
+  function exportSpots(){ download("odra-miejscowki.json", JSON.stringify(loadSpots(), null, 2)); }
+  function importSpots(input){
+    var file = input.files[0]; if(!file) return;
+    var r = new FileReader();
+    r.onload = function(){
+      try{
+        var arr = JSON.parse(r.result);
+        if(!Array.isArray(arr)) throw 0;
+        var cur = loadSpots();
+        persistSpots(arr.concat(cur));
+        renderSpots();
+        document.getElementById("spHint").textContent = "✅ Zaimportowano " + arr.length + " miejscówek.";
+      }catch(e){ document.getElementById("spHint").textContent = "⚠️ Błędny plik JSON."; }
+      input.value = "";
+    };
+    r.readAsText(file);
+  }
+  function exportLinks(){ download("odra-linki.json", JSON.stringify(loadLinks(), null, 2)); }
+  function importLinks(input){
+    var file = input.files[0]; if(!file) return;
+    var r = new FileReader();
+    r.onload = function(){
+      try{
+        var arr = JSON.parse(r.result);
+        if(!Array.isArray(arr)) throw 0;
+        var cur = loadLinks();
+        persistLinks(arr.concat(cur));
+        renderUserLinks();
+        document.getElementById("lkHint").textContent = "✅ Zaimportowano " + arr.length + " linków.";
+      }catch(e){ document.getElementById("lkHint").textContent = "⚠️ Błędny plik JSON."; }
+      input.value = "";
+    };
+    r.readAsText(file);
+  }
+
+  renderCheck();
+</script>
+
+</body>
+</html>
+
