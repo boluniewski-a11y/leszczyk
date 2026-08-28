@@ -1,5 +1,5 @@
 // Service Worker — cache dla trybu offline
-const CACHE_NAME = "leszczyk-v1";
+const CACHE_NAME = "leszczyk-v2";
 const CORE_ASSETS = [
   "./",
   "./index.html",

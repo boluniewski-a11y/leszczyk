@@ -271,7 +271,8 @@
     // Wyczyść stare markery
     spotsMarkers.forEach(function(m){ spotsMap.removeLayer(m); });
     spotsMarkers = [];
-    const all = fileSpots.concat(loadSpots());
+    // Tylko miejscówki użytkownika z localStorage (bez wbudowanych z pliku JSON)
+    const all = loadSpots();
     let added = 0;
     all.forEach(function(s){
       const coords = parseCoords(s.link);
