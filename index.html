@@ -1411,8 +1411,11 @@
 </script>
 
 <script>
-  // MIEJSCÓWKI — zapis w localStorage
+  // MIEJSCÓWKI — zapis w localStorage + automatyczne wczytywanie z pliku JSON
   const SP_KEY = "odraSpots";
+  const SP_FILE = "odra-miejscowki.json";
+  let fileSpots = []; // miejscówki wbudowane, wczytane z pliku JSON
+
   function loadSpots(){ try{ return JSON.parse(localStorage.getItem(SP_KEY) || "[]"); } catch(e){ return []; } }
   function persistSpots(list){ try{ localStorage.setItem(SP_KEY, JSON.stringify(list)); return true; } catch(e){ return false; } }
 
@@ -1422,56 +1425,66 @@
     return "https://www.google.com/maps?q=" + encodeURIComponent(s);
   }
 
-  function renderSpots(){
-    const box = document.getElementById("userSpots");
-    const list = loadSpots();
-    box.innerHTML = "";
-    if(list.length === 0){
-      box.innerHTML = '<p class="kicker" style="border:1px dashed var(--border);border-radius:10px;padding:14px;">Brak zapisanych miejscówek — dodaj pierwszą powyżej. 📍</p>';
-      return;
+  // Buduje kartę miejscówki. userIndex !== null oznacza miejscówkę użytkownika (z localStorage) — wtedy dodaje przycisk "Usuń".
+  function buildSpotCard(s, userIndex){
+    const d = document.createElement("div");
+    d.className = "spotcard";
+    const url = mapsUrl(s.link);
+
+    const top = document.createElement("div");
+    top.className = "top";
+    const h = document.createElement("h4");
+    h.textContent = s.name || "Bez nazwy";
+    const f = document.createElement("span");
+    f.className = "fish";
+    f.textContent = s.fish || "";
+    top.appendChild(h);
+    top.appendChild(f);
+    d.appendChild(top);
+
+    if(s.note){
+      const n = document.createElement("p");
+      n.className = "note";
+      n.textContent = s.note;
+      d.appendChild(n);
     }
-    list.forEach((s, i) => {
-      const d = document.createElement("div");
-      d.className = "spotcard";
-      const url = mapsUrl(s.link);
 
-      const top = document.createElement("div");
-      top.className = "top";
-      const h = document.createElement("h4");
-      h.textContent = s.name || "Bez nazwy";
-      const f = document.createElement("span");
-      f.className = "fish";
-      f.textContent = s.fish || "";
-      top.appendChild(h);
-      top.appendChild(f);
-      d.appendChild(top);
+    const act = document.createElement("div");
+    act.className = "act";
+    const a = document.createElement("a");
+    a.href = url; a.target = "_blank"; a.rel = "noopener";
+    a.textContent = "Otwórz w Google Maps ↗";
+    act.appendChild(a);
 
-      if(s.note){
-        const n = document.createElement("p");
-        n.className = "note";
-        n.textContent = s.note;
-        d.appendChild(n);
-      }
-
-      const act = document.createElement("div");
-      act.className = "act";
-      const a = document.createElement("a");
-      a.href = url; a.target = "_blank"; a.rel = "noopener";
-      a.textContent = "Otwórz w Google Maps ↗";
+    if(userIndex !== null){
       const del = document.createElement("a");
       del.href = "#"; del.textContent = "Usuń"; del.style.color = "var(--muted)";
       del.onclick = function(e){
         e.preventDefault();
         const cur = loadSpots();
-        cur.splice(i, 1);
+        cur.splice(userIndex, 1);
         persistSpots(cur);
         renderSpots();
       };
-      act.appendChild(a);
       act.appendChild(del);
-      d.appendChild(act);
-      box.appendChild(d);
-    });
+    }
+
+    d.appendChild(act);
+    return d;
+  }
+
+  function renderSpots(){
+    const box = document.getElementById("userSpots");
+    const userList = loadSpots();
+    box.innerHTML = "";
+    if(fileSpots.length === 0 && userList.length === 0){
+      box.innerHTML = '<p class="kicker" style="border:1px dashed var(--border);border-radius:10px;padding:14px;">Brak miejscówek — dodaj pierwszą powyżej. 📍</p>';
+      return;
+    }
+    // Najpierw miejscówki wbudowane z pliku JSON (bez przycisku usuwania)
+    fileSpots.forEach((s) => { box.appendChild(buildSpotCard(s, null)); });
+    // Potem miejscówki użytkownika z localStorage (z przyciskiem usuwania)
+    userList.forEach((s, i) => { box.appendChild(buildSpotCard(s, i)); });
   }
 
   function addSpot(){
@@ -1495,7 +1508,17 @@
     else { hint.textContent = "⚠️ Dodano do listy, ale zapis nie zadziałał (pamięć zablokowana — np. w podglądzie). Po wgraniu na hosting zapis działa w pełni."; }
   }
 
-  renderSpots();
+  // Automatyczne wczytanie miejscówek z pliku JSON przy starcie strony.
+  // Łączy je z miejscówkami użytkownika zapisanymi w localStorage.
+  function loadFileSpots(){
+    fetch(SP_FILE)
+      .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function(arr){ if(Array.isArray(arr)) fileSpots = arr; })
+      .catch(function(){ fileSpots = []; })
+      .finally(function(){ renderSpots(); });
+  }
+
+  loadFileSpots();
 </script>
 
 
