@@ -1,4 +1,5 @@
 // BIBLIOTEKA LINKÓW — własne linki w localStorage (bezpieczny fallback, gdyby storage był zablokowany)
+  var charts = {}; // instancje wykresów Chart.js
   const LS_KEY = "odraLinks";
 
   function loadLinks(){
@@ -155,6 +156,7 @@
     fileSpots.forEach((s) => { box.appendChild(buildSpotCard(s, null)); });
     // Potem miejscówki użytkownika z localStorage (z przyciskiem usuwania)
     userList.forEach((s, i) => { box.appendChild(buildSpotCard(s, i)); });
+    renderMapMarkers();
   }
 
   function addSpot(){
@@ -178,6 +180,7 @@
     document.getElementById("spRating").value = "";
     document.getElementById("spLastVisit").value = "";
     renderSpots();
+    renderMapMarkers();
     if(ok){ hint.textContent = "✅ Zapisano w tej przeglądarce."; }
     else { hint.textContent = "⚠️ Dodano do listy, ale zapis nie zadziałał (pamięć zablokowana — np. w podglądzie). Po wgraniu na hosting zapis działa w pełni."; }
   }
@@ -189,10 +192,73 @@
       .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .then(function(arr){ if(Array.isArray(arr)) fileSpots = arr; })
       .catch(function(){ fileSpots = []; })
-      .finally(function(){ renderSpots(); });
+      .finally(function(){ renderSpots(); renderMapMarkers(); });
   }
 
   loadFileSpots();
+
+  // ===== MAPA MIEJSCÓWEK (Leaflet) =====
+  let spotsMap = null;
+  let spotsMarkers = [];
+
+  function initMap(){
+    const el = document.getElementById("spotsMap");
+    if(!el || typeof L === "undefined") return;
+    if(spotsMap) return;
+    spotsMap = L.map("spotsMap").setView([53.43, 14.55], 11);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(spotsMap);
+  }
+
+  // Parsuje współrzędne z linku (np. "53.42, 14.55" lub link Google Maps)
+  function parseCoords(link){
+    const s = (link || "").trim();
+    const m = s.match(/(-?\d+\.?\d*)\s*[,;\s]\s*(-?\d+\.?\d*)/);
+    if(m) return [parseFloat(m[1]), parseFloat(m[2])];
+    // Google Maps link z @lat,lng
+    const g = s.match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/);
+    if(g) return [parseFloat(g[1]), parseFloat(g[2])];
+    return null;
+  }
+
+  function renderMapMarkers(){
+    if(typeof L === "undefined") return;
+    initMap();
+    if(!spotsMap) return;
+    // Wyczyść stare markery
+    spotsMarkers.forEach(function(m){ spotsMap.removeLayer(m); });
+    spotsMarkers = [];
+    const all = fileSpots.concat(loadSpots());
+    let added = 0;
+    all.forEach(function(s){
+      const coords = parseCoords(s.link);
+      if(!coords) return;
+      const marker = L.marker(coords).addTo(spotsMap);
+      const rating = s.rating ? " ⭐".repeat(parseInt(s.rating,10) || 0) : "";
+      const popup = "<b>" + (s.name || "Bez nazwy") + "</b>" + rating +
+        (s.fish ? "<br>🐟 " + s.fish : "") +
+        (s.note ? "<br>" + s.note : "") +
+        (s.lastVisit ? "<br>📅 " + s.lastVisit : "") +
+        '<br><a href="' + mapsUrl(s.link) + '" target="_blank" rel="noopener">Otwórz w Google Maps ↗</a>';
+      marker.bindPopup(popup);
+      spotsMarkers.push(marker);
+      added++;
+    });
+    if(added > 0 && spotsMap){
+      // Dopasuj widok do wszystkich markerów
+      const group = L.featureGroup(spotsMarkers);
+      spotsMap.fitBounds(group.getBounds().pad(0.1));
+    }
+  }
+
+  // Inicjalizacja mapy po załadowaniu strony
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", function(){ initMap(); renderMapMarkers(); });
+  } else {
+    initMap(); renderMapMarkers();
+  }
 
 
   // CHECKLISTA
@@ -451,6 +517,7 @@
     });
     renderCatchStats(filtered);
     renderRecords();
+    renderCharts();
   }
 
   function renderCatchStats(list){
@@ -485,6 +552,7 @@
         persistCatches(arr.concat(cur));
         renderCatches();
         renderRecords();
+        renderCharts();
         document.getElementById("cHint").textContent = "✅ Zaimportowano " + arr.length + " połowów.";
       }catch(e){ document.getElementById("cHint").textContent = "⚠️ Błędny plik JSON."; }
       input.value = "";
@@ -521,6 +589,74 @@
 
   renderRecords();
 
+  // ===== WYKRESY STATYSTYK (Chart.js) =====
+  function renderCharts(){
+    if(typeof Chart === "undefined") return;
+    const list = loadCatches();
+    Object.keys(charts).forEach(function(k){ if(charts[k]) charts[k].destroy(); });
+    charts = {};
+    if(list.length === 0) return;
+
+    const bySpecies = {};
+    list.forEach(function(c){ bySpecies[c.species] = (bySpecies[c.species] || 0) + 1; });
+    const spLabels = Object.keys(bySpecies);
+    const spData = spLabels.map(function(s){ return bySpecies[s]; });
+    const el1 = document.getElementById("chartSpecies");
+    if(el1) charts.species = new Chart(el1, {
+      type: "pie",
+      data: { labels: spLabels, datasets: [{ data: spData, backgroundColor: ["#4fd1a5","#7fd8ff","#f2b35c","#ff8a8a","#a78bfa","#f472b6","#34d399","#fbbf24","#60a5fa"] }] },
+      options: { plugins: { legend: { labels: { color: "#e8eef0" } } } }
+    });
+
+    const months = ["Sty","Lut","Mar","Kwi","Maj","Cze","Lip","Sie","Wrz","Paź","Lis","Gru"];
+    const monthCount = [0,0,0,0,0,0,0,0,0,0,0,0];
+    list.forEach(function(c){
+      if(c.date){
+        const m = parseInt(c.date.split("-")[1], 10);
+        if(m >= 1 && m <= 12) monthCount[m-1]++;
+      }
+    });
+    const el2 = document.getElementById("chartMonths");
+    if(el2) charts.months = new Chart(el2, {
+      type: "bar",
+      data: { labels: months, datasets: [{ label: "Połowy", data: monthCount, backgroundColor: "#4fd1a5" }] },
+      options: { plugins: { legend: { display: false } }, scales: { x: { ticks: { color: "#9fb3ba" } }, y: { ticks: { color: "#9fb3ba" }, beginAtZero: true } } }
+    });
+
+    const lengths = list.map(function(c){ return c.length || 0; }).filter(function(v){ return v > 0; });
+    const el3 = document.getElementById("chartLengths");
+    if(el3 && lengths.length > 0){
+      const buckets = [0,0,0,0,0,0];
+      const labels = ["<30","30-40","40-50","50-60","60-70","70+"];
+      lengths.forEach(function(l){
+        if(l < 30) buckets[0]++;
+        else if(l < 40) buckets[1]++;
+        else if(l < 50) buckets[2]++;
+        else if(l < 60) buckets[3]++;
+        else if(l < 70) buckets[4]++;
+        else buckets[5]++;
+      });
+      charts.lengths = new Chart(el3, {
+        type: "bar",
+        data: { labels: labels, datasets: [{ label: "Sztuki", data: buckets, backgroundColor: "#7fd8ff" }] },
+        options: { plugins: { legend: { display: false } }, scales: { x: { ticks: { color: "#9fb3ba" } }, y: { ticks: { color: "#9fb3ba" }, beginAtZero: true } } }
+      });
+    }
+
+    const byLure = {};
+    list.forEach(function(c){ if(c.lure){ byLure[c.lure] = (byLure[c.lure] || 0) + 1; } });
+    const lureLabels = Object.keys(byLure).sort(function(a,b){ return byLure[b]-byLure[a]; }).slice(0, 6);
+    const lureData = lureLabels.map(function(l){ return byLure[l]; });
+    const el4 = document.getElementById("chartLures");
+    if(el4 && lureLabels.length > 0) charts.lures = new Chart(el4, {
+      type: "bar",
+      data: { labels: lureLabels, datasets: [{ label: "Połowy", data: lureData, backgroundColor: "#f2b35c" }] },
+      options: { indexAxis: "y", plugins: { legend: { display: false } }, scales: { x: { ticks: { color: "#9fb3ba" }, beginAtZero: true }, y: { ticks: { color: "#9fb3ba" } } } }
+    });
+  }
+
+  renderCharts();
+
   // ===== BAROMETR BRAŃ =====
   function calcBarometer(){
     const pressure = document.getElementById("bPressure").value;
@@ -545,5 +681,75 @@
     else { verdict = "🔴 Raczej nie — trudne warunki, ryby mało aktywne."; color = "#ff8a8a"; }
     res.textContent = verdict + " (" + reasons.join(", ") + ")";
     res.style.color = color;
+  }
+
+  // ===== INTERAKTYWNY DOBÓR SPRZĘTU =====
+  const GEAR = {
+    szczupak: {
+      wedka: "2,4–2,7 m, c.w. 7–28 g, akcja fast",
+      kolowrotek: "3000, przełożenie 5:1",
+      linka: "plecionka 0,12–0,14 mm (ok. 12 lb)",
+      przypon: "stal/wolfram, min. 20–30 cm, 5–10 kg+",
+      przynety: "gumy 10–20 cm (kopytka, shady), wahadłówki 12–20 g, obrotówki nr 3–5, jerki 8–12 cm",
+      prowadzenie: "wolno, z pauzami; obrotówka wolno przy dnie; guma z opadu"
+    },
+    sandacz: {
+      wedka: "2,7 m+, c.w. 10–40 g, akcja fast",
+      kolowrotek: "3000, przełożenie 5:1",
+      linka: "plecionka 0,12–0,16 mm",
+      przypon: "fluorocarbon 0,25–0,33 mm, 50–80 cm (lub stal 15–25 cm przy ryzyku szczupaka)",
+      przynety: "kopyta i smukłe shady 8–14 cm na główkach 10–25 g, woblery i cykady przy dnie",
+      prowadzenie: "opad — rzuć, czekaj aż opadnie, potem skoki po dnie; branie często na opadaniu"
+    },
+    okon: {
+      wedka: "2,4 m, c.w. 5–20 g, akcja fast",
+      kolowrotek: "2500, przełożenie 5:1",
+      linka: "plecionka 0,08–0,10 mm",
+      przypon: "fluorocarbon cienki 0,20–0,25 mm (opcjonalnie)",
+      przynety: "małe gumy 3–8 cm na główkach 2–7 g, obrotówki nr 0–2, cykady, koguty, małe woblery",
+      prowadzenie: "skoki po dnie, opad, lekkie podrywanie"
+    },
+    bolen: {
+      wedka: "2,4–2,7 m, c.w. 5–25 g, akcja fast",
+      kolowrotek: "2500–3000, przełożenie 6:1 (szybsze)",
+      linka: "plecionka 0,10–0,12 mm",
+      przypon: "fluorocarbon cienki 0,20–0,28 mm",
+      przynety: "smukłe woblery 7–12 cm imitujące ukleję, wąskie wahadłówki, cykady, rippery/pilkery 5–8 cm (białe/perłowe)",
+      prowadzenie: "szybko, wysoko w toni; szukaj „chlapań\" bolenia"
+    },
+    sum: {
+      wedka: "2,7 m+, c.w. 40 g+, akcja slow/regular",
+      kolowrotek: "4000+ lub baitcaster, mocny",
+      linka: "plecionka 0,16–0,20 mm (20 lb+)",
+      przypon: "gruby, stalowy/wolframowy",
+      przynety: "duże gumy 15–25 cm+, duże kopyta, ciężkie woblery na główkach 20–60 g",
+      prowadzenie: "wolno przy dnie, nocą"
+    },
+    klen: {
+      wedka: "2,4 m, c.w. 5–20 g, akcja fast",
+      kolowrotek: "2500, przełożenie 5:1",
+      linka: "plecionka 0,08–0,10 mm + fluorocarbon",
+      przypon: "fluorocarbon cienki 0,20–0,28 mm",
+      przynety: "małe woblery do ~4–5 cm, mikrogumy/twistery/rippery 3–7 cm, cykady, małe jigi",
+      prowadzenie: "naturalnie, z nurtem"
+    }
+  };
+
+  function showGear(){
+    const sel = document.getElementById("gearSpecies").value;
+    const box = document.getElementById("gearResult");
+    if(!sel){ box.innerHTML = '<p class="kicker">Wybierz rybę, aby zobaczyć zestaw.</p>'; return; }
+    const g = GEAR[sel];
+    if(!g){ box.innerHTML = '<p class="kicker">Brak danych.</p>'; return; }
+    box.innerHTML =
+      '<div class="spotcard">' +
+      '<div class="top"><h4>Zestaw na ' + sel.charAt(0).toUpperCase() + sel.slice(1) + '</h4></div>' +
+      '<p class="note"><b>Wędka:</b> ' + g.wedka + '</p>' +
+      '<p class="note"><b>Kołowrotek:</b> ' + g.kolowrotek + '</p>' +
+      '<p class="note"><b>Linka:</b> ' + g.linka + '</p>' +
+      '<p class="note"><b>Przypon:</b> ' + g.przypon + '</p>' +
+      '<p class="note"><b>Przynęty:</b> ' + g.przynety + '</p>' +
+      '<p class="note"><b>Prowadzenie:</b> ' + g.prowadzenie + '</p>' +
+      '</div>';
   }
 
