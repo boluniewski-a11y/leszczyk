@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jak nie być leszczykiem — Spinning na Odrze A.D. 2026</title>
 <meta name="description" content="Praktyczny, lekko zabawny poradnik: jak zacząć i nie wyglądać jak leszczyk przy spinningu na Odrze. Ryby, sprzęt, przynęty, techniki, prawo.">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0e1a1e">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
@@ -13,8 +15,12 @@
 <nav>
   <div class="bar">
     <span class="logo">Jak nie być <span class="dot">leszczykiem</span></span>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="theme-btn" onclick="toggleTheme()" title="Przełącz motyw" aria-label="Przełącz motyw">🌙</button>
     <button class="printbtn" onclick="window.print()" title="Drukuj / zapisz PDF">🖨️ Drukuj</button>
-    <div class="links">
+    <div class="links" id="navLinks">
       <a class="l" href="#wstep">Wstęp</a>
       <a class="l" href="#rzeka">Rzeka</a>
       <a class="l" href="#ryby">Ryby</a>
@@ -1148,6 +1154,16 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="js/main.js"></script>
+<script>
+  // Rejestracja Service Workera (PWA)
+  if("serviceWorker" in navigator){
+    window.addEventListener("load", function(){
+      navigator.serviceWorker.register("sw.js").catch(function(err){
+        console.warn("SW rejestracja nie powiodła się:", err);
+      });
+    });
+  }
+</script>
 </body>
 </html>
 

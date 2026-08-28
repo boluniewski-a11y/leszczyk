@@ -2,6 +2,47 @@
   var charts = {}; // instancje wykresów Chart.js
   const LS_KEY = "odraLinks";
 
+  // ===== MENU (hamburger) =====
+  function toggleMenu(){
+    const btn = document.querySelector(".hamburger");
+    const links = document.getElementById("navLinks");
+    if(!btn || !links) return;
+    const open = links.classList.toggle("open");
+    btn.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  // Zamknij menu po kliknięciu linku (mobile)
+  document.addEventListener("click", function(e){
+    if(e.target.closest && e.target.closest("#navLinks a")){
+      const links = document.getElementById("navLinks");
+      const btn = document.querySelector(".hamburger");
+      if(links && links.classList.contains("open")){
+        links.classList.remove("open");
+        if(btn){ btn.classList.remove("open"); btn.setAttribute("aria-expanded","false"); }
+      }
+    }
+  });
+
+  // ===== MOTYW (jasny/ciemny) =====
+  function applyTheme(theme){
+    document.documentElement.setAttribute("data-theme", theme);
+    const btn = document.querySelector(".theme-btn");
+    if(btn) btn.textContent = theme === "light" ? "🌙" : "☀️";
+    try{ localStorage.setItem("odraTheme", theme); }catch(e){}
+  }
+  function toggleTheme(){
+    const cur = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+    applyTheme(cur);
+  }
+  // Inicjalizacja motywu
+  (function(){
+    let saved = null;
+    try{ saved = localStorage.getItem("odraTheme"); }catch(e){}
+    if(saved === "light" || saved === "dark"){ applyTheme(saved); }
+    else if(window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches){ applyTheme("light"); }
+    else { applyTheme("dark"); }
+  })();
+
   function loadLinks(){
     try{ return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); }
     catch(e){ return []; }
@@ -356,7 +397,7 @@
     if(!box) return;
     box.innerHTML = "";
     if(fishData.length === 0){
-      box.innerHTML = '<p class="kicker">Ładowanie ryb…</p>';
+      box.innerHTML = '<div class="sk-fish"><div class="sk-img skeleton"></div><div class="sk-lines"><div class="sk-line w60 skeleton"></div><div class="sk-line w80 skeleton"></div><div class="sk-line w40 skeleton"></div><div class="sk-line w80 skeleton"></div></div></div><div class="sk-fish"><div class="sk-img skeleton"></div><div class="sk-lines"><div class="sk-line w60 skeleton"></div><div class="sk-line w80 skeleton"></div><div class="sk-line w40 skeleton"></div><div class="sk-line w80 skeleton"></div></div></div>';
       return;
     }
     fishData.forEach(function(f){
@@ -390,7 +431,7 @@
     if(!box) return;
     box.innerHTML = "";
     if(lureData.length === 0){
-      box.innerHTML = '<p class="kicker">Ładowanie przynęt…</p>';
+      box.innerHTML = '<div class="sk-lure"><div class="sk-img skeleton"></div><div class="sk-line w70 skeleton"></div><div class="sk-line skeleton"></div><div class="sk-line w40 skeleton"></div></div><div class="sk-lure"><div class="sk-img skeleton"></div><div class="sk-line w70 skeleton"></div><div class="sk-line skeleton"></div><div class="sk-line w40 skeleton"></div></div>';
       return;
     }
     lureData.forEach(function(l){
