@@ -419,6 +419,7 @@
   // ===== DANE Z PLIKÓW JSON: ryby i przynęty =====
   let fishData = [];
   let lureData = [];
+  let encData = []; // encyklopedia ryb
 
   function renderFish(){
     const box = document.getElementById("fishList");
@@ -503,9 +504,100 @@
       .then(function(arr){ if(Array.isArray(arr)) lureData = arr; })
       .catch(function(){ lureData = []; })
       .finally(function(){ renderLures(); });
+    fetch("data/encyklopedia.json")
+      .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function(arr){ if(Array.isArray(arr)) encData = arr; })
+      .catch(function(){ encData = []; })
+      .finally(function(){ renderEncyklopedia(); });
   }
 
   loadDataFiles();
+
+  // ===== ENCYKLOPEDIA RYB =====
+  function encList(arr){
+    if(!arr || arr.length === 0) return "";
+    return "<ul>" + arr.map(function(x){ return "<li>" + x + "</li>"; }).join("") + "</ul>";
+  }
+
+  function encRow(label, value){
+    if(!value) return "";
+    return '<p class="enc-row"><b>' + label + ':</b> ' + value + "</p>";
+  }
+
+  function renderEncyklopedia(){
+    const box = document.getElementById("encyklopediaList");
+    if(!box) return;
+    box.innerHTML = "";
+    if(encData.length === 0){
+      box.innerHTML = '<div class="sk-lure"><div class="sk-line w70 skeleton"></div><div class="sk-line skeleton"></div><div class="sk-line w40 skeleton"></div></div>';
+      return;
+    }
+    encData.forEach(function(fam){
+      const famBox = document.createElement("div");
+      famBox.className = "enc-family";
+      const famH = document.createElement("h3");
+      famH.innerHTML = '<span class="em">' + fam.rodzina + "</span>";
+      famBox.appendChild(famH);
+      fam.gatunki.forEach(function(s){
+        const item = document.createElement("div");
+        item.className = "enc-item";
+        const head = document.createElement("button");
+        head.type = "button";
+        head.className = "enc-head";
+        head.setAttribute("aria-expanded", "false");
+        const latin = s.latin ? '<span class="latin">' + s.latin + "</span>" : "";
+        head.innerHTML = '<span class="enc-name">' + s.name + "</span>" + latin + '<span class="enc-arrow">▾</span>';
+        const body = document.createElement("div");
+        body.className = "enc-body";
+        let html = "";
+        if(s.ang) html += '<p class="enc-ang">ang. ' + s.ang + "</p>";
+        html += encRow("Wygląd", s.wyglad);
+        if(s.wystepowanie){
+          html += '<p class="enc-row"><b>Występowanie:</b></p>' + (Array.isArray(s.wystepowanie) ? encList(s.wystepowanie) : "<p>" + s.wystepowanie + "</p>");
+        }
+        if(s.przynety){
+          html += '<p class="enc-row"><b>Przynęty:</b></p>' + (Array.isArray(s.przynety) ? encList(s.przynety) : "<p>" + s.przynety + "</p>");
+        }
+        html += encRow("Rozród", s.rozrod);
+        if(s.ciekawostka) html += '<div class="enc-fact">💡 ' + s.ciekawostka + "</div>";
+        html += '<div class="enc-prot">';
+        html += '<p class="enc-row"><b>Wymiar ochronny:</b> ' + (s.wymiar || "—") + "</p>";
+        html += '<p class="enc-row"><b>Limit dobowy:</b> ' + (s.limit || "—") + "</p>";
+        html += '<p class="enc-row"><b>Okres ochronny:</b> ' + (s.okres || "—") + "</p>";
+        html += '<p class="enc-row"><b>Rekord Polski:</b> ' + (s.rekord || "—") + "</p>";
+        html += '<p class="enc-row"><b>Rozmiary:</b> ' + (s.rozmiary || "—") + "</p>";
+        if(s.uwaga) html += '<p class="enc-warn">⚠️ ' + s.uwaga + "</p>";
+        html += "</div>";
+        body.innerHTML = html;
+        head.addEventListener("click", function(){
+          const open = head.getAttribute("aria-expanded") === "true";
+          head.setAttribute("aria-expanded", open ? "false" : "true");
+          body.style.display = open ? "none" : "block";
+          head.querySelector(".enc-arrow").textContent = open ? "▾" : "▴";
+        });
+        item.appendChild(head);
+        item.appendChild(body);
+        famBox.appendChild(item);
+      });
+      box.appendChild(famBox);
+    });
+  }
+
+  function filterEncyklopedia(){
+    const q = (document.getElementById("encSearch").value || "").toLowerCase().trim();
+    const box = document.getElementById("encyklopediaList");
+    if(!box) return;
+    const items = box.querySelectorAll(".enc-item");
+    items.forEach(function(item){
+      const text = (item.textContent || "").toLowerCase();
+      item.style.display = (!q || text.indexOf(q) !== -1) ? "" : "none";
+    });
+    // Ukryj puste rodziny
+    box.querySelectorAll(".enc-family").forEach(function(fam){
+      const visible = Array.from(fam.querySelectorAll(".enc-item")).some(function(it){ return it.style.display !== "none"; });
+      fam.style.display = visible ? "" : "none";
+    });
+  }
 
   // ===== DZIENNIK POŁOWÓW =====
   const CATCH_KEY = "odraCatches";
