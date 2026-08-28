@@ -143,6 +143,11 @@
   .mapwrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:16px 0;}
   .mapwrap iframe{width:100%;height:380px;border:0;display:block;filter:grayscale(15%);}
   .mapnote{font-size:12.5px;color:var(--muted);margin:8px 0 4px;}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend .sw{width:14px;height:14px;border-radius:50%;display:inline-block;box-shadow:0 0 0 2px var(--bg);}
+  .spot-pin{background:transparent;border:none;}
+  .spot-pin .pin{width:20px;height:20px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);}
   .steps{counter-reset:s;margin:14px 0;}
   .steps .st{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
   .steps .st .n{

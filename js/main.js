@@ -128,6 +128,20 @@
   }
 
   // Buduje kartę miejscówki. userIndex !== null oznacza miejscówkę użytkownika (z localStorage) — wtedy dodaje przycisk "Usuń".
+  function categoryLabel(cat){
+    if(cat === "pzw") return "PZW";
+    if(cat === "morze") return "Wody morskie";
+    if(cat === "inne") return "Inne / niestandardowe";
+    return "";
+  }
+
+  function categoryColor(cat){
+    if(cat === "pzw") return "#4fd1a5";
+    if(cat === "morze") return "#7fd8ff";
+    if(cat === "inne") return "#f2b35c";
+    return "#9aa4b2";
+  }
+
   function buildSpotCard(s, userIndex){
     const d = document.createElement("div");
     d.className = "spotcard";
@@ -151,10 +165,11 @@
       d.appendChild(n);
     }
 
-    if(s.rating || s.lastVisit){
+    if(s.rating || s.lastVisit || s.category){
       const meta = document.createElement("p");
       meta.className = "note";
       const parts = [];
+      if(s.category) parts.push(categoryLabel(s.category));
       if(s.rating) parts.push("Ocena: " + "⭐".repeat(parseInt(s.rating, 10) || 0));
       if(s.lastVisit) parts.push("Ostatnia wizyta: " + s.lastVisit);
       meta.textContent = parts.join(" · ");
@@ -205,6 +220,7 @@
     const fish = document.getElementById("spFish").value.trim();
     const link = document.getElementById("spLink").value.trim();
     const note = document.getElementById("spNote").value.trim();
+    const category = document.getElementById("spCategory").value;
     const rating = document.getElementById("spRating").value;
     const lastVisit = document.getElementById("spLastVisit").value;
     const hint = document.getElementById("spHint");
@@ -212,12 +228,13 @@
     if(!name){ hint.textContent = "Podaj nazwę miejscówki."; return; }
 
     const list = loadSpots();
-    list.unshift({ name: name, fish: fish, link: link, note: note, rating: rating, lastVisit: lastVisit });
+    list.unshift({ name: name, fish: fish, link: link, note: note, category: category, rating: rating, lastVisit: lastVisit });
     const ok = persistSpots(list);
     document.getElementById("spName").value = "";
     document.getElementById("spFish").value = "";
     document.getElementById("spLink").value = "";
     document.getElementById("spNote").value = "";
+    document.getElementById("spCategory").value = "";
     document.getElementById("spRating").value = "";
     document.getElementById("spLastVisit").value = "";
     renderSpots();
@@ -277,9 +294,19 @@
     all.forEach(function(s){
       const coords = parseCoords(s.link);
       if(!coords) return;
-      const marker = L.marker(coords).addTo(spotsMap);
+      const color = categoryColor(s.category);
+      const icon = L.divIcon({
+        className: "spot-pin",
+        html: '<div class="pin" style="background:' + color + ';"></div>',
+        iconSize: [22, 22],
+        iconAnchor: [11, 22],
+        popupAnchor: [0, -20]
+      });
+      const marker = L.marker(coords, { icon: icon }).addTo(spotsMap);
       const rating = s.rating ? " ⭐".repeat(parseInt(s.rating,10) || 0) : "";
+      const cat = s.category ? "<br>🏷️ " + categoryLabel(s.category) : "";
       const popup = "<b>" + (s.name || "Bez nazwy") + "</b>" + rating +
+        cat +
         (s.fish ? "<br>🐟 " + s.fish : "") +
         (s.note ? "<br>" + s.note : "") +
         (s.lastVisit ? "<br>📅 " + s.lastVisit : "") +

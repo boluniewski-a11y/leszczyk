@@ -542,7 +542,12 @@
     <div class="mapwrap">
       <div id="spotsMap" style="height:420px;width:100%;"></div>
     </div>
-    <p class="mapnote">Interaktywna mapa miejscówek (Odra, jezioro Dąbie, Regalica). Kliknij pinezkę, aby zobaczyć szczegóły. Miejscówki z pliku JSON i Twoje własne pojawiają się automatycznie.</p>
+    <div class="legend" style="margin-top:10px;">
+      <span><span class="sw" style="background:#4fd1a5;"></span> PZW</span>
+      <span><span class="sw" style="background:#7fd8ff;"></span> Wody morskie</span>
+      <span><span class="sw" style="background:#f2b35c;"></span> Inne / niestandardowe</span>
+    </div>
+    <p class="mapnote">Interaktywna mapa miejscówek (Odra, jezioro Dąbie, Regalica). Kliknij pinezkę, aby zobaczyć szczegóły. Kolor pinezki = kategoria miejscówki.</p>
 
     <h3><span class="em">Jak zapisać miejscówkę w 3 krokach</span></h3>
     <div class="steps">
@@ -564,6 +569,12 @@
         <input type="text" id="spNote" placeholder="Notatka: metoda, pora, co brało… (opcjonalnie)">
       </div>
       <div class="row">
+        <select id="spCategory" style="flex:1;min-width:140px;background:var(--bg2);border:1px solid var(--border);color:var(--ink);padding:9px 11px;border-radius:9px;font-size:14px;">
+          <option value="">Kategoria…</option>
+          <option value="pzw">PZW</option>
+          <option value="morze">Wody morskie</option>
+          <option value="inne">Inne / niestandardowe</option>
+        </select>
         <select id="spRating" style="flex:1;min-width:140px;background:var(--bg2);border:1px solid var(--border);color:var(--ink);padding:9px 11px;border-radius:9px;font-size:14px;">
           <option value="">Ocena…</option>
           <option value="5">⭐⭐⭐⭐⭐ (5)</option>
